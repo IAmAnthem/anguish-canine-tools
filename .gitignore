@@ -1,0 +1,14 @@
+# Local/private source material
+private-data/
+
+# Spreadsheet exports that may contain private planning data
+*.xlsx
+*.xls
+*.ods
+
+# Local scratch/output
+node_modules/
+dist/
+*.log
+*.tmp
+~$*
