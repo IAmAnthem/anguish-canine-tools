@@ -429,6 +429,18 @@ h3 {
   min-width: 980px;
 }
 
+.herd-table {
+  min-width: 720px;
+}
+
+.herd-overview-cards {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.herd-overview-cards .result-card strong {
+  font-size: 1.2rem;
+}
+
 .multi-step-layout {
   display: grid;
   grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
@@ -567,6 +579,11 @@ h3 {
   min-height: 34px;
   padding: 6px 9px;
   font-size: 0.78rem;
+}
+
+.ownership-cell {
+  display: grid;
+  gap: 8px;
 }
 
 .pending-status {
@@ -829,6 +846,7 @@ h3 {
   .status-strip,
   .tool-grid,
   .result-cards,
+  .herd-overview-cards,
   .puppy-slot-grid,
   .puppy-metric-cards,
   .key-value-list {

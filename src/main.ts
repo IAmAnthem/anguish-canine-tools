@@ -13,6 +13,7 @@ import {
   type DataBrowserRow
 } from "./app/dataBrowser.js";
 import { createDataStore, type CanineSummary, type DataStore } from "./app/dataStore.js";
+import { createHerdHealthReport, type HerdHealthReport } from "./app/herdHealth.js";
 import {
   createDefaultMultiStepPlanViewModel,
   createMultiStepPlanExport,
@@ -43,8 +44,9 @@ import {
 } from "./domain/reference/collarGuidance.js";
 import { traitNames } from "./domain/traits/traitNames.js";
 
-type AppView = "calculator" | "planner" | "multi-step" | "browser" | "curate" | "guidance" | "contribute";
+type AppView = "calculator" | "planner" | "multi-step" | "browser" | "curate" | "herd" | "guidance" | "contribute";
 type CuratedCanineStatus = "active" | "inactive" | "unknown";
+type CurationMode = "status" | "ownership";
 
 type ViewDefinition = {
   id: AppView;
@@ -95,6 +97,14 @@ const views: ViewDefinition[] = [
     title: "Status curation",
     status: "Find records where legacy active flags conflict with current game rules.",
     items: ["Warnings", "Characters", "Status", "Patch export"]
+  },
+  {
+    id: "herd",
+    label: "Herd Health",
+    eyebrow: "Population view",
+    title: "Herd genetic health",
+    status: "First pass at active-pool coverage, relatedness pressure, and constrained bloodlines.",
+    items: ["Active pool", "Relatedness", "Ancestors", "Mate options"]
   },
   {
     id: "guidance",
@@ -171,10 +181,14 @@ const dataBrowserState: {
   selectedCanineId: ""
 };
 const curationState: {
+  mode: CurationMode;
   statusUpdatesByCanineId: Record<string, CuratedCanineStatus>;
+  humanUpdatesByCharacterId: Record<string, string | null>;
   copiedPatch: boolean;
 } = {
+  mode: "status",
   statusUpdatesByCanineId: {},
+  humanUpdatesByCharacterId: {},
   copiedPatch: false
 };
 
@@ -293,6 +307,8 @@ function createPanel(view: ViewDefinition, store: DataStore): HTMLElement {
     panel.append(createDataBrowserWorkflow(store));
   } else if (view.id === "curate") {
     panel.append(createCurationWorkflow(store));
+  } else if (view.id === "herd") {
+    panel.append(createHerdHealthWorkflow(store));
   } else if (view.id === "guidance") {
     panel.append(createGuidanceWorkflow(store));
   } else {
@@ -409,18 +425,64 @@ type CanineStatusPatchUpdate = {
   status: CuratedCanineStatus;
 };
 
+type OwnershipReviewEntry = {
+  characterId: string;
+  characterName: string;
+  currentHumanId: string | null;
+  currentHumanLabel: string;
+  canines: CanineSummary[];
+};
+
+type CharacterHumanPatchUpdate = {
+  characterId: string;
+  humanId: string | null;
+};
+
 function createCurationWorkflow(store: DataStore): HTMLElement {
   const section = createElement("section", "workflow-section guidance-layout");
-  const conflicts = getActiveCanineConflicts(store);
+  section.append(createElement("h3", undefined, "Records curation"), createCurationModeToggle());
 
-  section.append(
-    createElement("h3", undefined, "Records warnings"),
-    createCurationNotice(conflicts.length),
-    createActiveCanineConflictTable(conflicts),
-    createPendingStatusPatchPanel(store)
-  );
+  if (curationState.mode === "status") {
+    const conflicts = getActiveCanineConflicts(store);
+    section.append(
+      createCurationNotice(conflicts.length),
+      createActiveCanineConflictTable(conflicts),
+      createPendingStatusPatchPanel(store)
+    );
+  } else {
+    const entries = getOwnershipReviewEntries(store);
+    section.append(
+      createOwnershipReviewNotice(entries.length),
+      createOwnershipReviewTable(store, entries),
+      createPendingHumanPatchPanel(store)
+    );
+  }
 
   return section;
+}
+
+function createCurationModeToggle(): HTMLElement {
+  const group = createElement("div", "toggle-group");
+
+  for (const [mode, label] of [
+    ["status", "Multiple active pets"],
+    ["ownership", "Ownership review"]
+  ] as const) {
+    const button = createElement(
+      "button",
+      curationState.mode === mode ? "toggle-button toggle-button-active" : "toggle-button",
+      label
+    );
+    button.type = "button";
+    button.setAttribute("aria-pressed", String(curationState.mode === mode));
+    button.addEventListener("click", () => {
+      curationState.mode = mode;
+      render();
+    });
+    group.append(button);
+  }
+
+  return group;
 }
 
 function createCurationNotice(conflictCount: number): HTMLElement {
@@ -602,6 +664,189 @@ function createPendingStatusPatchPanel(store: DataStore): HTMLElement {
   return panel;
 }
 
+function createOwnershipReviewNotice(entryCount: number): HTMLElement {
+  const notice = createElement("section", entryCount > 0 ? "warning-box" : "data-health data-health-ok");
+  notice.append(
+    createElement("h3", undefined, `${entryCount} character${entryCount === 1 ? "" : "s"} need ownership review`),
+    createElement(
+      "p",
+      undefined,
+      "Use this mode to reassign characters that still sit on Unknown or no public human link. The app only stages a patch; it does not change repo data directly."
+    )
+  );
+
+  return notice;
+}
+
+function createOwnershipReviewTable(store: DataStore, entries: readonly OwnershipReviewEntry[]): HTMLElement {
+  const section = createElement("section", "data-table-section compact-table-section");
+  const table = createElement("table", "data-table curation-table");
+  const head = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  const body = document.createElement("tbody");
+
+  for (const label of ["Character", "Current human", "Canines", "Assign human"]) {
+    headRow.append(createElement("th", undefined, label));
+  }
+  head.append(headRow);
+
+  if (entries.length === 0) {
+    const row = document.createElement("tr");
+    const cell = createElement("td", undefined, "No unknown or unattributed ownership records found.");
+    cell.colSpan = 4;
+    row.append(cell);
+    body.append(row);
+  }
+
+  for (const entry of entries) {
+    const row = document.createElement("tr");
+    row.append(
+      createElement("td", undefined, entry.characterName),
+      createElement("td", undefined, entry.currentHumanLabel),
+      createOwnershipCanineListCell(entry.canines),
+      createOwnershipAssignmentCell(store, entry)
+    );
+    body.append(row);
+  }
+
+  table.append(head, body);
+  section.append(createElement("h3", undefined, "Unknown and unattributed ownership"), table);
+
+  return section;
+}
+
+function createOwnershipCanineListCell(canines: readonly CanineSummary[]): HTMLTableCellElement {
+  const cell = createElement("td");
+  const list = createElement("ul", "compact-list");
+
+  for (const summary of canines) {
+    list.append(
+      createElement(
+        "li",
+        undefined,
+        `${summary.canine.displayName} | ${formatGenderLabel(summary.canine.gender)} | ${summary.canine.status}`
+      )
+    );
+  }
+
+  cell.append(list);
+  return cell;
+}
+
+function createOwnershipAssignmentCell(store: DataStore, entry: OwnershipReviewEntry): HTMLTableCellElement {
+  const cell = createElement("td");
+  const wrap = createElement("div", "ownership-cell");
+  const select = createElement("select", "field-control");
+  const pendingHumanId = getEffectiveHumanId(entry.characterId, entry.currentHumanId);
+
+  for (const option of getOwnershipHumanOptions(store)) {
+    const element = document.createElement("option");
+    element.value = option.humanId ?? "__NULL__";
+    element.textContent = option.label;
+    select.append(element);
+  }
+
+  select.value = pendingHumanId ?? "__NULL__";
+  select.addEventListener("change", () => {
+    stageCharacterHuman(entry.characterId, select.value === "__NULL__" ? null : select.value);
+    render();
+  });
+
+  wrap.append(select);
+
+  if (curationState.humanUpdatesByCharacterId[entry.characterId] !== undefined) {
+    wrap.append(
+      createElement(
+        "span",
+        "pending-status",
+        `Pending: ${labelHumanOption(store, curationState.humanUpdatesByCharacterId[entry.characterId])}`
+      )
+    );
+  }
+
+  cell.append(wrap);
+  return cell;
+}
+
+function createPendingHumanPatchPanel(store: DataStore): HTMLElement {
+  const panel = createElement("section", "plan-panel curation-patch-panel");
+  const updates = getPendingHumanUpdates(store);
+  const output = createElement("textarea", "field-control plan-json-output");
+  const resetButton = createElement("button", "secondary-button", "Reset ownership changes");
+  const copyButton = createElement("button", "primary-button", curationState.copiedPatch ? "Copied" : "Copy patch JSON");
+  const table = createElement("table", "data-table pending-change-table");
+  const head = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  const body = document.createElement("tbody");
+  const patch = {
+    schemaVersion: 1,
+    kind: "character-human-patch",
+    updates
+  };
+
+  output.readOnly = true;
+  output.value = JSON.stringify(patch, null, 2);
+
+  for (const label of ["Character", "From", "To"]) {
+    headRow.append(createElement("th", undefined, label));
+  }
+  head.append(headRow);
+
+  if (updates.length === 0) {
+    const row = document.createElement("tr");
+    const cell = createElement("td", undefined, "No pending ownership changes.");
+    cell.colSpan = 3;
+    row.append(cell);
+    body.append(row);
+  }
+
+  for (const update of updates) {
+    const character = store.charactersById.get(update.characterId);
+    const previousLabel = labelHumanOption(store, character?.humanId ?? null);
+    const nextLabel = labelHumanOption(store, update.humanId);
+    const row = document.createElement("tr");
+    row.append(
+      createElement("td", undefined, character?.name ?? update.characterId),
+      createElement("td", undefined, previousLabel),
+      createElement("td", undefined, nextLabel)
+    );
+    body.append(row);
+  }
+
+  resetButton.type = "button";
+  resetButton.disabled = updates.length === 0;
+  resetButton.addEventListener("click", () => {
+    curationState.humanUpdatesByCharacterId = {};
+    curationState.copiedPatch = false;
+    render();
+  });
+
+  copyButton.type = "button";
+  copyButton.disabled = updates.length === 0;
+  copyButton.addEventListener("click", () => {
+    void navigator.clipboard.writeText(output.value).then(() => {
+      curationState.copiedPatch = true;
+      render();
+    });
+  });
+
+  table.append(head, body);
+  panel.append(
+    createElement("h3", undefined, "Pending ownership patch"),
+    createElement(
+      "p",
+      "plan-note",
+      "This prepares a character-to-human reassignment patch for repo review. It does not edit canonical data directly."
+    ),
+    table,
+    createElement("p", "plan-note", `${updates.length} changed character owner${updates.length === 1 ? "" : "s"}.`),
+    output,
+    createButtonRow([copyButton, resetButton])
+  );
+
+  return panel;
+}
+
 function createButtonRow(buttons: readonly HTMLButtonElement[]): HTMLElement {
   const row = createElement("div", "button-row");
   row.append(...buttons);
@@ -695,6 +940,276 @@ function getPendingStatusUpdates(store: DataStore): CanineStatusPatchUpdate[] {
       const rightName = store.caninesById.get(right.canineId)?.displayName ?? right.canineId;
       return leftName.localeCompare(rightName, undefined, { sensitivity: "base" });
     });
+}
+
+function getOwnershipReviewEntries(store: DataStore): OwnershipReviewEntry[] {
+  const entries = store.data.canonical.characters
+    .filter((character) => character.humanId === "human-unknown")
+    .map((character) => {
+      const canines = store.data.canonical.canines
+        .filter((canine) => canine.characterId === character.id)
+        .map((canine) => store.getCanineSummary(canine.id))
+        .filter((summary): summary is CanineSummary => Boolean(summary))
+        .sort((left, right) => left.canine.displayName.localeCompare(right.canine.displayName, undefined, { sensitivity: "base" }));
+
+      return {
+        characterId: character.id,
+        characterName: character.name,
+        currentHumanId: character.humanId,
+        currentHumanLabel: labelHumanOption(store, character.humanId),
+        canines
+      };
+    })
+    .filter((entry) => entry.canines.length > 0)
+    .sort((left, right) => left.characterName.localeCompare(right.characterName, undefined, { sensitivity: "base" }));
+
+  return entries;
+}
+
+function getOwnershipHumanOptions(store: DataStore): Array<{ humanId: string | null; label: string }> {
+  const humans = store.data.canonical.humans
+    .filter((human) => human.id !== "human-unknown")
+    .sort((left, right) => left.displayName.localeCompare(right.displayName, undefined, { sensitivity: "base" }))
+    .map((human) => ({
+      humanId: human.id,
+      label: human.displayName
+    }));
+
+  return [{ humanId: null, label: "Unattributed (no public human link)" }, ...humans];
+}
+
+function labelHumanOption(store: DataStore, humanId: string | null): string {
+  if (humanId === null) {
+    return "Unattributed";
+  }
+
+  return store.humansById.get(humanId)?.displayName ?? humanId;
+}
+
+function getEffectiveHumanId(characterId: string, originalHumanId: string | null): string | null {
+  return Object.prototype.hasOwnProperty.call(curationState.humanUpdatesByCharacterId, characterId)
+    ? curationState.humanUpdatesByCharacterId[characterId]
+    : originalHumanId;
+}
+
+function stageCharacterHuman(characterId: string, humanId: string | null): void {
+  const character = dataStore.charactersById.get(characterId);
+
+  if (!character) {
+    return;
+  }
+
+  curationState.copiedPatch = false;
+
+  if (character.humanId === humanId) {
+    delete curationState.humanUpdatesByCharacterId[characterId];
+    return;
+  }
+
+  curationState.humanUpdatesByCharacterId[characterId] = humanId;
+}
+
+function getPendingHumanUpdates(store: DataStore): CharacterHumanPatchUpdate[] {
+  return Object.entries(curationState.humanUpdatesByCharacterId)
+    .filter(([characterId, humanId]) => store.charactersById.get(characterId)?.humanId !== humanId)
+    .map(([characterId, humanId]) => ({ characterId, humanId }))
+    .sort((left, right) => {
+      const leftName = store.charactersById.get(left.characterId)?.name ?? left.characterId;
+      const rightName = store.charactersById.get(right.characterId)?.name ?? right.characterId;
+      return leftName.localeCompare(rightName, undefined, { sensitivity: "base" });
+    });
+}
+
+function createHerdHealthWorkflow(store: DataStore): HTMLElement {
+  const report = createHerdHealthReport(store);
+  const section = createElement("section", "workflow-section guidance-layout");
+
+  section.append(
+    createElement("h3", undefined, "Active pool health"),
+    createHerdHealthNotice(report),
+    createHerdOverviewCards(report),
+    createOverusedAncestorTable(report),
+    createLowMateOptionTable(report)
+  );
+
+  return section;
+}
+
+function createHerdHealthNotice(report: HerdHealthReport): HTMLElement {
+  const relatedness = report.relatednessPressure.relatedPairPercent;
+  const notice = createElement("section", relatedness !== null && relatedness > 0.35 ? "warning-box" : "data-health data-health-ok");
+  notice.append(
+    createElement("h3", undefined, "Population snapshot"),
+    createElement(
+      "p",
+      undefined,
+      relatedness === null
+        ? "There is not enough active lineage coverage to calculate herd relatedness pressure yet."
+        : `${formatPercent(relatedness)} of comparable active pairs share tracked ancestry. This is a first-pass pressure signal, not a complete genetics model.`
+    )
+  );
+
+  return notice;
+}
+
+function createHerdOverviewCards(report: HerdHealthReport): HTMLElement {
+  const cards = createElement("div", "result-cards herd-overview-cards");
+  const overview = report.overview;
+  const relatedness = report.relatednessPressure;
+  const cardValues = [
+    [
+      "Active canines",
+      String(overview.activeCanines),
+      "Count of active canines in the canonical dataset."
+    ],
+    [
+      "Gender split",
+      `${overview.activeMales} M / ${overview.activeFemales} F`,
+      "Active canines grouped by recorded gender. Unknown gender is not included in this split."
+    ],
+    [
+      "Trait coverage",
+      `${overview.activeWithTraitProfiles}/${overview.activeCanines}`,
+      "How many active canines have a trait profile available for solving, planning, and comparison."
+    ],
+    [
+      "Lineage coverage",
+      `${overview.activeWithLineageProfiles}/${overview.activeCanines}`,
+      "How many active canines have tracked parent and grandparent lineage data."
+    ],
+    [
+      "Avg total",
+      formatNullableNumber(overview.averageTotal),
+      "Average TOTAL score across active canines with known trait profiles."
+    ],
+    [
+      "Avg Procreation",
+      formatNullableNumber(overview.averageProcreation),
+      "Average Procreation value across active canines with known trait profiles."
+    ],
+    [
+      "Related pairs",
+      `${relatedness.relatedPairs}/${relatedness.comparablePairs}`,
+      "Comparable active mating pairs that are blocked by tracked parent or grandparent relatedness."
+    ],
+    [
+      "Inactive/unknown",
+      `${overview.inactiveCanines}/${overview.unknownStatusCanines}`,
+      "Inactive canines shown first, then canines whose status is still unknown."
+    ]
+  ];
+
+  for (const [label, value, tooltip] of cardValues) {
+    const card = createElement("div", "result-card");
+    card.title = tooltip;
+    card.append(createElement("span", "status-label", label), createElement("strong", undefined, value));
+    cards.append(card);
+  }
+
+  return cards;
+}
+
+function createOverusedAncestorTable(report: HerdHealthReport): HTMLElement {
+  const section = createElement("section", "data-table-section");
+  const table = createElement("table", "data-table herd-table");
+  const head = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  const body = document.createElement("tbody");
+
+  for (const label of ["Tracked ancestor", "Active descendants"]) {
+    headRow.append(createElement("th", undefined, label));
+  }
+  head.append(headRow);
+
+  if (report.overusedAncestors.length === 0) {
+    const row = document.createElement("tr");
+    const cell = createElement("td", undefined, "No repeated tracked ancestors found in the active pool.");
+    cell.colSpan = 2;
+    row.append(cell);
+    body.append(row);
+  }
+
+  for (const ancestor of report.overusedAncestors) {
+    const row = document.createElement("tr");
+    row.append(
+      createElement("td", undefined, ancestor.label),
+      createElement("td", "numeric-cell", String(ancestor.descendantCount))
+    );
+    body.append(row);
+  }
+
+  table.append(head, body);
+  section.append(
+    createElement("h3", undefined, "Repeated tracked ancestors"),
+    createElement("p", "plan-note", "Ancestors appearing in multiple active lineages can indicate bloodlines that are becoming hard to avoid."),
+    table
+  );
+
+  return section;
+}
+
+function createLowMateOptionTable(report: HerdHealthReport): HTMLElement {
+  const section = createElement("section", "data-table-section");
+  const table = createElement("table", "data-table herd-table");
+  const head = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  const body = document.createElement("tbody");
+  const heading = createElement("h3", undefined, "Lowest safe-mate counts");
+  heading.title = "Active canines with the fewest genetically safe opposite-gender mates in the current active pool.";
+  const headerTooltips = new Map<string, string>([
+    ["Active canine", "The active canine being evaluated for breeding flexibility."],
+    ["Gender", "Recorded gender for the active canine."],
+    ["Safe mates", "Possible mates remaining after tracked parent and grandparent relatedness blocks are removed."],
+    ["Possible mates", "Active opposite-gender candidates before relatedness filtering."],
+    ["Owner", "Current human assignment for the active canine, if known."]
+  ]);
+
+  for (const label of ["Active canine", "Gender", "Safe mates", "Possible mates", "Owner"]) {
+    const cell = createElement("th", undefined, label);
+    const tooltip = headerTooltips.get(label);
+    if (tooltip) {
+      cell.title = tooltip;
+    }
+    headRow.append(cell);
+  }
+  head.append(headRow);
+
+  if (report.lowMateOptions.length === 0) {
+    const row = document.createElement("tr");
+    const cell = createElement("td", undefined, "No constrained active canines found with current lineage coverage.");
+    cell.colSpan = 5;
+    row.append(cell);
+    body.append(row);
+  }
+
+  for (const option of report.lowMateOptions) {
+    const row = document.createElement("tr");
+    row.append(
+      createElement("td", undefined, option.summary.canine.displayName),
+      createElement("td", undefined, formatGenderLabel(option.summary.canine.gender)),
+      createElement("td", option.safeMateCount === 0 ? "warn-cell numeric-cell" : "numeric-cell", String(option.safeMateCount)),
+      createElement("td", "numeric-cell", String(option.possibleMateCount)),
+      createElement("td", undefined, option.summary.human?.displayName ?? "unattributed")
+    );
+    body.append(row);
+  }
+
+  table.append(head, body);
+  section.append(
+    heading,
+    createElement("p", "plan-note", "These records have the fewest genetically safe opposite-gender active mates within the tracked parent/grandparent window."),
+    table
+  );
+
+  return section;
+}
+
+function formatNullableNumber(value: number | null): string {
+  return value === null ? "unknown" : String(Math.round(value));
+}
+
+function formatPercent(value: number): string {
+  return `${Math.round(value * 100)}%`;
 }
 
 function createGuidanceNotice(): HTMLElement {

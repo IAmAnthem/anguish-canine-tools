@@ -2,6 +2,8 @@
 
 Browser-based tools for Ancient Anguish canine breeding.
 
+Live app: https://iamanthem.github.io/anguish-canine-tools/
+
 This project is intended to replace and expand the older PowerShell tools:
 
 - `CanineCalculations`: trait comparison and stat solving

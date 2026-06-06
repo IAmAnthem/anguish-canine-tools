@@ -1,2322 +1,2092 @@
-﻿[
-    {
-        "id":  "source-legacy-knowns-csv-canine-canine-an-untraited-canine",
-        "entityType":  "canine",
-        "entityId":  "canine-an-untraited-canine",
-        "source":  "legacy/KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-knowns-csv-canine-canine-mulapin-ringo-733-54",
-        "entityType":  "canine",
-        "entityId":  "canine-mulapin-ringo-733-54",
-        "source":  "legacy/KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-knowns-csv-canine-canine-lullaby-sandman-722-57",
-        "entityType":  "canine",
-        "entityId":  "canine-lullaby-sandman-722-57",
-        "source":  "legacy/KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-knowns-csv-canine-canine-grazioso-hoover-718-54",
-        "entityType":  "canine",
-        "entityId":  "canine-grazioso-hoover-718-54",
-        "source":  "legacy/KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-knowns-csv-canine-canine-exie-shaker-694-53",
-        "entityType":  "canine",
-        "entityId":  "canine-exie-shaker-694-53",
-        "source":  "legacy/KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-knowns-csv-canine-canine-dirge-fluid-692-57",
-        "entityType":  "canine",
-        "entityId":  "canine-dirge-fluid-692-57",
-        "source":  "legacy/KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-knowns-csv-canine-canine-crescendo-eddie-698-51",
-        "entityType":  "canine",
-        "entityId":  "canine-crescendo-eddie-698-51",
-        "source":  "legacy/KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-knowns-csv-canine-canine-cover-rocker-714-60",
-        "entityType":  "canine",
-        "entityId":  "canine-cover-rocker-714-60",
-        "source":  "legacy/KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-knowns-csv-canine-canine-ballad-fireball-730-55",
-        "entityType":  "canine",
-        "entityId":  "canine-ballad-fireball-730-55",
-        "source":  "legacy/KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-knowns-csv-canine-canine-mulapin-gringo-709-53",
-        "entityType":  "canine",
-        "entityId":  "canine-mulapin-gringo-709-53",
-        "source":  "legacy/KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-knowns-csv-canine-canine-guest-puppeh",
-        "entityType":  "canine",
-        "entityId":  "canine-guest-puppeh",
-        "source":  "legacy/KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-an-untraited-canine",
-        "entityType":  "canine",
-        "entityId":  "canine-an-untraited-canine",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-toccato-gen10-872",
-        "entityType":  "canine",
-        "entityId":  "canine-toccato-gen10-872",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-crescendo-reacher-812",
-        "entityType":  "canine",
-        "entityId":  "canine-crescendo-reacher-812",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-refrain-moolah-826",
-        "entityType":  "canine",
-        "entityId":  "canine-refrain-moolah-826",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-portamento-jill-828",
-        "entityType":  "canine",
-        "entityId":  "canine-portamento-jill-828",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-lullaby-ais-839",
-        "entityType":  "canine",
-        "entityId":  "canine-lullaby-ais-839",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-mulapin-bess-839",
-        "entityType":  "canine",
-        "entityId":  "canine-mulapin-bess-839",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-exie-militant-856",
-        "entityType":  "canine",
-        "entityId":  "canine-exie-militant-856",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-cover-wonder-851",
-        "entityType":  "canine",
-        "entityId":  "canine-cover-wonder-851",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-crescendo-vox-856",
-        "entityType":  "canine",
-        "entityId":  "canine-crescendo-vox-856",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-mulapin-val-869",
-        "entityType":  "canine",
-        "entityId":  "canine-mulapin-val-869",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-ballad-fury-823",
-        "entityType":  "canine",
-        "entityId":  "canine-ballad-fury-823",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-dirge-magic-821",
-        "entityType":  "canine",
-        "entityId":  "canine-dirge-magic-821",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-fermata-gen6-773",
-        "entityType":  "canine",
-        "entityId":  "canine-fermata-gen6-773",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-grazioso-rels-757",
-        "entityType":  "canine",
-        "entityId":  "canine-grazioso-rels-757",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-heap-cheat-847",
-        "entityType":  "canine",
-        "entityId":  "canine-heap-cheat-847",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-impetuoso-goldie-737",
-        "entityType":  "canine",
-        "entityId":  "canine-impetuoso-goldie-737",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-pom-fuppy-v-570",
-        "entityType":  "canine",
-        "entityId":  "canine-pom-fuppy-v-570",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-jonsnow-ghost-851",
-        "entityType":  "canine",
-        "entityId":  "canine-jonsnow-ghost-851",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-repo-boomer-846",
-        "entityType":  "canine",
-        "entityId":  "canine-repo-boomer-846",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-doli-kiska-xxx-748",
-        "entityType":  "canine",
-        "entityId":  "canine-doli-kiska-xxx-748",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-baggins-bilbo-753",
-        "entityType":  "canine",
-        "entityId":  "canine-baggins-bilbo-753",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-treehugger-snickerz-850",
-        "entityType":  "canine",
-        "entityId":  "canine-treehugger-snickerz-850",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-angrynerd-baconator-867",
-        "entityType":  "canine",
-        "entityId":  "canine-angrynerd-baconator-867",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-grogu-mando-846",
-        "entityType":  "canine",
-        "entityId":  "canine-grogu-mando-846",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-rangerone-pet-741",
-        "entityType":  "canine",
-        "entityId":  "canine-rangerone-pet-741",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-rangertwo-pup-736",
-        "entityType":  "canine",
-        "entityId":  "canine-rangertwo-pup-736",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-elm-unnamed-724",
-        "entityType":  "canine",
-        "entityId":  "canine-elm-unnamed-724",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-bashel-valko3-763",
-        "entityType":  "canine",
-        "entityId":  "canine-bashel-valko3-763",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-arynia-ivy-818",
-        "entityType":  "canine",
-        "entityId":  "canine-arynia-ivy-818",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-nuisance-pesky-824",
-        "entityType":  "canine",
-        "entityId":  "canine-nuisance-pesky-824",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-stormsong-stormy-836",
-        "entityType":  "canine",
-        "entityId":  "canine-stormsong-stormy-836",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-jeanie-brat-720",
-        "entityType":  "canine",
-        "entityId":  "canine-jeanie-brat-720",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-dancer-walker-784",
-        "entityType":  "canine",
-        "entityId":  "canine-dancer-walker-784",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-rain-honeypot-811",
-        "entityType":  "canine",
-        "entityId":  "canine-rain-honeypot-811",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-storm-nuts-829",
-        "entityType":  "canine",
-        "entityId":  "canine-storm-nuts-829",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-zyrika-shimmer-848",
-        "entityType":  "canine",
-        "entityId":  "canine-zyrika-shimmer-848",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-whap-whop-846",
-        "entityType":  "canine",
-        "entityId":  "canine-whap-whop-846",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-jackal-flea-839",
-        "entityType":  "canine",
-        "entityId":  "canine-jackal-flea-839",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-nay-ix-803",
-        "entityType":  "canine",
-        "entityId":  "canine-nay-ix-803",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-pupimp-step1-825",
-        "entityType":  "canine",
-        "entityId":  "canine-pupimp-step1-825",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-calico-barkfox-710",
-        "entityType":  "canine",
-        "entityId":  "canine-calico-barkfox-710",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-jktwodoor-mook-874",
-        "entityType":  "canine",
-        "entityId":  "canine-jktwodoor-mook-874",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-name",
-        "entityType":  "canine",
-        "entityId":  "canine-name",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-alertness",
-        "entityType":  "canine",
-        "entityId":  "canine-alertness",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-appetite",
-        "entityType":  "canine",
-        "entityId":  "canine-appetite",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-brutality",
-        "entityType":  "canine",
-        "entityId":  "canine-brutality",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-development",
-        "entityType":  "canine",
-        "entityId":  "canine-development",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-eluding",
-        "entityType":  "canine",
-        "entityId":  "canine-eluding",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-energy",
-        "entityType":  "canine",
-        "entityId":  "canine-energy",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-evasion",
-        "entityType":  "canine",
-        "entityId":  "canine-evasion",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-ferocity",
-        "entityType":  "canine",
-        "entityId":  "canine-ferocity",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-fortitude",
-        "entityType":  "canine",
-        "entityId":  "canine-fortitude",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-insight",
-        "entityType":  "canine",
-        "entityId":  "canine-insight",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-might",
-        "entityType":  "canine",
-        "entityId":  "canine-might",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-nimbleness",
-        "entityType":  "canine",
-        "entityId":  "canine-nimbleness",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-patience",
-        "entityType":  "canine",
-        "entityId":  "canine-patience",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-procreation",
-        "entityType":  "canine",
-        "entityId":  "canine-procreation",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-sufficiency",
-        "entityType":  "canine",
-        "entityId":  "canine-sufficiency",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-targeting",
-        "entityType":  "canine",
-        "entityId":  "canine-targeting",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-toughness",
-        "entityType":  "canine",
-        "entityId":  "canine-toughness",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-csv-canine-canine-total",
-        "entityType":  "canine",
-        "entityId":  "canine-total",
-        "source":  "legacy/PRIVATE-KNOWNS.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-an-untraited-canine",
-        "entityType":  "canine",
-        "entityId":  "canine-an-untraited-canine",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-ballad-muck-1112",
-        "entityType":  "canine",
-        "entityId":  "canine-ballad-muck-1112",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-bromine-neg-1053",
-        "entityType":  "canine",
-        "entityId":  "canine-bromine-neg-1053",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-cover-songs-1113",
-        "entityType":  "canine",
-        "entityId":  "canine-cover-songs-1113",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-crescendo-fiddy-1111",
-        "entityType":  "canine",
-        "entityId":  "canine-crescendo-fiddy-1111",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-dirge-moah-1098",
-        "entityType":  "canine",
-        "entityId":  "canine-dirge-moah-1098",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-exie-colo-1086",
-        "entityType":  "canine",
-        "entityId":  "canine-exie-colo-1086",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-fermata-blog-1116",
-        "entityType":  "canine",
-        "entityId":  "canine-fermata-blog-1116",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-grazioso-rels-757",
-        "entityType":  "canine",
-        "entityId":  "canine-grazioso-rels-757",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-impetuoso-goldie-737",
-        "entityType":  "canine",
-        "entityId":  "canine-impetuoso-goldie-737",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-lullaby-dreedle-1097",
-        "entityType":  "canine",
-        "entityId":  "canine-lullaby-dreedle-1097",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-mulapin-giggle-996",
-        "entityType":  "canine",
-        "entityId":  "canine-mulapin-giggle-996",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-portamento-amg-1095",
-        "entityType":  "canine",
-        "entityId":  "canine-portamento-amg-1095",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-refrain-eevi-1103",
-        "entityType":  "canine",
-        "entityId":  "canine-refrain-eevi-1103",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-toccato-upg-1130",
-        "entityType":  "canine",
-        "entityId":  "canine-toccato-upg-1130",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-heap-eight-1005",
-        "entityType":  "canine",
-        "entityId":  "canine-heap-eight-1005",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-doli-kiska-xxx-748",
-        "entityType":  "canine",
-        "entityId":  "canine-doli-kiska-xxx-748",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-angrynerd-baconator-1116",
-        "entityType":  "canine",
-        "entityId":  "canine-angrynerd-baconator-1116",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-baggins-pearl-1085",
-        "entityType":  "canine",
-        "entityId":  "canine-baggins-pearl-1085",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-grogu-mando-1122",
-        "entityType":  "canine",
-        "entityId":  "canine-grogu-mando-1122",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-jonsnow-ghost-1107",
-        "entityType":  "canine",
-        "entityId":  "canine-jonsnow-ghost-1107",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-pom-fuppy-1085",
-        "entityType":  "canine",
-        "entityId":  "canine-pom-fuppy-1085",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-repo-boomer-1098",
-        "entityType":  "canine",
-        "entityId":  "canine-repo-boomer-1098",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-treehugger-snickerz-1106",
-        "entityType":  "canine",
-        "entityId":  "canine-treehugger-snickerz-1106",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-rangerone-pet-741",
-        "entityType":  "canine",
-        "entityId":  "canine-rangerone-pet-741",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-rangertwo-pup-736",
-        "entityType":  "canine",
-        "entityId":  "canine-rangertwo-pup-736",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-elm-unnamed-724",
-        "entityType":  "canine",
-        "entityId":  "canine-elm-unnamed-724",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-bashel-valko3-763",
-        "entityType":  "canine",
-        "entityId":  "canine-bashel-valko3-763",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-arynia-dingding-1103",
-        "entityType":  "canine",
-        "entityId":  "canine-arynia-dingding-1103",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-dancer-gypsy-1103",
-        "entityType":  "canine",
-        "entityId":  "canine-dancer-gypsy-1103",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-jackal-goonie-1079",
-        "entityType":  "canine",
-        "entityId":  "canine-jackal-goonie-1079",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-jackal-shadie-1109",
-        "entityType":  "canine",
-        "entityId":  "canine-jackal-shadie-1109",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-jeanie-brat-720",
-        "entityType":  "canine",
-        "entityId":  "canine-jeanie-brat-720",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-nuisance-fishy-1094",
-        "entityType":  "canine",
-        "entityId":  "canine-nuisance-fishy-1094",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-rain-droppy-1077",
-        "entityType":  "canine",
-        "entityId":  "canine-rain-droppy-1077",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-storm-frisky-1109",
-        "entityType":  "canine",
-        "entityId":  "canine-storm-frisky-1109",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-stormsong-viggo-1089",
-        "entityType":  "canine",
-        "entityId":  "canine-stormsong-viggo-1089",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-twitchy-two-1094",
-        "entityType":  "canine",
-        "entityId":  "canine-twitchy-two-1094",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-whap-charlie-1106",
-        "entityType":  "canine",
-        "entityId":  "canine-whap-charlie-1106",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-whap-bunny-1126",
-        "entityType":  "canine",
-        "entityId":  "canine-whap-bunny-1126",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-zyrika-step2-1117",
-        "entityType":  "canine",
-        "entityId":  "canine-zyrika-step2-1117",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-quack-plucky-1060",
-        "entityType":  "canine",
-        "entityId":  "canine-quack-plucky-1060",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-nay-xi-1097",
-        "entityType":  "canine",
-        "entityId":  "canine-nay-xi-1097",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-pupimp-pup-1070",
-        "entityType":  "canine",
-        "entityId":  "canine-pupimp-pup-1070",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-calico-barkfox-710",
-        "entityType":  "canine",
-        "entityId":  "canine-calico-barkfox-710",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-jktwodoor-drue-1106",
-        "entityType":  "canine",
-        "entityId":  "canine-jktwodoor-drue-1106",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-rawr-pet1-847",
-        "entityType":  "canine",
-        "entityId":  "canine-rawr-pet1-847",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-anonymoose-why-1016",
-        "entityType":  "canine",
-        "entityId":  "canine-anonymoose-why-1016",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-slam-step2-1050",
-        "entityType":  "canine",
-        "entityId":  "canine-slam-step2-1050",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-zazaz-step2-1045",
-        "entityType":  "canine",
-        "entityId":  "canine-zazaz-step2-1045",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-gong-cocoa-1063",
-        "entityType":  "canine",
-        "entityId":  "canine-gong-cocoa-1063",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-dagon-p3m-pureblack-981",
-        "entityType":  "canine",
-        "entityId":  "canine-dagon-p3m-pureblack-981",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-izen-ara-1116",
-        "entityType":  "canine",
-        "entityId":  "canine-izen-ara-1116",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-knowns-current-csv-canine-canine-deadshot-girl-1099",
-        "entityType":  "canine",
-        "entityId":  "canine-deadshot-girl-1099",
-        "source":  "legacy/PRIVATE-KNOWNS-CURRENT.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy known trait data."
-    },
-    {
-        "id":  "source-legacy-private-retired-breeders-csv-canine-canine-portamento-roger-304-11",
-        "entityType":  "canine",
-        "entityId":  "canine-portamento-roger-304-11",
-        "source":  "legacy/PRIVATE-RETIRED-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-retired-breeders-csv-canine-canine-treehugger-snickerz-744",
-        "entityType":  "canine",
-        "entityId":  "canine-treehugger-snickerz-744",
-        "source":  "legacy/PRIVATE-RETIRED-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-retired-breeders-csv-canine-canine-grogu-mando-555",
-        "entityType":  "canine",
-        "entityId":  "canine-grogu-mando-555",
-        "source":  "legacy/PRIVATE-RETIRED-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-retired-breeders-csv-canine-canine-grogu-mando-ix-616",
-        "entityType":  "canine",
-        "entityId":  "canine-grogu-mando-ix-616",
-        "source":  "legacy/PRIVATE-RETIRED-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-retired-breeders-csv-canine-canine-grogu-mando-x-664",
-        "entityType":  "canine",
-        "entityId":  "canine-grogu-mando-x-664",
-        "source":  "legacy/PRIVATE-RETIRED-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-impetuoso-cali-600-40",
-        "entityType":  "canine",
-        "entityId":  "canine-impetuoso-cali-600-40",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-toccato-betti-705-56",
-        "entityType":  "canine",
-        "entityId":  "canine-toccato-betti-705-56",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-dirge-nunes-722",
-        "entityType":  "canine",
-        "entityId":  "canine-dirge-nunes-722",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-crescendo-eddie-698-51",
-        "entityType":  "canine",
-        "entityId":  "canine-crescendo-eddie-698-51",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-exie-shaker-694-53",
-        "entityType":  "canine",
-        "entityId":  "canine-exie-shaker-694-53",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-lullaby-sandman-722-57",
-        "entityType":  "canine",
-        "entityId":  "canine-lullaby-sandman-722-57",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-refrain-hobby-714-52",
-        "entityType":  "canine",
-        "entityId":  "canine-refrain-hobby-714-52",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-ballad-fireball-730-55",
-        "entityType":  "canine",
-        "entityId":  "canine-ballad-fireball-730-55",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-cover-rocker-714-60",
-        "entityType":  "canine",
-        "entityId":  "canine-cover-rocker-714-60",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-grazioso-hoover-718-54",
-        "entityType":  "canine",
-        "entityId":  "canine-grazioso-hoover-718-54",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-portamento-brian-419-30",
-        "entityType":  "canine",
-        "entityId":  "canine-portamento-brian-419-30",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-mulapin-ringo-733-54",
-        "entityType":  "canine",
-        "entityId":  "canine-mulapin-ringo-733-54",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-angrynerd-baconator-704",
-        "entityType":  "canine",
-        "entityId":  "canine-angrynerd-baconator-704",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-baggins-bilbo-723",
-        "entityType":  "canine",
-        "entityId":  "canine-baggins-bilbo-723",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-repo-boomer-701",
-        "entityType":  "canine",
-        "entityId":  "canine-repo-boomer-701",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-treehugger-snickerz-753",
-        "entityType":  "canine",
-        "entityId":  "canine-treehugger-snickerz-753",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-jonsnow-ghost-728",
-        "entityType":  "canine",
-        "entityId":  "canine-jonsnow-ghost-728",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-pom-fuppy-502",
-        "entityType":  "canine",
-        "entityId":  "canine-pom-fuppy-502",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-grogu-mando-xi-700",
-        "entityType":  "canine",
-        "entityId":  "canine-grogu-mando-xi-700",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-legacy-private-breeders-csv-canine-canine-stormsong-sassy-720",
-        "entityType":  "canine",
-        "entityId":  "canine-stormsong-sassy-720",
-        "source":  "legacy/PRIVATE-Breeders.csv",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from legacy breeder lineage data."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-mulapin-giggle-996",
-        "entityType":  "canine",
-        "entityId":  "canine-mulapin-giggle-996",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-portamento-amg-1095",
-        "entityType":  "canine",
-        "entityId":  "canine-portamento-amg-1095",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-lullaby-dreedle-1097",
-        "entityType":  "canine",
-        "entityId":  "canine-lullaby-dreedle-1097",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-refrain-eevi-1103",
-        "entityType":  "canine",
-        "entityId":  "canine-refrain-eevi-1103",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-dirge-pep-1108",
-        "entityType":  "canine",
-        "entityId":  "canine-dirge-pep-1108",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-crescendo-fiddy-1111",
-        "entityType":  "canine",
-        "entityId":  "canine-crescendo-fiddy-1111",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-ballad-muck-1112",
-        "entityType":  "canine",
-        "entityId":  "canine-ballad-muck-1112",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-fermata-blog-1116",
-        "entityType":  "canine",
-        "entityId":  "canine-fermata-blog-1116",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-mulapin-silvia-1127",
-        "entityType":  "canine",
-        "entityId":  "canine-mulapin-silvia-1127",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-cipe-epic-1091",
-        "entityType":  "canine",
-        "entityId":  "canine-cipe-epic-1091",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-impetuoso-goldie-737",
-        "entityType":  "canine",
-        "entityId":  "canine-impetuoso-goldie-737",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-grazioso-rels-757",
-        "entityType":  "canine",
-        "entityId":  "canine-grazioso-rels-757",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-heap-eight-1005",
-        "entityType":  "canine",
-        "entityId":  "canine-heap-eight-1005",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-bromine-neg-1053",
-        "entityType":  "canine",
-        "entityId":  "canine-bromine-neg-1053",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-exie-colo-1086",
-        "entityType":  "canine",
-        "entityId":  "canine-exie-colo-1086",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-cover-songs-1113",
-        "entityType":  "canine",
-        "entityId":  "canine-cover-songs-1113",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-toccato-upg-1130",
-        "entityType":  "canine",
-        "entityId":  "canine-toccato-upg-1130",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-heap-gold-1",
-        "entityType":  "canine",
-        "entityId":  "canine-heap-gold-1",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-heap-gold-2",
-        "entityType":  "canine",
-        "entityId":  "canine-heap-gold-2",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-whap-charlie-1106",
-        "entityType":  "canine",
-        "entityId":  "canine-whap-charlie-1106",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-jackal-shadie-1109",
-        "entityType":  "canine",
-        "entityId":  "canine-jackal-shadie-1109",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-storm-frisky-1109",
-        "entityType":  "canine",
-        "entityId":  "canine-storm-frisky-1109",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-dancer-gypsy-1103",
-        "entityType":  "canine",
-        "entityId":  "canine-dancer-gypsy-1103",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-dancer-step4",
-        "entityType":  "canine",
-        "entityId":  "canine-dancer-step4",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-whap-bunny-1126",
-        "entityType":  "canine",
-        "entityId":  "canine-whap-bunny-1126",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-jeanie-brat-720",
-        "entityType":  "canine",
-        "entityId":  "canine-jeanie-brat-720",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-quack-plucky-1060",
-        "entityType":  "canine",
-        "entityId":  "canine-quack-plucky-1060",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-rain-droppy-1077",
-        "entityType":  "canine",
-        "entityId":  "canine-rain-droppy-1077",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-stormsong-viggo-1089",
-        "entityType":  "canine",
-        "entityId":  "canine-stormsong-viggo-1089",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-nuisance-fishy-1094",
-        "entityType":  "canine",
-        "entityId":  "canine-nuisance-fishy-1094",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-twitchy-two-1094",
-        "entityType":  "canine",
-        "entityId":  "canine-twitchy-two-1094",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-arynia-dingding-1103",
-        "entityType":  "canine",
-        "entityId":  "canine-arynia-dingding-1103",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-dancer-gypsy-1103-2",
-        "entityType":  "canine",
-        "entityId":  "canine-dancer-gypsy-1103",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-zyrika-step2-1117",
-        "entityType":  "canine",
-        "entityId":  "canine-zyrika-step2-1117",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-doli-kiska-xxx-748",
-        "entityType":  "canine",
-        "entityId":  "canine-doli-kiska-xxx-748",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-doli-kiska-xxxii-1070",
-        "entityType":  "canine",
-        "entityId":  "canine-doli-kiska-xxxii-1070",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-doli-kiska-xxxiii-1091",
-        "entityType":  "canine",
-        "entityId":  "canine-doli-kiska-xxxiii-1091",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-doli-kiska-xxxiv-1110",
-        "entityType":  "canine",
-        "entityId":  "canine-doli-kiska-xxxiv-1110",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-doli-kiska-xxxv-1131",
-        "entityType":  "canine",
-        "entityId":  "canine-doli-kiska-xxxv-1131",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-pom-fuppy-1085",
-        "entityType":  "canine",
-        "entityId":  "canine-pom-fuppy-1085",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-repo-boomer-1098",
-        "entityType":  "canine",
-        "entityId":  "canine-repo-boomer-1098",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-treehugger-snickerz-1106",
-        "entityType":  "canine",
-        "entityId":  "canine-treehugger-snickerz-1106",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-jonsnow-ghost-1107",
-        "entityType":  "canine",
-        "entityId":  "canine-jonsnow-ghost-1107",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-angrynerd-baconator-1116",
-        "entityType":  "canine",
-        "entityId":  "canine-angrynerd-baconator-1116",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-grogu-mando-1122",
-        "entityType":  "canine",
-        "entityId":  "canine-grogu-mando-1122",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-baggins-pearl-1085",
-        "entityType":  "canine",
-        "entityId":  "canine-baggins-pearl-1085",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-pom-step1-1085",
-        "entityType":  "canine",
-        "entityId":  "canine-pom-step1-1085",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-pom-step2",
-        "entityType":  "canine",
-        "entityId":  "canine-pom-step2",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-pom-step3",
-        "entityType":  "canine",
-        "entityId":  "canine-pom-step3",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-baggins-pearl-1101",
-        "entityType":  "canine",
-        "entityId":  "canine-baggins-pearl-1101",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-izen-ara-1116",
-        "entityType":  "canine",
-        "entityId":  "canine-izen-ara-1116",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-deadshot-girl-1099",
-        "entityType":  "canine",
-        "entityId":  "canine-deadshot-girl-1099",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-draak-finale-719",
-        "entityType":  "canine",
-        "entityId":  "canine-draak-finale-719",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-rma-lee6",
-        "entityType":  "canine",
-        "entityId":  "canine-rma-lee6",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-rma-lee7-689-690",
-        "entityType":  "canine",
-        "entityId":  "canine-rma-lee7-689-690",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-pupimp-pup-1085",
-        "entityType":  "canine",
-        "entityId":  "canine-pupimp-pup-1085",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-nay-xi-1097",
-        "entityType":  "canine",
-        "entityId":  "canine-nay-xi-1097",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-nay-male",
-        "entityType":  "canine",
-        "entityId":  "canine-nay-male",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-gong-cocoa-1063",
-        "entityType":  "canine",
-        "entityId":  "canine-gong-cocoa-1063",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-zazaz-step2",
-        "entityType":  "canine",
-        "entityId":  "canine-zazaz-step2",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-zazaz-step3",
-        "entityType":  "canine",
-        "entityId":  "canine-zazaz-step3",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-huwang-hee",
-        "entityType":  "canine",
-        "entityId":  "canine-huwang-hee",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-bashel-gen2",
-        "entityType":  "canine",
-        "entityId":  "canine-bashel-gen2",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-bashel-valko3-763",
-        "entityType":  "canine",
-        "entityId":  "canine-bashel-valko3-763",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-bashel-valko4-777",
-        "entityType":  "canine",
-        "entityId":  "canine-bashel-valko4-777",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-swifteye-lirima-785",
-        "entityType":  "canine",
-        "entityId":  "canine-swifteye-lirima-785",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-rangerone-pet-741",
-        "entityType":  "canine",
-        "entityId":  "canine-rangerone-pet-741",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-rangertwo-pup-736",
-        "entityType":  "canine",
-        "entityId":  "canine-rangertwo-pup-736",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-elm-unnamed-724",
-        "entityType":  "canine",
-        "entityId":  "canine-elm-unnamed-724",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-kylie-whitecoyote",
-        "entityType":  "canine",
-        "entityId":  "canine-kylie-whitecoyote",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-jktwodoor-doli-934",
-        "entityType":  "canine",
-        "entityId":  "canine-jktwodoor-doli-934",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-jktwodoor-anthem-1087",
-        "entityType":  "canine",
-        "entityId":  "canine-jktwodoor-anthem-1087",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-jktwodoor-drue-1106",
-        "entityType":  "canine",
-        "entityId":  "canine-jktwodoor-drue-1106",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-jktwodoor-step2-1118",
-        "entityType":  "canine",
-        "entityId":  "canine-jktwodoor-step2-1118",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-anonymoose-why-1016",
-        "entityType":  "canine",
-        "entityId":  "canine-anonymoose-why-1016",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-rawr-pet1-847",
-        "entityType":  "canine",
-        "entityId":  "canine-rawr-pet1-847",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-jeebus-step1-1016",
-        "entityType":  "canine",
-        "entityId":  "canine-jeebus-step1-1016",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-slam-step2-1050",
-        "entityType":  "canine",
-        "entityId":  "canine-slam-step2-1050",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-shudder-step5",
-        "entityType":  "canine",
-        "entityId":  "canine-shudder-step5",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    },
-    {
-        "id":  "source-workbook-doli-path-xlsx-breeders-canine-canine-dagon-p3m-pureblack-981",
-        "entityType":  "canine",
-        "entityId":  "canine-dagon-p3m-pureblack-981",
-        "source":  "workbook/Doli-Path.xlsx#Breeders",
-        "sourceObservedAt":  null,
-        "sourceLag":  null,
-        "externalId":  null,
-        "notes":  "Imported from reviewed private planning workbook Breeders sheet."
-    }
+[
+  {
+    "id": "source-legacy-knowns-csv-canine-canine-an-untraited-canine",
+    "entityType": "canine",
+    "entityId": "canine-an-untraited-canine",
+    "source": "legacy/KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-knowns-csv-canine-canine-mulapin-ringo-733-54",
+    "entityType": "canine",
+    "entityId": "canine-mulapin-ringo-733-54",
+    "source": "legacy/KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-knowns-csv-canine-canine-lullaby-sandman-722-57",
+    "entityType": "canine",
+    "entityId": "canine-lullaby-sandman-722-57",
+    "source": "legacy/KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-knowns-csv-canine-canine-grazioso-hoover-718-54",
+    "entityType": "canine",
+    "entityId": "canine-grazioso-hoover-718-54",
+    "source": "legacy/KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-knowns-csv-canine-canine-exie-shaker-694-53",
+    "entityType": "canine",
+    "entityId": "canine-exie-shaker-694-53",
+    "source": "legacy/KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-knowns-csv-canine-canine-dirge-fluid-692-57",
+    "entityType": "canine",
+    "entityId": "canine-dirge-fluid-692-57",
+    "source": "legacy/KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-knowns-csv-canine-canine-crescendo-eddie-698-51",
+    "entityType": "canine",
+    "entityId": "canine-crescendo-eddie-698-51",
+    "source": "legacy/KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-knowns-csv-canine-canine-cover-rocker-714-60",
+    "entityType": "canine",
+    "entityId": "canine-cover-rocker-714-60",
+    "source": "legacy/KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-knowns-csv-canine-canine-ballad-fireball-730-55",
+    "entityType": "canine",
+    "entityId": "canine-ballad-fireball-730-55",
+    "source": "legacy/KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-knowns-csv-canine-canine-mulapin-gringo-709-53",
+    "entityType": "canine",
+    "entityId": "canine-mulapin-gringo-709-53",
+    "source": "legacy/KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-an-untraited-canine",
+    "entityType": "canine",
+    "entityId": "canine-an-untraited-canine",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-toccato-gen10-872",
+    "entityType": "canine",
+    "entityId": "canine-toccato-gen10-872",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-crescendo-reacher-812",
+    "entityType": "canine",
+    "entityId": "canine-crescendo-reacher-812",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-refrain-moolah-826",
+    "entityType": "canine",
+    "entityId": "canine-refrain-moolah-826",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-portamento-jill-828",
+    "entityType": "canine",
+    "entityId": "canine-portamento-jill-828",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-lullaby-ais-839",
+    "entityType": "canine",
+    "entityId": "canine-lullaby-ais-839",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-mulapin-bess-839",
+    "entityType": "canine",
+    "entityId": "canine-mulapin-bess-839",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-exie-militant-856",
+    "entityType": "canine",
+    "entityId": "canine-exie-militant-856",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-cover-wonder-851",
+    "entityType": "canine",
+    "entityId": "canine-cover-wonder-851",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-crescendo-vox-856",
+    "entityType": "canine",
+    "entityId": "canine-crescendo-vox-856",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-mulapin-val-869",
+    "entityType": "canine",
+    "entityId": "canine-mulapin-val-869",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-ballad-fury-823",
+    "entityType": "canine",
+    "entityId": "canine-ballad-fury-823",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-dirge-magic-821",
+    "entityType": "canine",
+    "entityId": "canine-dirge-magic-821",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-fermata-gen6-773",
+    "entityType": "canine",
+    "entityId": "canine-fermata-gen6-773",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-grazioso-rels-757",
+    "entityType": "canine",
+    "entityId": "canine-grazioso-rels-757",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-heap-cheat-847",
+    "entityType": "canine",
+    "entityId": "canine-heap-cheat-847",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-impetuoso-goldie-737",
+    "entityType": "canine",
+    "entityId": "canine-impetuoso-goldie-737",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-pom-fuppy-v-570",
+    "entityType": "canine",
+    "entityId": "canine-pom-fuppy-v-570",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-jonsnow-ghost-851",
+    "entityType": "canine",
+    "entityId": "canine-jonsnow-ghost-851",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-repo-boomer-846",
+    "entityType": "canine",
+    "entityId": "canine-repo-boomer-846",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-doli-kiska-xxx-748",
+    "entityType": "canine",
+    "entityId": "canine-doli-kiska-xxx-748",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-baggins-bilbo-753",
+    "entityType": "canine",
+    "entityId": "canine-baggins-bilbo-753",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-treehugger-snickerz-850",
+    "entityType": "canine",
+    "entityId": "canine-treehugger-snickerz-850",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-angrynerd-baconator-867",
+    "entityType": "canine",
+    "entityId": "canine-angrynerd-baconator-867",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-grogu-mando-846",
+    "entityType": "canine",
+    "entityId": "canine-grogu-mando-846",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-rangerone-pet-741",
+    "entityType": "canine",
+    "entityId": "canine-rangerone-pet-741",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-rangertwo-pup-736",
+    "entityType": "canine",
+    "entityId": "canine-rangertwo-pup-736",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-bashel-valko3-763",
+    "entityType": "canine",
+    "entityId": "canine-bashel-valko3-763",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-arynia-ivy-818",
+    "entityType": "canine",
+    "entityId": "canine-arynia-ivy-818",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-nuisance-pesky-824",
+    "entityType": "canine",
+    "entityId": "canine-nuisance-pesky-824",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-stormsong-stormy-836",
+    "entityType": "canine",
+    "entityId": "canine-stormsong-stormy-836",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-jeanie-brat-720",
+    "entityType": "canine",
+    "entityId": "canine-jeanie-brat-720",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-dancer-walker-784",
+    "entityType": "canine",
+    "entityId": "canine-dancer-walker-784",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-rain-honeypot-811",
+    "entityType": "canine",
+    "entityId": "canine-rain-honeypot-811",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-storm-nuts-829",
+    "entityType": "canine",
+    "entityId": "canine-storm-nuts-829",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-zyrika-shimmer-848",
+    "entityType": "canine",
+    "entityId": "canine-zyrika-shimmer-848",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-whap-whop-846",
+    "entityType": "canine",
+    "entityId": "canine-whap-whop-846",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-jackal-flea-839",
+    "entityType": "canine",
+    "entityId": "canine-jackal-flea-839",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-nay-ix-803",
+    "entityType": "canine",
+    "entityId": "canine-nay-ix-803",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-pupimp-step1-825",
+    "entityType": "canine",
+    "entityId": "canine-pupimp-step1-825",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-calico-barkfox-710",
+    "entityType": "canine",
+    "entityId": "canine-calico-barkfox-710",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-csv-canine-canine-jktwodoor-mook-874",
+    "entityType": "canine",
+    "entityId": "canine-jktwodoor-mook-874",
+    "source": "legacy/PRIVATE-KNOWNS.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-an-untraited-canine",
+    "entityType": "canine",
+    "entityId": "canine-an-untraited-canine",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-ballad-muck-1112",
+    "entityType": "canine",
+    "entityId": "canine-ballad-muck-1112",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-bromine-neg-1053",
+    "entityType": "canine",
+    "entityId": "canine-bromine-neg-1053",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-cover-songs-1113",
+    "entityType": "canine",
+    "entityId": "canine-cover-songs-1113",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-crescendo-fiddy-1111",
+    "entityType": "canine",
+    "entityId": "canine-crescendo-fiddy-1111",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-dirge-moah-1098",
+    "entityType": "canine",
+    "entityId": "canine-dirge-moah-1098",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-exie-colo-1086",
+    "entityType": "canine",
+    "entityId": "canine-exie-colo-1086",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-fermata-blog-1116",
+    "entityType": "canine",
+    "entityId": "canine-fermata-blog-1116",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-grazioso-rels-757",
+    "entityType": "canine",
+    "entityId": "canine-grazioso-rels-757",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-impetuoso-goldie-737",
+    "entityType": "canine",
+    "entityId": "canine-impetuoso-goldie-737",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-lullaby-dreedle-1097",
+    "entityType": "canine",
+    "entityId": "canine-lullaby-dreedle-1097",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-mulapin-giggle-996",
+    "entityType": "canine",
+    "entityId": "canine-mulapin-giggle-996",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-portamento-amg-1095",
+    "entityType": "canine",
+    "entityId": "canine-portamento-amg-1095",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-refrain-eevi-1103",
+    "entityType": "canine",
+    "entityId": "canine-refrain-eevi-1103",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-toccato-upg-1130",
+    "entityType": "canine",
+    "entityId": "canine-toccato-upg-1130",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-heap-eight-1005",
+    "entityType": "canine",
+    "entityId": "canine-heap-eight-1005",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-doli-kiska-xxx-748",
+    "entityType": "canine",
+    "entityId": "canine-doli-kiska-xxx-748",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-angrynerd-baconator-1116",
+    "entityType": "canine",
+    "entityId": "canine-angrynerd-baconator-1116",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-baggins-pearl-1085",
+    "entityType": "canine",
+    "entityId": "canine-baggins-pearl-1085",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-grogu-mando-1122",
+    "entityType": "canine",
+    "entityId": "canine-grogu-mando-1122",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-jonsnow-ghost-1107",
+    "entityType": "canine",
+    "entityId": "canine-jonsnow-ghost-1107",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-pom-fuppy-1085",
+    "entityType": "canine",
+    "entityId": "canine-pom-fuppy-1085",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-repo-boomer-1098",
+    "entityType": "canine",
+    "entityId": "canine-repo-boomer-1098",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-treehugger-snickerz-1106",
+    "entityType": "canine",
+    "entityId": "canine-treehugger-snickerz-1106",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-rangerone-pet-741",
+    "entityType": "canine",
+    "entityId": "canine-rangerone-pet-741",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-rangertwo-pup-736",
+    "entityType": "canine",
+    "entityId": "canine-rangertwo-pup-736",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-bashel-valko3-763",
+    "entityType": "canine",
+    "entityId": "canine-bashel-valko3-763",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-arynia-dingding-1103",
+    "entityType": "canine",
+    "entityId": "canine-arynia-dingding-1103",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-dancer-gypsy-1103",
+    "entityType": "canine",
+    "entityId": "canine-dancer-gypsy-1103",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-jackal-goonie-1079",
+    "entityType": "canine",
+    "entityId": "canine-jackal-goonie-1079",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-jackal-shadie-1109",
+    "entityType": "canine",
+    "entityId": "canine-jackal-shadie-1109",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-jeanie-brat-720",
+    "entityType": "canine",
+    "entityId": "canine-jeanie-brat-720",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-nuisance-fishy-1094",
+    "entityType": "canine",
+    "entityId": "canine-nuisance-fishy-1094",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-rain-droppy-1077",
+    "entityType": "canine",
+    "entityId": "canine-rain-droppy-1077",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-storm-frisky-1109",
+    "entityType": "canine",
+    "entityId": "canine-storm-frisky-1109",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-stormsong-viggo-1089",
+    "entityType": "canine",
+    "entityId": "canine-stormsong-viggo-1089",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-twitchy-two-1094",
+    "entityType": "canine",
+    "entityId": "canine-twitchy-two-1094",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-whap-charlie-1106",
+    "entityType": "canine",
+    "entityId": "canine-whap-charlie-1106",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-whap-bunny-1126",
+    "entityType": "canine",
+    "entityId": "canine-whap-bunny-1126",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-zyrika-step2-1117",
+    "entityType": "canine",
+    "entityId": "canine-zyrika-step2-1117",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-quack-plucky-1060",
+    "entityType": "canine",
+    "entityId": "canine-quack-plucky-1060",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-nay-xi-1097",
+    "entityType": "canine",
+    "entityId": "canine-nay-xi-1097",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-pupimp-pup-1070",
+    "entityType": "canine",
+    "entityId": "canine-pupimp-pup-1070",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-calico-barkfox-710",
+    "entityType": "canine",
+    "entityId": "canine-calico-barkfox-710",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-jktwodoor-drue-1106",
+    "entityType": "canine",
+    "entityId": "canine-jktwodoor-drue-1106",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-rawr-pet1-847",
+    "entityType": "canine",
+    "entityId": "canine-rawr-pet1-847",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-anonymoose-why-1016",
+    "entityType": "canine",
+    "entityId": "canine-anonymoose-why-1016",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-slam-step2-1050",
+    "entityType": "canine",
+    "entityId": "canine-slam-step2-1050",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-zazaz-step2-1045",
+    "entityType": "canine",
+    "entityId": "canine-zazaz-step2-1045",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-gong-cocoa-1063",
+    "entityType": "canine",
+    "entityId": "canine-gong-cocoa-1063",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-dagon-p3m-pureblack-981",
+    "entityType": "canine",
+    "entityId": "canine-dagon-p3m-pureblack-981",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-izen-ara-1116",
+    "entityType": "canine",
+    "entityId": "canine-izen-ara-1116",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-knowns-current-csv-canine-canine-deadshot-girl-1099",
+    "entityType": "canine",
+    "entityId": "canine-deadshot-girl-1099",
+    "source": "legacy/PRIVATE-KNOWNS-CURRENT.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy known trait data."
+  },
+  {
+    "id": "source-legacy-private-retired-breeders-csv-canine-canine-portamento-roger-304-11",
+    "entityType": "canine",
+    "entityId": "canine-portamento-roger-304-11",
+    "source": "legacy/PRIVATE-RETIRED-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-retired-breeders-csv-canine-canine-treehugger-snickerz-744",
+    "entityType": "canine",
+    "entityId": "canine-treehugger-snickerz-744",
+    "source": "legacy/PRIVATE-RETIRED-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-retired-breeders-csv-canine-canine-grogu-mando-555",
+    "entityType": "canine",
+    "entityId": "canine-grogu-mando-555",
+    "source": "legacy/PRIVATE-RETIRED-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-retired-breeders-csv-canine-canine-grogu-mando-ix-616",
+    "entityType": "canine",
+    "entityId": "canine-grogu-mando-ix-616",
+    "source": "legacy/PRIVATE-RETIRED-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-retired-breeders-csv-canine-canine-grogu-mando-x-664",
+    "entityType": "canine",
+    "entityId": "canine-grogu-mando-x-664",
+    "source": "legacy/PRIVATE-RETIRED-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-impetuoso-cali-600-40",
+    "entityType": "canine",
+    "entityId": "canine-impetuoso-cali-600-40",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-toccato-betti-705-56",
+    "entityType": "canine",
+    "entityId": "canine-toccato-betti-705-56",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-dirge-nunes-722",
+    "entityType": "canine",
+    "entityId": "canine-dirge-nunes-722",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-crescendo-eddie-698-51",
+    "entityType": "canine",
+    "entityId": "canine-crescendo-eddie-698-51",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-exie-shaker-694-53",
+    "entityType": "canine",
+    "entityId": "canine-exie-shaker-694-53",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-lullaby-sandman-722-57",
+    "entityType": "canine",
+    "entityId": "canine-lullaby-sandman-722-57",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-refrain-hobby-714-52",
+    "entityType": "canine",
+    "entityId": "canine-refrain-hobby-714-52",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-ballad-fireball-730-55",
+    "entityType": "canine",
+    "entityId": "canine-ballad-fireball-730-55",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-cover-rocker-714-60",
+    "entityType": "canine",
+    "entityId": "canine-cover-rocker-714-60",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-grazioso-hoover-718-54",
+    "entityType": "canine",
+    "entityId": "canine-grazioso-hoover-718-54",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-portamento-brian-419-30",
+    "entityType": "canine",
+    "entityId": "canine-portamento-brian-419-30",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-mulapin-ringo-733-54",
+    "entityType": "canine",
+    "entityId": "canine-mulapin-ringo-733-54",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-angrynerd-baconator-704",
+    "entityType": "canine",
+    "entityId": "canine-angrynerd-baconator-704",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-baggins-bilbo-723",
+    "entityType": "canine",
+    "entityId": "canine-baggins-bilbo-723",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-repo-boomer-701",
+    "entityType": "canine",
+    "entityId": "canine-repo-boomer-701",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-treehugger-snickerz-753",
+    "entityType": "canine",
+    "entityId": "canine-treehugger-snickerz-753",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-jonsnow-ghost-728",
+    "entityType": "canine",
+    "entityId": "canine-jonsnow-ghost-728",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-pom-fuppy-502",
+    "entityType": "canine",
+    "entityId": "canine-pom-fuppy-502",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-grogu-mando-xi-700",
+    "entityType": "canine",
+    "entityId": "canine-grogu-mando-xi-700",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-legacy-private-breeders-csv-canine-canine-stormsong-sassy-720",
+    "entityType": "canine",
+    "entityId": "canine-stormsong-sassy-720",
+    "source": "legacy/PRIVATE-Breeders.csv",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from legacy breeder lineage data."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-mulapin-giggle-996",
+    "entityType": "canine",
+    "entityId": "canine-mulapin-giggle-996",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-portamento-amg-1095",
+    "entityType": "canine",
+    "entityId": "canine-portamento-amg-1095",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-lullaby-dreedle-1097",
+    "entityType": "canine",
+    "entityId": "canine-lullaby-dreedle-1097",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-refrain-eevi-1103",
+    "entityType": "canine",
+    "entityId": "canine-refrain-eevi-1103",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-dirge-pep-1108",
+    "entityType": "canine",
+    "entityId": "canine-dirge-pep-1108",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-crescendo-fiddy-1111",
+    "entityType": "canine",
+    "entityId": "canine-crescendo-fiddy-1111",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-ballad-muck-1112",
+    "entityType": "canine",
+    "entityId": "canine-ballad-muck-1112",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-fermata-blog-1116",
+    "entityType": "canine",
+    "entityId": "canine-fermata-blog-1116",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-mulapin-silvia-1127",
+    "entityType": "canine",
+    "entityId": "canine-mulapin-silvia-1127",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-cipe-epic-1091",
+    "entityType": "canine",
+    "entityId": "canine-cipe-epic-1091",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-impetuoso-goldie-737",
+    "entityType": "canine",
+    "entityId": "canine-impetuoso-goldie-737",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-grazioso-rels-757",
+    "entityType": "canine",
+    "entityId": "canine-grazioso-rels-757",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-heap-eight-1005",
+    "entityType": "canine",
+    "entityId": "canine-heap-eight-1005",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-bromine-neg-1053",
+    "entityType": "canine",
+    "entityId": "canine-bromine-neg-1053",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-exie-colo-1086",
+    "entityType": "canine",
+    "entityId": "canine-exie-colo-1086",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-cover-songs-1113",
+    "entityType": "canine",
+    "entityId": "canine-cover-songs-1113",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-toccato-upg-1130",
+    "entityType": "canine",
+    "entityId": "canine-toccato-upg-1130",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-heap-gold-1",
+    "entityType": "canine",
+    "entityId": "canine-heap-gold-1",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-heap-gold-2",
+    "entityType": "canine",
+    "entityId": "canine-heap-gold-2",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-whap-charlie-1106",
+    "entityType": "canine",
+    "entityId": "canine-whap-charlie-1106",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-jackal-shadie-1109",
+    "entityType": "canine",
+    "entityId": "canine-jackal-shadie-1109",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-storm-frisky-1109",
+    "entityType": "canine",
+    "entityId": "canine-storm-frisky-1109",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-dancer-gypsy-1103",
+    "entityType": "canine",
+    "entityId": "canine-dancer-gypsy-1103",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-dancer-step4",
+    "entityType": "canine",
+    "entityId": "canine-dancer-step4",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-whap-bunny-1126",
+    "entityType": "canine",
+    "entityId": "canine-whap-bunny-1126",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-jeanie-brat-720",
+    "entityType": "canine",
+    "entityId": "canine-jeanie-brat-720",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-quack-plucky-1060",
+    "entityType": "canine",
+    "entityId": "canine-quack-plucky-1060",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-rain-droppy-1077",
+    "entityType": "canine",
+    "entityId": "canine-rain-droppy-1077",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-stormsong-viggo-1089",
+    "entityType": "canine",
+    "entityId": "canine-stormsong-viggo-1089",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-nuisance-fishy-1094",
+    "entityType": "canine",
+    "entityId": "canine-nuisance-fishy-1094",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-twitchy-two-1094",
+    "entityType": "canine",
+    "entityId": "canine-twitchy-two-1094",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-arynia-dingding-1103",
+    "entityType": "canine",
+    "entityId": "canine-arynia-dingding-1103",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-dancer-gypsy-1103-2",
+    "entityType": "canine",
+    "entityId": "canine-dancer-gypsy-1103",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-zyrika-step2-1117",
+    "entityType": "canine",
+    "entityId": "canine-zyrika-step2-1117",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-doli-kiska-xxx-748",
+    "entityType": "canine",
+    "entityId": "canine-doli-kiska-xxx-748",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-doli-kiska-xxxii-1070",
+    "entityType": "canine",
+    "entityId": "canine-doli-kiska-xxxii-1070",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-doli-kiska-xxxiii-1091",
+    "entityType": "canine",
+    "entityId": "canine-doli-kiska-xxxiii-1091",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-doli-kiska-xxxiv-1110",
+    "entityType": "canine",
+    "entityId": "canine-doli-kiska-xxxiv-1110",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-doli-kiska-xxxv-1131",
+    "entityType": "canine",
+    "entityId": "canine-doli-kiska-xxxv-1131",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-pom-fuppy-1085",
+    "entityType": "canine",
+    "entityId": "canine-pom-fuppy-1085",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-repo-boomer-1098",
+    "entityType": "canine",
+    "entityId": "canine-repo-boomer-1098",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-treehugger-snickerz-1106",
+    "entityType": "canine",
+    "entityId": "canine-treehugger-snickerz-1106",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-jonsnow-ghost-1107",
+    "entityType": "canine",
+    "entityId": "canine-jonsnow-ghost-1107",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-angrynerd-baconator-1116",
+    "entityType": "canine",
+    "entityId": "canine-angrynerd-baconator-1116",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-grogu-mando-1122",
+    "entityType": "canine",
+    "entityId": "canine-grogu-mando-1122",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-baggins-pearl-1085",
+    "entityType": "canine",
+    "entityId": "canine-baggins-pearl-1085",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-pom-step1-1085",
+    "entityType": "canine",
+    "entityId": "canine-pom-step1-1085",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-pom-step2",
+    "entityType": "canine",
+    "entityId": "canine-pom-step2",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-pom-step3",
+    "entityType": "canine",
+    "entityId": "canine-pom-step3",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-baggins-pearl-1101",
+    "entityType": "canine",
+    "entityId": "canine-baggins-pearl-1101",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-izen-ara-1116",
+    "entityType": "canine",
+    "entityId": "canine-izen-ara-1116",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-deadshot-girl-1099",
+    "entityType": "canine",
+    "entityId": "canine-deadshot-girl-1099",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-draak-finale-719",
+    "entityType": "canine",
+    "entityId": "canine-draak-finale-719",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-rma-lee6",
+    "entityType": "canine",
+    "entityId": "canine-rma-lee6",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-rma-lee7-689-690",
+    "entityType": "canine",
+    "entityId": "canine-rma-lee7-689-690",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-pupimp-pup-1085",
+    "entityType": "canine",
+    "entityId": "canine-pupimp-pup-1085",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-nay-xi-1097",
+    "entityType": "canine",
+    "entityId": "canine-nay-xi-1097",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-nay-male",
+    "entityType": "canine",
+    "entityId": "canine-nay-male",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-gong-cocoa-1063",
+    "entityType": "canine",
+    "entityId": "canine-gong-cocoa-1063",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-zazaz-step2",
+    "entityType": "canine",
+    "entityId": "canine-zazaz-step2",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-zazaz-step3",
+    "entityType": "canine",
+    "entityId": "canine-zazaz-step3",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-huwang-hee",
+    "entityType": "canine",
+    "entityId": "canine-huwang-hee",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-bashel-gen2",
+    "entityType": "canine",
+    "entityId": "canine-bashel-gen2",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-bashel-valko3-763",
+    "entityType": "canine",
+    "entityId": "canine-bashel-valko3-763",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-bashel-valko4-777",
+    "entityType": "canine",
+    "entityId": "canine-bashel-valko4-777",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-swifteye-lirima-785",
+    "entityType": "canine",
+    "entityId": "canine-swifteye-lirima-785",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-rangerone-pet-741",
+    "entityType": "canine",
+    "entityId": "canine-rangerone-pet-741",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-rangertwo-pup-736",
+    "entityType": "canine",
+    "entityId": "canine-rangertwo-pup-736",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-kylie-whitecoyote",
+    "entityType": "canine",
+    "entityId": "canine-kylie-whitecoyote",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-jktwodoor-doli-934",
+    "entityType": "canine",
+    "entityId": "canine-jktwodoor-doli-934",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-jktwodoor-anthem-1087",
+    "entityType": "canine",
+    "entityId": "canine-jktwodoor-anthem-1087",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-jktwodoor-drue-1106",
+    "entityType": "canine",
+    "entityId": "canine-jktwodoor-drue-1106",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-jktwodoor-step2-1118",
+    "entityType": "canine",
+    "entityId": "canine-jktwodoor-step2-1118",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-anonymoose-why-1016",
+    "entityType": "canine",
+    "entityId": "canine-anonymoose-why-1016",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-rawr-pet1-847",
+    "entityType": "canine",
+    "entityId": "canine-rawr-pet1-847",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-jeebus-step1-1016",
+    "entityType": "canine",
+    "entityId": "canine-jeebus-step1-1016",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-slam-step2-1050",
+    "entityType": "canine",
+    "entityId": "canine-slam-step2-1050",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-shudder-step5",
+    "entityType": "canine",
+    "entityId": "canine-shudder-step5",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-workbook-doli-path-xlsx-breeders-canine-canine-dagon-p3m-pureblack-981",
+    "entityType": "canine",
+    "entityId": "canine-dagon-p3m-pureblack-981",
+    "source": "workbook/Doli-Path.xlsx#Breeders",
+    "sourceObservedAt": null,
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  }
 ]

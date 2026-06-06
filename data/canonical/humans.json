@@ -1,134 +1,128 @@
-﻿[
-    {
-        "id":  "human-anyone",
-        "displayName":  "Anyone",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-dave",
-        "displayName":  "Dave",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-john",
-        "displayName":  "John",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-bash",
-        "displayName":  "Bash",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-jeanie",
-        "displayName":  "Jeanie",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-ixnay",
-        "displayName":  "Ixnay",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-sarah",
-        "displayName":  "Sarah",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-lebornesr",
-        "displayName":  "Lebornesr",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-unknown",
-        "displayName":  "Unknown",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-lanstri",
-        "displayName":  "Lanstri",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-zzzzzz",
-        "displayName":  "Zzzzzz",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-dagon",
-        "displayName":  "Dagon",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-izen",
-        "displayName":  "Izen",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-draith",
-        "displayName":  "Draith",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-rma",
-        "displayName":  "RMA",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-zzzzzzz",
-        "displayName":  "Zzzzzzz",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-huwang",
-        "displayName":  "Huwang",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-bashel",
-        "displayName":  "Bashel",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-swift",
-        "displayName":  "Swift",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-krystal",
-        "displayName":  "Krystal",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-leborne",
-        "displayName":  "Leborne",
-        "contact":  null,
-        "status":  "active"
-    },
-    {
-        "id":  "human-tim",
-        "displayName":  "Tim",
-        "contact":  null,
-        "status":  "active"
-    }
+[
+  {
+    "id": "human-anyone",
+    "displayName": "Anyone",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-dave",
+    "displayName": "Dave",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-john",
+    "displayName": "John",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-bash",
+    "displayName": "Bash",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-jeanie",
+    "displayName": "Jeanie",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-ixnay",
+    "displayName": "Ixnay",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-sarah",
+    "displayName": "Sarah",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-lebornesr",
+    "displayName": "Lebornesr",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-unknown",
+    "displayName": "Unknown",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-lanstri",
+    "displayName": "Lanstri",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-dagon",
+    "displayName": "Dagon",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-izen",
+    "displayName": "Izen",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-draith",
+    "displayName": "Draith",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-rma",
+    "displayName": "RMA",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-zzzzzzz",
+    "displayName": "Zzzzzzz",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-huwang",
+    "displayName": "Huwang",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-bashel",
+    "displayName": "Bashel",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-swift",
+    "displayName": "Swift",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-krystal",
+    "displayName": "Krystal",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-leborne",
+    "displayName": "Leborne",
+    "contact": null,
+    "status": "active"
+  },
+  {
+    "id": "human-tim",
+    "displayName": "Tim",
+    "contact": null,
+    "status": "active"
+  }
 ]

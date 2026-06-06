@@ -247,22 +247,13 @@ Initial launch stance: desktop and tablet are supported; phone loads but is not 
 
 ### Phase 3B: Initial Public Readiness
 
-- [ ] Update README with the live GitHub Pages URL.
+- [x] Update README with the live GitHub Pages URL.
 - [x] Document the repo-based data update process.
 - [x] Add contribution guidance for data corrections or new canine submissions.
-- [ ] Add issue templates for data correction and app bug reports.
 
 ## Phase 4: Optimization For Herd Management
 
-### Phase 4A: Herd Genetic Health
-
-- [ ] Define population-level health indicators for the active canine pool.
-- [ ] Surface relatedness pressure across the herd, not only pairwise parent checks.
-- [ ] Identify overused bloodlines and underrepresented clean lines.
-- [ ] Show stale, inactive, or unknown-status records separately from current breeding stock.
-- [ ] Add warnings when a proposed breeding path narrows future mate options.
-
-### Phase 4B: Data Editor
+### Phase 4A: Status Curation
 
 Goal: build a safe maintainer workflow for fast data curation without creating a public writable database. The first editor should focus on status curation, because old historical pets currently pollute active breeding suggestions.
 
@@ -279,8 +270,6 @@ Status Curation UI:
 
 - [x] Add a maintainer/status-curation view separate from public breeding tools.
 - [x] Show records-management warnings for characters with multiple active canines.
-- [ ] Filter canines by human, character, status, and search text.
-- [ ] Show all canines owned by a selected character together.
 - [x] Allow fast status changes among `active`, `inactive`, and `unknown`.
 - [x] Provide a one-click "make this character's active pet" action.
 - [x] When one canine is marked active for a character, mark that character's other active canines inactive in the pending edit set.
@@ -291,7 +280,6 @@ Patch Export:
 
 - [x] Export a compact status patch JSON instead of rewriting full canonical files.
 - [x] Include only changed canine IDs and new statuses.
-- [ ] Include optional notes/source date when available.
 - [x] Make patch output easy to paste back into the repo workflow.
 
 Patch Apply Script:
@@ -312,8 +300,28 @@ Safety And Audit:
 
 Later Expansion:
 
+- [ ] Add issue templates for data correction and app bug reports.
+- [ ] Add broader data-editor filters by human, character, status, and search text.
+- [ ] Show all canines owned by a selected character together.
+- [ ] Include optional notes/source date in status patch export.
 - [ ] Support bulk spreadsheet import or update review.
 - [ ] Support trait, appearance, lineage, and ownership edits after status curation is proven safe.
+
+Ownership Review:
+
+- [x] Add a subordinate ownership-review mode for assigning `unknown` or unattributed characters to recognized humans.
+- [x] Show affected characters with their associated canines for recognition.
+- [x] Export a compact ownership patch for repo review rather than direct mutation.
+- [ ] Add a local script that applies character-to-human ownership patches.
+
+### Phase 4B: Herd Genetic Health Tab
+
+- [x] Add a dedicated Herd Health tab separate from Data and Curate.
+- [x] Define population-level health indicators for the active canine pool.
+- [x] Surface relatedness pressure across the herd, not only pairwise parent checks.
+- [x] Identify overused bloodlines and underrepresented clean lines.
+- [x] Show stale, inactive, or unknown-status records separately from current breeding stock.
+- [x] Add warnings when a proposed breeding path narrows future mate options.
 
 ### Phase 4C: Mating Algorithms
 
