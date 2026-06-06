@@ -32,7 +32,7 @@ Observed early growth stages:
 Relevant notes:
 
 - Growth continues after very large.
-- Very large stage 2, or `VL2`, is the breeding-maturity threshold.
+- Very Large, Stage 2 (`VL2`), is the breeding-maturity threshold.
 - Males are immediately viable at VL2.
 - Females reach physical maturity at VL2 but must also wait for heat before breeding.
 - Generation matters especially through approximately generation 10.

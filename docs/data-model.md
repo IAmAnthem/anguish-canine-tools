@@ -217,7 +217,7 @@ The app should warn when planned parents have different `canineType` values. Thi
 
 Breeding readiness is not identical for males and females.
 
-- Very large stage 2, or `VL2`, is the maturity threshold for breeding.
+- Very Large, Stage 2 (`VL2`), is the maturity threshold for breeding.
 - Males are viable immediately at VL2.
 - Females must reach VL2 and also be in heat.
 

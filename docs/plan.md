@@ -215,6 +215,12 @@ This is a separate workflow from the Phase 2D one-breeding Planner. The Planner 
 - [x] Keep passive trait collar references separate from timed breeding actions.
 - [x] Make clear collar guidance does not mutate trait data.
 - [x] Show wearer/timing context for collar setup.
+- [x] Split guidance into beginner-friendly panes instead of one dense reference block.
+- [x] Add a newcomer-oriented "how advancing pets works" guidance panel.
+- [x] Add beginner-oriented bonded-wolf and wolf-training guidance panels.
+- [x] Keep collar timing/setup as its own dedicated guidance pane.
+- [x] Add an app-orientation pane that explains what each tab is for and a recommended workflow through the site.
+- [x] Use first-mention expansion for newcomer-facing abbreviations such as Very Large, Stage 2 (`VL2`).
 
 ### Phase 2H: App Quality Checks
 
@@ -355,10 +361,11 @@ Algorithm Controls And Transparency:
 
 Optimum Contribution Selection:
 
-- [ ] Define a simple herd-level objective that balances canine quality against overused bloodlines.
-- [ ] Choose first-pass diversity penalties: shared ancestors, low safe-mate counts, and repeated line concentration.
-- [ ] Produce an OCS-style ranking that favors improvement without collapsing the herd into a few dominant lines.
-- [ ] Decide how to explain herd-level math in player terms users can trust.
+- [x] Define a simple herd-level objective that balances canine quality against overused bloodlines.
+- [x] Choose first-pass diversity penalties: shared ancestors, low safe-mate counts, and repeated line concentration.
+- [x] Produce an OCS-style ranking that favors improvement without collapsing the herd into a few dominant lines.
+- [x] Surface visible OCS penalty columns and tooltips so the herd-level math is inspectable instead of hidden.
+- [x] Decide how to explain herd-level math in player terms users can trust.
 - [ ] Show why an OCS-ranked mate differs from compensatory or assortative rankings.
 
 ## Phase 5: Custom Domain Later

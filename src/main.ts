@@ -57,6 +57,7 @@ import { traitNames } from "./domain/traits/traitNames.js";
 type AppView = "calculator" | "planner" | "multi-step" | "browser" | "curate" | "herd" | "algorithms" | "guidance" | "contribute";
 type CuratedCanineStatus = "active" | "inactive" | "unknown";
 type CurationMode = "status" | "ownership";
+type GuidancePane = "advancing" | "collars" | "using-app";
 
 type ViewDefinition = {
   id: AppView;
@@ -210,6 +211,11 @@ const curationState: {
   humanUpdatesByCharacterId: {},
   copiedPatch: false
 };
+const guidanceState: {
+  activePane: GuidancePane;
+} = {
+  activePane: "advancing"
+};
 const algorithmState: {
   selectedAlgorithm: MatingAlgorithmId;
   selectedTargetId: string;
@@ -357,16 +363,218 @@ function createGuidanceWorkflow(store: DataStore): HTMLElement {
   const traits = getTraitCollarReferences(store.data.reference.collars);
   const utility = getUtilityCollarReferences(store.data.reference.collars);
 
-  section.append(
-    createElement("h3", undefined, "Reference guidance"),
-    createGuidanceNotice(),
-    createCollarActionPanel("Breeding-time collar", breeding, "Use during the breeding action."),
-    createCollarActionPanel("Birth-time collars", birth, "Put on the female before birth and remove after all pups are born."),
-    createCollarActionPanel("Utility collars", utility, "General pet-care references outside breeding and birth timing."),
-    createTraitCollarReferenceTable(traits)
-  );
+  section.append(createElement("h3", undefined, "Breeding guidance"), createGuidancePaneToggle());
+
+  if (guidanceState.activePane === "advancing") {
+    section.append(
+      createAdvancingPetsGuidancePanel(),
+      createBondedWolfGuidancePanel(),
+      createWolfStatsGuidancePanel(),
+      createBreedingProgramGuidancePanel()
+    );
+  } else if (guidanceState.activePane === "using-app") {
+    section.append(createUsingAppGuidancePanel(), createRecommendedWorkflowPanel());
+  } else {
+    section.append(
+      createGuidanceNotice(),
+      createCollarActionPanel("Breeding-time collar", breeding, "Use during the breeding action."),
+      createCollarActionPanel("Birth-time collars", birth, "Put on the female before birth and remove after all pups are born."),
+      createCollarActionPanel("Utility collars", utility, "General pet-care references outside breeding and birth timing."),
+      createTraitCollarReferenceTable(traits)
+    );
+  }
 
   return section;
+}
+
+function createGuidancePaneToggle(): HTMLElement {
+  const group = createElement("div", "toggle-group");
+
+  for (const [pane, label] of [
+    ["advancing", "Advancing pets"],
+    ["using-app", "Using this app"],
+    ["collars", "Collars"]
+  ] as const) {
+    const button = createElement(
+      "button",
+      guidanceState.activePane === pane ? "toggle-button toggle-button-active" : "toggle-button",
+      label
+    );
+    button.type = "button";
+    button.setAttribute("aria-pressed", String(guidanceState.activePane === pane));
+    button.addEventListener("click", () => {
+      guidanceState.activePane = pane;
+      render();
+    });
+    group.append(button);
+  }
+
+  return group;
+}
+
+function createAdvancingPetsGuidancePanel(): HTMLElement {
+  const panel = createElement("section", "plan-panel");
+  const list = createElement("ul", "compact-list");
+
+  for (const line of [
+    "Start with any traited pet if possible. Forest tames and NPC pets are much weaker long-term and are mostly useful for late cosmetic or breed adjustments.",
+    "Pets must reach Very Large, Stage 2 (VL2) before they count for advancement. Males can breed immediately at VL2; females also need to wait for heat.",
+    "Generation investment speeds future raising dramatically. Legacy notes suggest early pets take roughly 40 hours to reach VL2, while mature lines can drop near 4 hours.",
+    "Development likely helps growth time a little, but the biggest acceleration comes from working multiple generations forward.",
+    "Breeding progress is time-gated by female heat, pregnancy, litter birth, puppy growth, and puppy statting. That is why mature females are the scarce resource in a breeding program.",
+    "Certain compares are critical for accurate stat solving. Females reliably gain certain compares after enough puppies; male certainty is less well understood."
+  ]) {
+    list.append(createElement("li", undefined, line));
+  }
+
+  panel.append(
+    createElement("h3", undefined, "How advancing pets works"),
+    createElement(
+      "p",
+      "plan-note",
+      "A new breeder usually needs two mental models at once: advancing a pet line over generations, and knowing when a pet is actually ready to breed."
+    ),
+    list
+  );
+
+  return panel;
+}
+
+function createBreedingProgramGuidancePanel(): HTMLElement {
+  const panel = createElement("section", "plan-panel");
+  const list = createElement("ul", "compact-list");
+
+  for (const line of [
+    "The game only remembers parent and grandparent lineage strongly enough to matter for the current workflow, so the program goal is often to push starting ancestry beyond that window.",
+    "The Multi-Step workflow does this by carrying one gender line forward for several generations, then switching when needed. You are improving the herd, not only producing one good puppy.",
+    "Procreation is the lynchpin breeding trait because bigger litters mean more chances to roll an above-average puppy.",
+    "Candidate quality is never deterministic. A useful mental model is parent average plus a random spread, slightly favorable to long-term player advancement.",
+    "Unique names make family tracking easier, but names are not perfect identity. The canonical data and lineage view matter more than memory."
+  ]) {
+    list.append(createElement("li", undefined, line));
+  }
+
+  panel.append(
+    createElement("h3", undefined, "How a breeding program progresses"),
+    createElement(
+      "p",
+      "plan-note",
+      "Use this panel as the newcomer orientation before diving into Planner, Multi-Step, Herd Health, or Algorithms."
+    ),
+    list
+  );
+
+  return panel;
+}
+
+function createUsingAppGuidancePanel(): HTMLElement {
+  const panel = createElement("section", "plan-panel");
+  const list = createElement("ul", "compact-list");
+
+  for (const line of [
+    "Calculator: solve a canine's 17 trait values from certain compare text against a known canine.",
+    "Planner: answer the immediate question, 'who can this canine breed with right now?'",
+    "Multi-Step: build a multi-generation lift plan that pushes ancestry beyond the remembered relationship window.",
+    "Data: search the canonical records for canines, ownership, traits, lineage, and appearance.",
+    "Curate: maintainer-only records-management workflow for fixing stale statuses and ownership issues through patch export.",
+    "Herd Health: inspect the overall active pool for bloodline pressure, coverage, and constrained mate options.",
+    "Algorithms: rank safe mates using compensatory, positive assortative, or OCS-style logic."
+  ]) {
+    list.append(createElement("li", undefined, line));
+  }
+
+  panel.append(
+    createElement("h3", undefined, "What each tab does"),
+    createElement(
+      "p",
+      "plan-note",
+      "This pane is for the player who opens the site and immediately wonders which tab answers which breeding question."
+    ),
+    list
+  );
+
+  return panel;
+}
+
+function createRecommendedWorkflowPanel(): HTMLElement {
+  const panel = createElement("section", "plan-panel");
+  const list = createElement("ol", "compact-list");
+
+  for (const line of [
+    "Use Data to confirm the canine, owner, and current lineage you are working with.",
+    "Use Calculator when you have compare text and need to solve real trait values.",
+    "Use Planner for immediate safe mates, then Algorithms for ranked recommendations with a specific goal.",
+    "Use Multi-Step when the goal is a breeding program lift rather than one litter.",
+    "Use Herd Health when you need to understand what repeated lines or tight mate options are doing to the whole pool."
+  ]) {
+    list.append(createElement("li", undefined, line));
+  }
+
+  panel.append(
+    createElement("h3", undefined, "Suggested workflow"),
+    createElement(
+      "p",
+      "plan-note",
+      "Most players do not need every tab every day. This is the shortest path through the app for common breeding work."
+    ),
+    list
+  );
+
+  return panel;
+}
+
+function createBondedWolfGuidancePanel(): HTMLElement {
+  const panel = createElement("section", "plan-panel");
+  const list = createElement("ul", "compact-list");
+
+  for (const line of [
+    "A bonded wolf is a real long-term investment. Ranger guide notes suggest bonding can take about 20 minutes by idling, or as little as roughly 5 minutes if you are killing with it.",
+    "Keep a bonded wolf fed and happy. If it ferals, it is gone for good.",
+    "If a bonded wolf dies after it reaches the larger trained sizes, it can come back smaller. That can cost roughly a day of growth, so deaths are expensive.",
+    "Growth takes both time and some experience. If a wolf has idled for a long time without growing, it may simply need real kills to push the next step.",
+    "The ranger guide treats enormous-plus bonded wolves as a multi-day project, so players should plan around that time cost instead of assuming wolves are disposable."
+  ]) {
+    list.append(createElement("li", undefined, line));
+  }
+
+  panel.append(
+    createElement("h3", undefined, "Bonded wolf basics"),
+    createElement(
+      "p",
+      "plan-note",
+      "This is ranger-specific context from the public ranger guide: bonded wolves are powerful, but they are also a real time investment."
+    ),
+    list
+  );
+
+  return panel;
+}
+
+function createWolfStatsGuidancePanel(): HTMLElement {
+  const panel = createElement("section", "plan-panel");
+  const list = createElement("ul", "compact-list");
+
+  for (const line of [
+    "Use observe to get a practical read on a wolf's current stats. The ranger guide calls out strength, dexterity, and constitution as the main confirmed stats.",
+    "The guide suggests early neglect is expensive later: if you let a wolf fall behind on its stat growth, catching up can take longer.",
+    "Dodge is called out as one of the most important wolf skills for real use.",
+    "Carry training improves with time spent carrying something, and rescue becomes available later at larger sizes.",
+    "For practical combat, the ranger guide emphasizes dexterity, constitution, dodge, and rescue over trivia skills like guard."
+  ]) {
+    list.append(createElement("li", undefined, line));
+  }
+
+  panel.append(
+    createElement("h3", undefined, "Checking and training a wolf"),
+    createElement(
+      "p",
+      "plan-note",
+      "A new ranger may not realize that raising a good wolf is not only about waiting for size increases. You also need to check its stats with observe and build the useful skills."
+    ),
+    list
+  );
+
+  return panel;
 }
 
 function createContributorWorkflow(): HTMLElement {
