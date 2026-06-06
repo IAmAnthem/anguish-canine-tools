@@ -15,6 +15,16 @@ import {
 import { createDataStore, type CanineSummary, type DataStore } from "./app/dataStore.js";
 import { createHerdHealthReport, type HerdHealthReport } from "./app/herdHealth.js";
 import {
+  analyzeAssortativeMates,
+  analyzeCompensatoryMates,
+  analyzeOcsMates,
+  type AssortativeCandidate,
+  getAlgorithmCanineOptions,
+  type CompensatoryCandidate,
+  type OcsCandidate,
+  type MatingAlgorithmId
+} from "./app/matingAlgorithms.js";
+import {
   createDefaultMultiStepPlanViewModel,
   createMultiStepPlanExport,
   parseActualPuppyStats,
@@ -44,7 +54,7 @@ import {
 } from "./domain/reference/collarGuidance.js";
 import { traitNames } from "./domain/traits/traitNames.js";
 
-type AppView = "calculator" | "planner" | "multi-step" | "browser" | "curate" | "herd" | "guidance" | "contribute";
+type AppView = "calculator" | "planner" | "multi-step" | "browser" | "curate" | "herd" | "algorithms" | "guidance" | "contribute";
 type CuratedCanineStatus = "active" | "inactive" | "unknown";
 type CurationMode = "status" | "ownership";
 
@@ -107,6 +117,14 @@ const views: ViewDefinition[] = [
     items: ["Active pool", "Relatedness", "Ancestors", "Mate options"]
   },
   {
+    id: "algorithms",
+    label: "Algorithms",
+    eyebrow: "Mate finder",
+    title: "Mating algorithms",
+    status: "Compensatory, positive assortative, and first-pass OCS ranking are all available for side-by-side mate review.",
+    items: ["Algorithm", "Target canine", "Ranked mates", "Tradeoffs"]
+  },
+  {
     id: "guidance",
     label: "Guidance",
     eyebrow: "Reference notes",
@@ -128,6 +146,7 @@ let activeView: AppView = "calculator";
 const dataStore = createDataStore();
 const knownCanineOptions = getKnownCanineOptions(dataStore);
 const breedingCanineOptions = getBreedingCanineOptions(dataStore);
+const algorithmCanineOptions = getAlgorithmCanineOptions(dataStore);
 const knownCanineSelectId = "known-canine-select";
 const breedingTargetSelectId = "breeding-target-select";
 const calculatorState: {
@@ -190,6 +209,17 @@ const curationState: {
   statusUpdatesByCanineId: {},
   humanUpdatesByCharacterId: {},
   copiedPatch: false
+};
+const algorithmState: {
+  selectedAlgorithm: MatingAlgorithmId;
+  selectedTargetId: string;
+  prioritizedTrait: "" | (typeof traitNames)[number];
+  priorityWeight: number;
+} = {
+  selectedAlgorithm: "compensatory",
+  selectedTargetId: algorithmCanineOptions[0]?.canineId ?? "",
+  prioritizedTrait: "",
+  priorityWeight: 3
 };
 
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -309,6 +339,8 @@ function createPanel(view: ViewDefinition, store: DataStore): HTMLElement {
     panel.append(createCurationWorkflow(store));
   } else if (view.id === "herd") {
     panel.append(createHerdHealthWorkflow(store));
+  } else if (view.id === "algorithms") {
+    panel.append(createMatingAlgorithmsWorkflow(store));
   } else if (view.id === "guidance") {
     panel.append(createGuidanceWorkflow(store));
   } else {
@@ -459,6 +491,545 @@ function createCurationWorkflow(store: DataStore): HTMLElement {
   }
 
   return section;
+}
+
+function createMatingAlgorithmsWorkflow(store: DataStore): HTMLElement {
+  const section = createElement("section", "workflow-section algorithm-workflow");
+  const controls = createElement("div", "field-grid algorithm-controls");
+  const algorithmSelect = createElement("select", "field-control");
+  const targetSelect = createElement("select", "field-control");
+  const prioritySelect = createElement("select", "field-control");
+  const weightSelect = createElement("select", "field-control");
+  const isPriorityApplicable = algorithmState.selectedAlgorithm !== "ocs";
+
+  for (const algorithm of [
+    ["compensatory", "Compensatory"],
+    ["assortative", "Positive assortative"],
+    ["ocs", "Optimum contribution"]
+  ] as const) {
+    const option = document.createElement("option");
+    option.value = algorithm[0];
+    option.textContent = algorithm[1];
+    option.selected = algorithmState.selectedAlgorithm === algorithm[0];
+    algorithmSelect.append(option);
+  }
+
+  algorithmSelect.addEventListener("change", () => {
+    algorithmState.selectedAlgorithm = algorithmSelect.value as MatingAlgorithmId;
+    render();
+  });
+
+  for (const optionData of algorithmCanineOptions) {
+    const option = document.createElement("option");
+    option.value = optionData.canineId;
+    option.textContent = optionData.label;
+    option.selected = algorithmState.selectedTargetId === optionData.canineId;
+    targetSelect.append(option);
+  }
+
+  targetSelect.addEventListener("change", () => {
+    algorithmState.selectedTargetId = targetSelect.value;
+    render();
+  });
+
+  {
+    const automaticOption = document.createElement("option");
+    automaticOption.value = "";
+    automaticOption.textContent = "Automatic";
+    automaticOption.selected = algorithmState.prioritizedTrait === "";
+    prioritySelect.append(automaticOption);
+
+    for (const traitName of traitNames) {
+      const option = document.createElement("option");
+      option.value = traitName;
+      option.textContent = traitName;
+      option.selected = algorithmState.prioritizedTrait === traitName;
+      prioritySelect.append(option);
+    }
+  }
+
+  prioritySelect.addEventListener("change", () => {
+    algorithmState.prioritizedTrait = prioritySelect.value as typeof algorithmState.prioritizedTrait;
+    render();
+  });
+
+  for (let weight = 2; weight <= 10; weight += 1) {
+    const option = document.createElement("option");
+    option.value = String(weight);
+    option.textContent = `${weight}x`;
+    option.selected = algorithmState.priorityWeight === weight;
+    weightSelect.append(option);
+  }
+
+  weightSelect.addEventListener("change", () => {
+    algorithmState.priorityWeight = Number(weightSelect.value);
+    render();
+  });
+
+  prioritySelect.disabled = !isPriorityApplicable;
+  weightSelect.disabled = !isPriorityApplicable;
+
+  controls.append(
+    createLabel("Algorithm", algorithmSelect),
+    createLabel("Target canine", targetSelect),
+    createLabel("Priority trait", prioritySelect, !isPriorityApplicable),
+    createLabel("Priority weight", weightSelect, !isPriorityApplicable)
+  );
+  section.append(controls);
+
+  if (algorithmState.selectedAlgorithm === "compensatory") {
+    section.append(createCompensatoryAlgorithmOutput(store));
+  } else if (algorithmState.selectedAlgorithm === "assortative") {
+    section.append(createAssortativeAlgorithmOutput(store));
+  } else {
+    section.append(createOcsAlgorithmOutput(store));
+  }
+
+  return section;
+}
+
+function createCompensatoryAlgorithmOutput(store: DataStore): HTMLElement {
+  const analysis = analyzeCompensatoryMates(store, algorithmState.selectedTargetId, {
+    priorityTrait: algorithmState.prioritizedTrait || null,
+    priorityWeight: algorithmState.priorityWeight
+  });
+  const section = createElement("section", "candidate-detail");
+
+  if (!analysis) {
+    section.append(
+      createElement("h3", undefined, "Compensatory pairing"),
+      createElement("p", undefined, "Choose an active male or female canine with known stats to rank safe mates.")
+    );
+    return section;
+  }
+
+  const summaryCards = createElement("div", "result-cards");
+  for (const [label, value, tooltip] of [
+    ["Target", analysis.selectedLabel, "The active canine whose weaknesses we are trying to cover."],
+    ["Weak spots shown", String(analysis.weaknessTraits.length), "Lowest recorded traits used to explain the compensatory ranking."],
+    ["Safe candidates", String(analysis.candidates.length), "Opposite-gender active mates that remain after relatedness and same-human filters."],
+    ["Algorithm", "Compensatory", "Prefers mates that are strongest where the target canine is weakest."],
+    [
+      "Priority",
+      algorithmState.prioritizedTrait || "Automatic",
+      "Optional trait emphasis. When set, the selected trait is weighted in the mate ranking."
+    ],
+    [
+      "Weight",
+      `${algorithmState.priorityWeight}x`,
+      "Multiplier applied to the selected priority trait when ranking mates."
+    ]
+  ] as const) {
+    const card = createElement("div", "result-card");
+    card.title = tooltip;
+    card.append(createElement("span", "status-label", label), createElement("strong", undefined, value));
+    summaryCards.append(card);
+  }
+
+  section.append(
+    createElement("h3", undefined, "Compensatory pairing"),
+    createElement(
+      "p",
+      "plan-note",
+      "This first-pass ranking looks for safe mates whose strongest traits land where the selected canine is weakest."
+    ),
+    summaryCards,
+    createWeaknessSummaryPanel(analysis.weaknessTraits)
+  );
+
+  if (analysis.warnings.length > 0) {
+    section.append(createWarnings(analysis.warnings));
+  }
+
+  section.append(createCompensatoryCandidateTable(analysis.candidates));
+
+  return section;
+}
+
+function createOcsAlgorithmOutput(store: DataStore): HTMLElement {
+  const analysis = analyzeOcsMates(store, algorithmState.selectedTargetId);
+  const section = createElement("section", "candidate-detail");
+
+  if (!analysis) {
+    section.append(
+      createElement("h3", undefined, "Optimum contribution selection"),
+      createElement("p", undefined, "Choose an active male or female canine with known stats to rank safe mates.")
+    );
+    return section;
+  }
+
+  const summaryCards = createElement("div", "result-cards");
+  for (const [label, value, tooltip] of [
+    ["Target", analysis.selectedLabel, "The active canine being matched against herd-preserving mate choices."],
+    ["Safe candidates", String(analysis.candidates.length), "Opposite-gender active mates that remain after relatedness and same-human filters."],
+    ["Algorithm", "OCS", "Balances estimated puppy quality against herd concentration and future flexibility penalties."],
+    ["Goal", "Herd balance", "Favors improvement without pouring too much progress into already dominant lines."]
+  ] as const) {
+    const card = createElement("div", "result-card");
+    card.title = tooltip;
+    card.append(createElement("span", "status-label", label), createElement("strong", undefined, value));
+    summaryCards.append(card);
+  }
+
+  section.append(
+    createElement("h3", undefined, "Optimum contribution selection"),
+    createElement(
+      "p",
+      "plan-note",
+      "This first pass treats OCS as quality minus diversity penalties: better puppies still matter, but repeated bloodlines and constrained lines are pushed downward."
+    ),
+    summaryCards
+  );
+
+  if (analysis.warnings.length > 0) {
+    section.append(createWarnings(analysis.warnings));
+  }
+
+  section.append(createOcsCandidateTable(analysis.candidates));
+
+  return section;
+}
+
+function createAssortativeAlgorithmOutput(store: DataStore): HTMLElement {
+  const analysis = analyzeAssortativeMates(store, algorithmState.selectedTargetId, {
+    priorityTrait: algorithmState.prioritizedTrait || null,
+    priorityWeight: algorithmState.priorityWeight
+  });
+  const section = createElement("section", "candidate-detail");
+
+  if (!analysis) {
+    section.append(
+      createElement("h3", undefined, "Positive assortative mating"),
+      createElement("p", undefined, "Choose an active male or female canine with known stats to rank safe mates.")
+    );
+    return section;
+  }
+
+  const summaryCards = createElement("div", "result-cards");
+  for (const [label, value, tooltip] of [
+    ["Target", analysis.selectedLabel, "The active canine whose strongest traits we are trying to intensify."],
+    ["Strong traits shown", String(analysis.targetStrengthTraits.length), "Highest recorded traits used to explain the assortative ranking."],
+    ["Safe candidates", String(analysis.candidates.length), "Opposite-gender active mates that remain after relatedness and same-human filters."],
+    ["Algorithm", "Positive assortative", "Prefers mates that are already strongest in the same areas as the target canine."],
+    [
+      "Priority",
+      algorithmState.prioritizedTrait || "Automatic",
+      "Optional trait emphasis. When set, the selected trait is weighted in the mate ranking."
+    ],
+    [
+      "Weight",
+      `${algorithmState.priorityWeight}x`,
+      "Multiplier applied to the selected priority trait when ranking mates."
+    ]
+  ] as const) {
+    const card = createElement("div", "result-card");
+    card.title = tooltip;
+    card.append(createElement("span", "status-label", label), createElement("strong", undefined, value));
+    summaryCards.append(card);
+  }
+
+  section.append(
+    createElement("h3", undefined, "Positive assortative mating"),
+    createElement(
+      "p",
+      "plan-note",
+      "This ranking looks for safe mates that reinforce the target canine's best traits, which can push a line upward quickly but may narrow future diversity."
+    ),
+    summaryCards,
+    createStrengthSummaryPanel(analysis.targetStrengthTraits)
+  );
+
+  if (analysis.warnings.length > 0) {
+    section.append(createWarnings(analysis.warnings));
+  }
+
+  section.append(createAssortativeCandidateTable(analysis.candidates));
+
+  return section;
+}
+
+function createWeaknessSummaryPanel(weaknessTraits: ReadonlyArray<{ traitName: string; value: number }>): HTMLElement {
+  const panel = createElement("section", "plan-panel");
+  panel.append(createElement("h3", undefined, "Target weak traits"));
+
+  if (weaknessTraits.length === 0) {
+    panel.append(createElement("p", undefined, "No exact trait profile is available for this target."));
+    return panel;
+  }
+
+  const list = createElement(
+    "p",
+    undefined,
+    weaknessTraits.map((entry) => `${entry.traitName} ${entry.value}`).join(" | ")
+  );
+  panel.append(list);
+
+  return panel;
+}
+
+function createStrengthSummaryPanel(strengthTraits: ReadonlyArray<{ traitName: string; value: number }>): HTMLElement {
+  const panel = createElement("section", "plan-panel");
+  panel.append(createElement("h3", undefined, "Target strong traits"));
+
+  if (strengthTraits.length === 0) {
+    panel.append(createElement("p", undefined, "No exact trait profile is available for this target."));
+    return panel;
+  }
+
+  panel.append(
+    createElement(
+      "p",
+      undefined,
+      strengthTraits.map((entry) => `${entry.traitName} ${entry.value}`).join(" | ")
+    )
+  );
+
+  return panel;
+}
+
+function createCompensatoryCandidateTable(candidates: readonly CompensatoryCandidate[]): HTMLElement {
+  const section = createElement("section", "data-table-section");
+  const table = createElement("table", "data-table herd-table");
+  const head = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  const body = document.createElement("tbody");
+  const headerTooltips = new Map<string, string>([
+    ["Candidate", "The safe mate candidate being ranked against the selected target canine."],
+    ["Owner", "Current human assignment for that candidate, if known."],
+    ["Score", "A relative compensatory score. Higher means this candidate covers more of the target canine's weak traits, especially the weakest ones."],
+    ["Offset 1", "Strongest trait where this candidate improves on the target canine."],
+    ["Offset 2", "Second-strongest trait where this candidate improves on the target canine."],
+    ["Offset 3", "Third-strongest trait where this candidate improves on the target canine."],
+    ["Puppy estimate", "Estimated puppy TOTAL and Procreation from this pairing, shown as total / procreation."]
+  ]);
+
+  for (const label of ["Candidate", "Owner", "Score", "Offset 1", "Offset 2", "Offset 3", "Puppy estimate"]) {
+    const cell = createElement("th", undefined, label);
+    const tooltip = headerTooltips.get(label);
+    if (tooltip) {
+      cell.title = tooltip;
+    }
+    headRow.append(cell);
+  }
+  head.append(headRow);
+
+  if (candidates.length === 0) {
+    const row = document.createElement("tr");
+    const cell = createElement("td", undefined, "No safe compensatory mates found with the current filters and data coverage.");
+    cell.colSpan = 7;
+    row.append(cell);
+    body.append(row);
+  }
+
+  for (const entry of candidates.slice(0, 12)) {
+    const [offsetOne, offsetTwo, offsetThree] = entry.strongestImprovements;
+    const row = document.createElement("tr");
+    const offsetOneCell = createPriorityAwareOffsetCell(offsetOne);
+    const offsetTwoCell = createPriorityAwareOffsetCell(offsetTwo);
+    const offsetThreeCell = createPriorityAwareOffsetCell(offsetThree);
+    row.append(
+      createElement("td", undefined, entry.candidate.canine.displayName),
+      createElement("td", undefined, entry.candidate.humanName),
+      createElement("td", "numeric-cell", entry.score.toFixed(1)),
+      offsetOneCell,
+      offsetTwoCell,
+      offsetThreeCell,
+      createElement(
+        "td",
+        "numeric-cell",
+        entry.candidate.estimate?.traitTotal && entry.candidate.estimate?.procreation
+          ? `${Math.round(entry.candidate.estimate.traitTotal)} / ${Math.round(entry.candidate.estimate.procreation)}`
+          : "unknown"
+      )
+    );
+    body.append(row);
+  }
+
+  table.append(head, body);
+  section.append(table);
+
+  return section;
+}
+
+function createAssortativeCandidateTable(candidates: readonly AssortativeCandidate[]): HTMLElement {
+  const section = createElement("section", "data-table-section");
+  const table = createElement("table", "data-table herd-table");
+  const head = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  const body = document.createElement("tbody");
+  const headerTooltips = new Map<string, string>([
+    ["Candidate", "The safe mate candidate being ranked against the selected target canine."],
+    ["Owner", "Current human assignment for that candidate, if known."],
+    ["Score", "A relative assortative score. Higher means this candidate reinforces more of the target canine's strongest traits."],
+    ["Shared 1", "Strongest trait where both the target canine and this candidate are already strong."],
+    ["Shared 2", "Second-strongest trait where both the target canine and this candidate are already strong."],
+    ["Shared 3", "Third-strongest trait where both the target canine and this candidate are already strong."],
+    ["Puppy estimate", "Estimated puppy TOTAL and Procreation from this pairing, shown as total / procreation."]
+  ]);
+
+  for (const label of ["Candidate", "Owner", "Score", "Shared 1", "Shared 2", "Shared 3", "Puppy estimate"]) {
+    const cell = createElement("th", undefined, label);
+    const tooltip = headerTooltips.get(label);
+    if (tooltip) {
+      cell.title = tooltip;
+    }
+    headRow.append(cell);
+  }
+  head.append(headRow);
+
+  if (candidates.length === 0) {
+    const row = document.createElement("tr");
+    const cell = createElement("td", undefined, "No safe assortative mates found with the current filters and data coverage.");
+    cell.colSpan = 7;
+    row.append(cell);
+    body.append(row);
+  }
+
+  for (const entry of candidates.slice(0, 12)) {
+    const [sharedOne, sharedTwo, sharedThree] = entry.strongestSharedTraits;
+    const row = document.createElement("tr");
+    const sharedOneCell = createPriorityAwareSharedCell(sharedOne);
+    const sharedTwoCell = createPriorityAwareSharedCell(sharedTwo);
+    const sharedThreeCell = createPriorityAwareSharedCell(sharedThree);
+    row.append(
+      createElement("td", undefined, entry.candidate.canine.displayName),
+      createElement("td", undefined, entry.candidate.humanName),
+      createElement("td", "numeric-cell", entry.score.toFixed(1)),
+      sharedOneCell,
+      sharedTwoCell,
+      sharedThreeCell,
+      createElement(
+        "td",
+        "numeric-cell",
+        entry.candidate.estimate?.traitTotal && entry.candidate.estimate?.procreation
+          ? `${Math.round(entry.candidate.estimate.traitTotal)} / ${Math.round(entry.candidate.estimate.procreation)}`
+          : "unknown"
+      )
+    );
+    body.append(row);
+  }
+
+  table.append(head, body);
+  section.append(table);
+
+  return section;
+}
+
+function createOcsCandidateTable(candidates: readonly OcsCandidate[]): HTMLElement {
+  const section = createElement("section", "data-table-section");
+  const table = createElement("table", "data-table herd-table");
+  const head = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  const body = document.createElement("tbody");
+  const headerTooltips = new Map<string, string>([
+    ["Candidate", "The safe mate candidate being ranked against the selected target canine."],
+    ["Owner", "Current human assignment for that candidate, if known."],
+    ["Score", "Overall OCS score: base quality minus diversity penalties. Higher is better."],
+    ["Base quality", "Estimated puppy quality before diversity penalties, using total plus Procreation weight."],
+    ["Ancestor reuse", "Penalty for using ancestors that already appear often in active tracked lineages."],
+    ["Line constraint", "Penalty for choosing a candidate from a line with fewer remaining safe mates than the herd leaders."],
+    ["Related peers", "Penalty for choosing a candidate from a line already closely connected to many active canines."],
+    ["Puppy estimate", "Estimated puppy TOTAL and Procreation from this pairing, shown as total / procreation."]
+  ]);
+
+  for (const label of ["Candidate", "Owner", "Score", "Base quality", "Ancestor reuse", "Line constraint", "Related peers", "Puppy estimate"]) {
+    const cell = createElement("th", undefined, label);
+    const tooltip = headerTooltips.get(label);
+    if (tooltip) {
+      cell.title = tooltip;
+    }
+    headRow.append(cell);
+  }
+  head.append(headRow);
+
+  if (candidates.length === 0) {
+    const row = document.createElement("tr");
+    const cell = createElement("td", undefined, "No safe OCS-style mates found with the current filters and data coverage.");
+    cell.colSpan = 8;
+    row.append(cell);
+    body.append(row);
+  }
+
+  for (const entry of candidates.slice(0, 12)) {
+    const row = document.createElement("tr");
+    const ancestorReuseCell = createElement("td", "numeric-cell", String(entry.ancestorReusePenalty));
+    if (entry.repeatedAncestors.length > 0) {
+      ancestorReuseCell.title = entry.repeatedAncestors
+        .map((ancestor) => `${ancestor.label} (${ancestor.descendantCount} active descendants)`)
+        .join(" | ");
+    }
+
+    row.append(
+      createElement("td", undefined, entry.candidate.canine.displayName),
+      createElement("td", undefined, entry.candidate.humanName),
+      createElement("td", "numeric-cell", entry.score.toFixed(1)),
+      createElement("td", "numeric-cell", entry.baseQuality.toFixed(1)),
+      ancestorReuseCell,
+      createElement("td", "numeric-cell", String(entry.constrainedLinePenalty)),
+      createElement("td", "numeric-cell", String(entry.relatedPeerPenalty)),
+      createElement(
+        "td",
+        "numeric-cell",
+        entry.candidate.estimate?.traitTotal && entry.candidate.estimate?.procreation
+          ? `${Math.round(entry.candidate.estimate.traitTotal)} / ${Math.round(entry.candidate.estimate.procreation)}`
+          : "unknown"
+      )
+    );
+    body.append(row);
+  }
+
+  table.append(head, body);
+  section.append(table);
+
+  return section;
+}
+
+function formatTraitImprovement(improvement: { traitName: string; selectedValue: number; candidateValue: number; gain: number }): string {
+  return `${improvement.traitName}${"isPriority" in improvement && improvement.isPriority ? " *" : ""} +${improvement.gain}`;
+}
+
+function formatSharedStrength(
+  shared: { traitName: string; selectedValue: number; candidateValue: number; combined: number; isPriority?: boolean }
+): string {
+  return `${shared.traitName}${shared.isPriority ? " *" : ""} ${shared.selectedValue}/${shared.candidateValue}`;
+}
+
+function createPriorityAwareOffsetCell(
+  improvement:
+    | { traitName: string; selectedValue: number; candidateValue: number; gain: number; isPriority?: boolean; weightedGain?: number }
+    | undefined
+): HTMLTableCellElement {
+  const cell = createElement("td");
+  if (!improvement) {
+    cell.textContent = "—";
+    return cell;
+  }
+
+  cell.textContent = formatTraitImprovement(improvement);
+  if (improvement.isPriority) {
+    cell.title = `Priority-weighted trait. Gain ${improvement.gain}, weighted to ${improvement.weightedGain ?? improvement.gain}.`;
+  }
+
+  return cell;
+}
+
+function createPriorityAwareSharedCell(
+  shared:
+    | { traitName: string; selectedValue: number; candidateValue: number; combined: number; isPriority?: boolean; weightedCombined?: number }
+    | undefined
+): HTMLTableCellElement {
+  const cell = createElement("td");
+  if (!shared) {
+    cell.textContent = "—";
+    return cell;
+  }
+
+  cell.textContent = formatSharedStrength(shared);
+  if (shared.isPriority) {
+    cell.title = `Priority-weighted trait. Combined value ${shared.combined}, weighted to ${shared.weightedCombined ?? shared.combined}.`;
+  }
+
+  return cell;
 }
 
 function createCurationModeToggle(): HTMLElement {
@@ -2872,8 +3443,8 @@ function addComparisonToHistory(): void {
   render();
 }
 
-function createLabel(text: string, control: HTMLElement): HTMLElement {
-  const label = createElement("label", "field-label");
+function createLabel(text: string, control: HTMLElement, isDimmed = false): HTMLElement {
+  const label = createElement("label", isDimmed ? "field-label field-label-dimmed" : "field-label");
   label.append(createElement("span", undefined, text), control);
 
   return label;

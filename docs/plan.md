@@ -325,11 +325,41 @@ Ownership Review:
 
 ### Phase 4C: Mating Algorithms
 
-- [ ] Add compensatory mating suggestions for pairing strengths against weaknesses.
-- [ ] Explore optimum contribution selection for preserving genetic diversity while improving traits.
-- [ ] Add positive assortative mating suggestions for intensifying already-strong lines.
-- [ ] Compare algorithm outputs against simple total/Procreation ranking.
-- [ ] Make algorithm goals explicit so users understand why a pairing is suggested.
+Goal: add a dedicated recommendation surface for mate-finding strategies that go beyond simple total/Procreation sorting. This should become the "why this pairing" tab for active breeders.
+
+Mating Algorithms Tab:
+
+- [x] Add a dedicated Algorithms tab separate from Herd Health and Planner.
+- [x] Add an algorithm selector so different recommendation styles can share one workflow surface.
+- [x] Add a target-canine picker for ranking mates against a specific active canine.
+- [x] Make algorithm intent explicit in the UI so users understand what the selected mode is optimizing for.
+
+Compensatory Pairing:
+
+- [x] Add compensatory mating suggestions for pairing strengths against weaknesses.
+- [x] Surface the target canine's weakest traits so the ranking has visible context.
+- [x] Show ranked safe mates with a short explanation of which traits each candidate is offsetting.
+- [ ] Compare compensatory results against simple total/Procreation ranking.
+
+Positive Assortative Mating:
+
+- [x] Add positive assortative mating suggestions for intensifying already-strong lines.
+- [x] Explain the diversity tradeoff when users choose this mode.
+
+Algorithm Controls And Transparency:
+
+- [x] Let users optionally prioritize a specific trait in algorithm ranking.
+- [x] Let users tune the priority weight instead of hard-coding one fixed multiplier.
+- [x] Reflect weighted-priority effects in the visible result columns, not only in hidden score math.
+- [ ] Compare compensatory and assortative results against simple total/Procreation ranking.
+
+Optimum Contribution Selection:
+
+- [ ] Define a simple herd-level objective that balances canine quality against overused bloodlines.
+- [ ] Choose first-pass diversity penalties: shared ancestors, low safe-mate counts, and repeated line concentration.
+- [ ] Produce an OCS-style ranking that favors improvement without collapsing the herd into a few dominant lines.
+- [ ] Decide how to explain herd-level math in player terms users can trust.
+- [ ] Show why an OCS-ranked mate differs from compensatory or assortative rankings.
 
 ## Phase 5: Custom Domain Later
 
