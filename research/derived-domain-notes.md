@@ -138,12 +138,24 @@ Known time factors:
 - Breeding a female with an NPC male can count toward faster heats.
 - Forest-tamed pets and released traited puppies do not count toward fast-raising.
 - Maintaining a gender line can help assign the larger time burden to a player who can manage females and heat cycles.
+- Unwanted puppies create cleanup overhead unless they are deliberately removed.
+
+Operational notes:
+
+- A breeding attempt starts with sire and dam together in one room while the female is in heat.
+- `encourage` can be used to stimulate a breeding attempt and appears to work best on the female.
+- Once breeding takes, litter birth takes roughly 45 minutes.
+- Puppies need feeding after birth or they can die; neglected puppies also reduce the dam's loyalty.
+- Players often move a litter into a quiet room and run repeated compares against known-value pets to solve actual puppy stats quickly.
+- Not every puppy needs full solving if the litter already contains obviously poor choices and the operator is triaging for the keeper.
+- Lessa, a young half-elf on the Infidian continent, can tame unwanted puppies away and replaces part of the older manual puppy-disposal workflow.
 
 Model implication:
 
 - Breeding planner should eventually include throughput concepts, not only genetic safety.
 - A simple v1 can rank by current data; later versions can estimate breeding-cycle cost.
 - Time tracking itself is out of scope unless it supports breeding readiness or planning decisions.
+- The app should treat the post-birth litter session as an important workflow of its own: compare intake, stat solving, puppy triage, keeper selection, and cleanup.
 
 ## Gender-Run Population Lift
 
@@ -289,3 +301,21 @@ Model implication:
 - Website data needs a source timestamp because it is delayed.
 - Scraped website data should be treated as observed/source data, not necessarily current live game state.
 - Raw profile HTML may contain unrelated player/account/profile details and should not be committed unless sanitized.
+
+## Lessa Shelter Top-Ten List
+
+Lessa has a small shelter in her room which a player can enter and `read list`.
+
+Observed implications:
+
+- The shelter list is a public top-ten canine board.
+- The list appears to update only at reboot or on Lessa's own schedule, so it is not a precise live feed.
+- The output shows owner, canine call name, gender, visible color, and canine type/species.
+- The output does not reveal actual trait values or the ranking formula.
+- As of June 7, 2026, the list is still useful as a signal for which lines are currently active and strong enough to appear publicly.
+
+Model implication:
+
+- Treat the Lessa list as a public observational source, not canonical stat data.
+- The list can help prioritize data refresh work, because it identifies current competitive canines even when the canonical repository is stale.
+- Future data-ingestion workflow could support a lightweight "public top-ten observed" source type with source date and free-text snapshot.

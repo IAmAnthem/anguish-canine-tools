@@ -224,7 +224,18 @@ This is a separate workflow from the Phase 2D one-breeding Planner. The Planner 
 - [x] Keep collar timing/setup as its own dedicated guidance pane.
 - [x] Add an app-orientation pane that explains what each tab is for and a recommended workflow through the site.
 - [x] Use first-mention expansion for newcomer-facing abbreviations such as Very Large, Stage 2 (`VL2`).
-- [ ] Consider splitting current Guidance into a larger Ranger Class reference surface plus a separate App Directions surface as ranger-specific material grows.
+- [x] Split ranger-specific reference material into a dedicated Ranger Class surface and keep app-orientation material in App Directions.
+- [x] Add live breeding-cycle guidance including `encourage`, birth timing, puppy feeding risk, and Lessa cleanup.
+- [x] Add litter statting and triage workflow guidance that reflects real compare-driven breeding sessions.
+- [x] Add an app-directions workflow for live litter sessions rather than only static tab descriptions.
+
+Follow-on opportunities from the real breeding workflow:
+
+- [ ] Add a dedicated litter-session helper that accepts multiple compare blocks and groups them by puppy slot.
+- [ ] Add a fast triage mode for marking puppies as keeper, discard, or unsolved during a live litter.
+- [ ] Add a session checklist view for mating setup, collar timing, birth wait, statting, keeper selection, and cleanup.
+- [ ] Explore whether Multi-Step can promote a chosen live-litter puppy into the next step with fewer clicks.
+- [ ] Evaluate a lightweight public-source intake for Lessa's top-ten shelter list so stale canonical data can be cross-checked against currently visible competitive lines.
 
 ### Phase 2H: App Quality Checks
 

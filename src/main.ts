@@ -35,6 +35,31 @@ import {
   type PlanParentOverride
 } from "./app/multiStepPlan.js";
 import {
+  rangerAbilityNotes,
+  rangerAbilityRows,
+  rangerAppearanceNotes,
+  rangerBondingRows,
+  rangerBreedingNotes,
+  rangerBreedingStockNotes,
+  rangerClassOverview,
+  rangerCommandRows,
+  rangerCompareNotes,
+  rangerDescriptorRows,
+  rangerEyeRows,
+  rangerHeatRows,
+  rangerMiscNotes,
+  rangerObserveRows,
+  rangerPetRoleNotes,
+  rangerRaceRows,
+  rangerSizeRows,
+  rangerStatNotes,
+  rangerTameNotes,
+  rangerTraitDescriptorRows,
+  rangerTraitNames,
+  rangerTrainingNotes,
+  rangerVisibleStatTables
+} from "./app/rangerClassData.js";
+import {
   createCalculatorHistoryEntry,
   filterKnownCanineOptions,
   getKnownCanineOptions,
@@ -54,10 +79,10 @@ import {
 } from "./domain/reference/collarGuidance.js";
 import { traitNames } from "./domain/traits/traitNames.js";
 
-type AppView = "calculator" | "planner" | "multi-step" | "browser" | "curate" | "herd" | "algorithms" | "guidance" | "contribute";
+type AppView = "calculator" | "planner" | "multi-step" | "browser" | "curate" | "herd" | "algorithms" | "ranger" | "directions" | "contribute";
 type CuratedCanineStatus = "active" | "inactive" | "unknown";
 type CurationMode = "status" | "ownership";
-type GuidancePane = "advancing" | "collars" | "using-app";
+type RangerPane = "overview" | "abilities" | "companions" | "breeding" | "appearance" | "gear";
 
 type ViewDefinition = {
   id: AppView;
@@ -126,12 +151,20 @@ const views: ViewDefinition[] = [
     items: ["Algorithm", "Target canine", "Ranked mates", "Tradeoffs"]
   },
   {
-    id: "guidance",
-    label: "Guidance",
-    eyebrow: "Reference notes",
-    title: "Collars and setup",
-    status: "Ready for breeding-time and birth-time reminders.",
-    items: ["Trait collars", "Breeding collar", "Birth collars", "Timing"]
+    id: "ranger",
+    label: "Ranger Class",
+    eyebrow: "Class reference",
+    title: "Ranger class data",
+    status: "Curated ranger-class mechanics, companion science, breeding guidance, and collar reference data.",
+    items: ["Overview", "Companions", "Breeding", "Appearance"]
+  },
+  {
+    id: "directions",
+    label: "App Directions",
+    eyebrow: "How to use this",
+    title: "App directions",
+    status: "Orientation for what each tab does and how to move through the site.",
+    items: ["Tabs", "Workflow", "Start here", "Why"]
   },
   {
     id: "contribute",
@@ -211,10 +244,10 @@ const curationState: {
   humanUpdatesByCharacterId: {},
   copiedPatch: false
 };
-const guidanceState: {
-  activePane: GuidancePane;
+const rangerState: {
+  activePane: RangerPane;
 } = {
-  activePane: "advancing"
+  activePane: "overview"
 };
 const algorithmState: {
   selectedAlgorithm: MatingAlgorithmId;
@@ -347,8 +380,10 @@ function createPanel(view: ViewDefinition, store: DataStore): HTMLElement {
     panel.append(createHerdHealthWorkflow(store));
   } else if (view.id === "algorithms") {
     panel.append(createMatingAlgorithmsWorkflow(store));
-  } else if (view.id === "guidance") {
-    panel.append(createGuidanceWorkflow(store));
+  } else if (view.id === "ranger") {
+    panel.append(createRangerClassWorkflow(store));
+  } else if (view.id === "directions") {
+    panel.append(createAppDirectionsWorkflow());
   } else {
     panel.append(createContributorWorkflow());
   }
@@ -356,25 +391,39 @@ function createPanel(view: ViewDefinition, store: DataStore): HTMLElement {
   return panel;
 }
 
-function createGuidanceWorkflow(store: DataStore): HTMLElement {
+function createRangerClassWorkflow(store: DataStore): HTMLElement {
   const section = createElement("section", "workflow-section guidance-layout");
   const breeding = getBreedingCollarSuggestions(store.data.reference.collars);
   const birth = getBirthCollarSuggestions(store.data.reference.collars);
   const traits = getTraitCollarReferences(store.data.reference.collars);
   const utility = getUtilityCollarReferences(store.data.reference.collars);
 
-  section.append(createElement("h3", undefined, "Breeding guidance"), createGuidancePaneToggle());
+  section.append(createElement("h3", undefined, "Ranger class"), createRangerPaneToggle());
 
-  if (guidanceState.activePane === "advancing") {
+  if (rangerState.activePane === "overview") {
+    section.append(
+      createRangerOverviewPanel(),
+      createRangerRaceTablePanel(),
+      createPetRolesGuidancePanel(),
+      createBreedingStockGuidancePanel()
+    );
+  } else if (rangerState.activePane === "abilities") {
+    section.append(createRangerAbilitiesPanel(), createRangerObservePanel(), createRangerAbilityNotesPanel());
+  } else if (rangerState.activePane === "companions") {
+    section.append(
+      createRangerCompanionBasicsPanel(),
+      createRangerBondingPanel(),
+      createRangerCommandsPanel(),
+      createWolfStatsGuidancePanel()
+    );
+  } else if (rangerState.activePane === "breeding") {
     section.append(
       createAdvancingPetsGuidancePanel(),
-      createPetRolesGuidancePanel(),
-      createBreedingStockGuidancePanel(),
-      createWolfStatsGuidancePanel(),
-      createBreedingProgramGuidancePanel()
+      createBreedingProgramGuidancePanel(),
+      createRangerBreedingMechanicsPanel()
     );
-  } else if (guidanceState.activePane === "using-app") {
-    section.append(createUsingAppGuidancePanel(), createRecommendedWorkflowPanel());
+  } else if (rangerState.activePane === "appearance") {
+    section.append(createRangerAppearancePanel(), createRangerEyeColorPanel(), createRangerMarkingsPanel(), createRangerMiscPanel());
   } else {
     section.append(
       createGuidanceNotice(),
@@ -388,29 +437,90 @@ function createGuidanceWorkflow(store: DataStore): HTMLElement {
   return section;
 }
 
-function createGuidancePaneToggle(): HTMLElement {
+function createAppDirectionsWorkflow(): HTMLElement {
+  const section = createElement("section", "workflow-section guidance-layout");
+  section.append(createElement("h3", undefined, "App directions"), createUsingAppGuidancePanel(), createRecommendedWorkflowPanel());
+  return section;
+}
+
+function createRangerPaneToggle(): HTMLElement {
   const group = createElement("div", "toggle-group");
 
   for (const [pane, label] of [
-    ["advancing", "Advancing pets"],
-    ["using-app", "Using this app"],
-    ["collars", "Collars"]
+    ["overview", "Overview"],
+    ["abilities", "Abilities"],
+    ["companions", "Companions"],
+    ["breeding", "Breeding"],
+    ["appearance", "Appearance"],
+    ["gear", "Collars & gear"]
   ] as const) {
     const button = createElement(
       "button",
-      guidanceState.activePane === pane ? "toggle-button toggle-button-active" : "toggle-button",
+      rangerState.activePane === pane ? "toggle-button toggle-button-active" : "toggle-button",
       label
     );
     button.type = "button";
-    button.setAttribute("aria-pressed", String(guidanceState.activePane === pane));
+    button.setAttribute("aria-pressed", String(rangerState.activePane === pane));
     button.addEventListener("click", () => {
-      guidanceState.activePane = pane;
+      rangerState.activePane = pane;
       render();
     });
     group.append(button);
   }
 
   return group;
+}
+
+function createRangerOverviewPanel(): HTMLElement {
+  const panel = createElement("section", "plan-panel");
+  const items: Array<[string, string]> = [
+    ["Class Hall", rangerClassOverview.classHall],
+    ["Defense Modes", rangerClassOverview.defenseModes],
+    ["Level Bonus", rangerClassOverview.levelBonus],
+    ["Skilling", rangerClassOverview.skilling],
+    ["Symbol", rangerClassOverview.symbol]
+  ];
+  const list = createElement("dl", "key-value-list");
+  for (const [label, value] of items) {
+    list.append(createElement("dt", undefined, label), createElement("dd", undefined, value));
+  }
+  panel.append(
+    createElement("h3", undefined, "Class basics"),
+    createElement("p", "plan-note", rangerClassOverview.introduction),
+    list
+  );
+  return panel;
+}
+
+function createRangerRaceTablePanel(): HTMLElement {
+  return createSimpleTablePanel(
+    "Race baselines",
+    "Race, core stats, and guild options from the ranger class guide.",
+    ["Race", "Str", "Dex", "Int", "Con", "Wis", "HP", "SP", "Guild selection"],
+    rangerRaceRows
+  );
+}
+
+function createRangerAbilitiesPanel(): HTMLElement {
+  return createSimpleTablePanel(
+    "Ranger abilities",
+    "Core active commands, their SP costs, and what they are for.",
+    ["Ability", "SP", "Description"],
+    rangerAbilityRows
+  );
+}
+
+function createRangerObservePanel(): HTMLElement {
+  return createSimpleTablePanel(
+    "Observe and glance difficulty scale",
+    "These responses scale relative to the Ranger's level compared to the target.",
+    ["Relative level", "Response"],
+    rangerObserveRows
+  );
+}
+
+function createRangerAbilityNotesPanel(): HTMLElement {
+  return createBulletPanel("Practical ranger notes", "Hard-won operational notes from the guide about crafting, Woodcraft, and corpse processing.", rangerAbilityNotes);
 }
 
 function createAdvancingPetsGuidancePanel(): HTMLElement {
@@ -468,6 +578,174 @@ function createBreedingProgramGuidancePanel(): HTMLElement {
   return panel;
 }
 
+function createRangerCompanionBasicsPanel(): HTMLElement {
+  const section = createElement("section", "guidance-layout");
+  section.append(
+    createBulletPanel("Taming and companion basics", "High-level ranger companion rules from the class guide.", rangerTameNotes),
+    createSimpleTablePanel("Trained size bands", "After taming, the size description hints at the canine's level.", ["Level", "Description"], rangerSizeRows)
+  );
+  return section;
+}
+
+function createRangerBondingPanel(): HTMLElement {
+  const section = createElement("section", "guidance-layout");
+  section.append(
+    createSimpleTablePanel(
+      "Bonding and maximum size by race",
+      "Bonded canines requiring 5 or less Wisdom to tame can stay forever and grow over time. Maximum size depends on unmodified Ranger Wisdom.",
+      ["Race / Wisdom", "Maximum size", "Level", "Estimated time"],
+      rangerBondingRows
+    ),
+    createBulletPanel(
+      "Training unlocks",
+      "Bonded canines unlock additional practical abilities as they grow.",
+      rangerTrainingNotes
+    )
+  );
+  return section;
+}
+
+function createRangerCommandsPanel(): HTMLElement {
+  const section = createElement("section", "guidance-layout");
+  section.append(
+    createSimpleTablePanel(
+      "Canine commands",
+      "Practical commands for feeding, handling, combat, and behavior.",
+      ["Command", "Description"],
+      rangerCommandRows
+    )
+  );
+  section.append(createRangerVisibleStatsPanels());
+  return section;
+}
+
+function createRangerVisibleStatsPanels(): HTMLElement {
+  const section = createElement("section", "guidance-layout");
+  section.append(
+    createSimpleTablePanel(
+      "Armour descriptions",
+      "Observed descriptions are relative to the canine's current size and level, not absolute across all sizes.",
+      ["Rank", "Description"],
+      rangerVisibleStatTables.armour
+    ),
+    createSimpleTablePanel("Constitution descriptions", "Feeding improves Constitution over time.", ["Rank", "Description"], rangerVisibleStatTables.constitution),
+    createSimpleTablePanel("Dexterity descriptions", "Fighting improves Dexterity over time.", ["Rank", "Description"], rangerVisibleStatTables.dexterity),
+    createSimpleTablePanel("Intelligence descriptions", "Efficiency with canine abilities improves Intelligence over time.", ["Rank", "Description"], rangerVisibleStatTables.intelligence),
+    createSimpleTablePanel("Strength descriptions", "Carry training improves Strength over time.", ["Rank", "Description"], rangerVisibleStatTables.strength)
+  );
+  return section;
+}
+
+function createRangerBreedingMechanicsPanel(): HTMLElement {
+  const section = createElement("section", "guidance-layout");
+  section.append(
+    createLiveBreedingCyclePanel(),
+    createBulletPanel("Breeding mechanics", "Guide-backed timing and breeding rules for ranger canines.", rangerBreedingNotes),
+    createSimpleTablePanel("Heat cadence", "Heat timing changes depending on whether the last breeding opportunity was used.", ["Condition", "Effect"], rangerHeatRows),
+    createBulletPanel("Compare and bloodline detection", "What compare contributes beyond raw trait estimation.", rangerCompareNotes),
+    createLessaShelterPanel(),
+    createLitterStattingWorkflowPanel()
+  );
+  section.append(
+    createSimpleTablePanel(
+      "Breeding trait set",
+      "These are the 17 inherited breeding traits and their practical descriptions. This is core trait reference data, not a collar-history table.",
+      ["Trait", "Descriptor"],
+      rangerTraitDescriptorRows
+    )
+  );
+  return section;
+}
+
+function createLessaShelterPanel(): HTMLElement {
+  const panel = createElement("section", "plan-panel");
+  const list = createElement("ul", "compact-list");
+
+  for (const line of [
+    "Lessa has a small shelter in her room. Entering it and using read list shows a public top-ten canine list.",
+    "This list appears to update only at reboot or on Lessa's own schedule, so it is a public activity signal, not an exact live truth feed.",
+    "The output gives owner, pet name, gender, color, and species, but does not reveal the actual trait numbers.",
+    "That makes it useful for spotting which lines are still active and competitive, especially when canonical breeding data is stale.",
+    "It should be treated as a source hint for curation and herd awareness, not as canonical proof of stats or exact ranking math."
+  ]) {
+    list.append(createElement("li", undefined, line));
+  }
+
+  panel.append(
+    createElement("h3", undefined, "Lessa shelter top-ten list"),
+    createElement(
+      "p",
+      "plan-note",
+      "As of June 7, 2026, this is still a useful public source for identifying current standout canines without exposing their raw numbers."
+    ),
+    list
+  );
+
+  return panel;
+}
+
+function createRangerAppearancePanel(): HTMLElement {
+  const section = createElement("section", "guidance-layout");
+  section.append(
+    createAppearanceStrategyPanel(),
+    createBulletPanel("Appearance inheritance notes", "The class guide gives practical notes for coat and color transitions after bonding.", rangerAppearanceNotes)
+  );
+  return section;
+}
+
+function createAppearanceStrategyPanel(): HTMLElement {
+  const panel = createElement("section", "plan-panel");
+  const list = createElement("ul", "compact-list");
+
+  for (const line of [
+    "If your breeding program is doing many generations of stat improvement, you will often lose cosmetic traits along the way simply because you are breeding so many times.",
+    "The more mathematically sound approach is often to raise the herd's core numbers first, then breed back toward the specific race, colors, or markings you want once the line is already strong.",
+    "Birth-influence collars help with that cosmetic cleanup phase, but they do not remove the underlying tradeoff between stat progress and cosmetic control.",
+    "Players ultimately choose what matters more: pure numerical advancement, maintaining a beloved cosmetic look, or some compromise between the two.",
+    "Some retired or stashed canines may have a race or color combination worth bringing back into the program, but getting those old animals or their owners active again can be the real bottleneck."
+  ]) {
+    list.append(createElement("li", undefined, line));
+  }
+
+  panel.append(
+    createElement("h3", undefined, "Appearance strategy versus stat progress"),
+    createElement(
+      "p",
+      "plan-note",
+      "Cosmetic goals and breeding-program math do not always pull in the same direction. This panel is about choosing where to compromise."
+    ),
+    list
+  );
+
+  return panel;
+}
+
+function createRangerEyeColorPanel(): HTMLElement {
+  return createSimpleTablePanel(
+    "Eye color stages",
+    "Eye color transitions through stages and can continue changing after coat shedding ends.",
+    ["Stage 1", "Stage 2", "Stage 3", "Final eye"],
+    rangerEyeRows
+  );
+}
+
+function createRangerMarkingsPanel(): HTMLElement {
+  return createSimpleTablePanel(
+    "Secondary markings and features",
+    "Canines may receive zero, one, or two secondary markings/features on top of their primary coat.",
+    ["Descriptor", "Type"],
+    rangerDescriptorRows
+  );
+}
+
+function createRangerMiscPanel(): HTMLElement {
+  const section = createElement("section", "guidance-layout");
+  section.append(
+    createBulletPanel("Miscellaneous ranger canine notes", "Extra guide material that does not fit neatly into the other groups but is still operationally useful.", rangerMiscNotes)
+  );
+  return section;
+}
+
 function createUsingAppGuidancePanel(): HTMLElement {
   const panel = createElement("section", "plan-panel");
   const list = createElement("ul", "compact-list");
@@ -517,6 +795,90 @@ function createRecommendedWorkflowPanel(): HTMLElement {
       "p",
       "plan-note",
       "Most players do not need every tab every day. This is the shortest path through the app for common breeding work."
+    ),
+    list,
+    createLitterSessionWorkflowPanel()
+  );
+
+  return panel;
+}
+
+function createLiveBreedingCyclePanel(): HTMLElement {
+  const panel = createElement("section", "plan-panel");
+  const list = createElement("ol", "compact-list");
+
+  for (const line of [
+    "Bring sire and dam into the same room while the female is in heat.",
+    "Use encourage to stimulate a breeding attempt. In practice this works best on the female, and it does nothing useful if a mating attempt is already underway.",
+    "Once the breeding takes, wait roughly 45 minutes for the litter to be born.",
+    "After birth, the puppies become real time-sensitive objects: they must be fed or they can die, and neglected puppies also reduce the dam's loyalty.",
+    "If a puppy is not being kept, clean it up deliberately. Lessa, a young half-elf on the Infidian continent, can tame unwanted puppies away and removes a lot of old manual cleanup pain.",
+    "Ignored puppies eventually bounce off and disappear on their own, but that takes time and is usually worse than handling the litter promptly."
+  ]) {
+    list.append(createElement("li", undefined, line));
+  }
+
+  panel.append(
+    createElement("h3", undefined, "Live breeding cycle"),
+    createElement(
+      "p",
+      "plan-note",
+      "This is the actual in-game sequence around one litter, separate from the longer-range herd planning work."
+    ),
+    list
+  );
+
+  return panel;
+}
+
+function createLitterStattingWorkflowPanel(): HTMLElement {
+  const panel = createElement("section", "plan-panel");
+  const list = createElement("ol", "compact-list");
+
+  for (const line of [
+    "Move the litter to a quiet room with little traffic so compare text and puppy handling stay clean.",
+    "Cycle through known-value pets, often by swapping through alt characters, and gather compare text against the puppies one by one.",
+    "Paste each compare block into Calculator and let the app solve the real trait row instead of reasoning from compare phrases by hand.",
+    "Record solved rows in the litter slots, then triage. Some puppies are obviously weak and do not always need full solving if the litter already shows stronger candidates.",
+    "Pick the carry-forward puppy based on the session goal: raw improvement, Procreation, cosmetic recovery, or herd-health concerns.",
+    "After the keeper is chosen, use Lessa or another cleanup method to remove extra puppies so the female can return to the next cycle cleanly."
+  ]) {
+    list.append(createElement("li", undefined, line));
+  }
+
+  panel.append(
+    createElement("h3", undefined, "Litter statting and triage workflow"),
+    createElement(
+      "p",
+      "plan-note",
+      "This is where the tool should do the most heavy lifting: solve compare text quickly, reduce bookkeeping, and make the keeper decision easier."
+    ),
+    list
+  );
+
+  return panel;
+}
+
+function createLitterSessionWorkflowPanel(): HTMLElement {
+  const panel = createElement("section", "plan-panel");
+  const list = createElement("ol", "compact-list");
+
+  for (const line of [
+    "Before the breeding, use Planner or Algorithms to choose the mating pair and note any collar setup that matters.",
+    "When the litter is born, use Calculator with known canines to solve compare text as quickly as possible.",
+    "Use Multi-Step if the selected keeper puppy will become the next carry-forward parent in a longer lift plan.",
+    "Use Herd Health or Algorithms again if the real litter results change what the herd now needs.",
+    "Use Data and Curate later to fold confirmed keepers and stale records back into the canonical pool."
+  ]) {
+    list.append(createElement("li", undefined, line));
+  }
+
+  panel.append(
+    createElement("h3", undefined, "Suggested workflow for a live litter session"),
+    createElement(
+      "p",
+      "plan-note",
+      "The site is most valuable when it shortens the time between puppies being born and the keeper decision being made."
     ),
     list
   );
@@ -728,6 +1090,48 @@ function createCurationWorkflow(store: DataStore): HTMLElement {
   }
 
   return section;
+}
+
+function createBulletPanel(title: string, note: string, lines: readonly string[]): HTMLElement {
+  const panel = createElement("section", "plan-panel");
+  const list = createElement("ul", "compact-list");
+  for (const line of lines) {
+    list.append(createElement("li", undefined, line));
+  }
+  panel.append(createElement("h3", undefined, title), createElement("p", "plan-note", note), list);
+  return panel;
+}
+
+function createSimpleTablePanel(
+  title: string,
+  note: string,
+  headers: readonly string[],
+  rows: readonly (readonly string[])[]
+): HTMLElement {
+  const panel = createElement("section", "data-table-section compact-table-section");
+  const tablePane = createElement("div", "data-browser-table-section");
+  const table = createElement("table", "data-table herd-table");
+  const head = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  const body = document.createElement("tbody");
+
+  for (const header of headers) {
+    headRow.append(createElement("th", undefined, header));
+  }
+  head.append(headRow);
+
+  for (const rowValues of rows) {
+    const row = document.createElement("tr");
+    for (const value of rowValues) {
+      row.append(createElement("td", undefined, value));
+    }
+    body.append(row);
+  }
+
+  table.append(head, body);
+  tablePane.append(table);
+  panel.append(createElement("h3", undefined, title), createElement("p", "plan-note", note), tablePane);
+  return panel;
 }
 
 function createMatingAlgorithmsWorkflow(store: DataStore): HTMLElement {
