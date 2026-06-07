@@ -368,7 +368,8 @@ function createGuidanceWorkflow(store: DataStore): HTMLElement {
   if (guidanceState.activePane === "advancing") {
     section.append(
       createAdvancingPetsGuidancePanel(),
-      createBondedWolfGuidancePanel(),
+      createPetRolesGuidancePanel(),
+      createBreedingStockGuidancePanel(),
       createWolfStatsGuidancePanel(),
       createBreedingProgramGuidancePanel()
     );
@@ -523,26 +524,54 @@ function createRecommendedWorkflowPanel(): HTMLElement {
   return panel;
 }
 
-function createBondedWolfGuidancePanel(): HTMLElement {
+function createPetRolesGuidancePanel(): HTMLElement {
   const panel = createElement("section", "plan-panel");
   const list = createElement("ul", "compact-list");
 
   for (const line of [
-    "A bonded wolf is a real long-term investment. Ranger guide notes suggest bonding can take about 20 minutes by idling, or as little as roughly 5 minutes if you are killing with it.",
-    "Keep a bonded wolf fed and happy. If it ferals, it is gone for good.",
-    "If a bonded wolf dies after it reaches the larger trained sizes, it can come back smaller. That can cost roughly a day of growth, so deaths are expensive.",
-    "Growth takes both time and some experience. If a wolf has idled for a long time without growing, it may simply need real kills to push the next step.",
-    "The ranger guide treats enormous-plus bonded wolves as a multi-day project, so players should plan around that time cost instead of assuming wolves are disposable."
+    "Disposable pets are short-term utility animals. They may be fine for basic class use, for experimenting, or for late cosmetic changes, but they are not where a serious breeding program stores value.",
+    "Bonded pets are long-term working animals. They are the ones worth real growth time, careful feeding, stat checking, and breeding decisions.",
+    "Wild tames take real bonding time. Ranger guide notes suggest bonding can take roughly 20 minutes by idling, or closer to 5 minutes if you are actively killing with it.",
+    "Bred puppies bond instantly, so this time cost applies to wild tames, not to puppies coming out of a breeding line.",
+    "Keep bonded pets fed and happy. If a bonded wolf ferals, it is gone for good.",
+    "Deaths are expensive. If a bonded wolf dies after it reaches the larger trained sizes, it can come back smaller and cost meaningful growth time to recover."
   ]) {
     list.append(createElement("li", undefined, line));
   }
 
   panel.append(
-    createElement("h3", undefined, "Bonded wolf basics"),
+    createElement("h3", undefined, "Pet roles: disposable versus bonded"),
     createElement(
       "p",
       "plan-note",
-      "This is ranger-specific context from the public ranger guide: bonded wolves are powerful, but they are also a real time investment."
+      "The first big ranger-pet distinction is not breeding quality. It is whether a pet is disposable or whether it is a bonded long-term asset."
+    ),
+    list
+  );
+
+  return panel;
+}
+
+function createBreedingStockGuidancePanel(): HTMLElement {
+  const panel = createElement("section", "plan-panel");
+  const list = createElement("ul", "compact-list");
+
+  for (const line of [
+    "Wild-tamed stock starts from whatever the game gives you in the wild. It can be useful for getting started, for changing breed, or for chasing a cosmetic goal, but it begins with much weaker breeding potential.",
+    "Bred-line stock means a puppy that has already been improved through prior generations of trait breeding. This is the livestock-style breeding-program version of a pet line.",
+    "A useful mental split is wild stock versus bred-line stock, similar to the difference between a wild-caught animal and a deliberately improved working line.",
+    "Forest-tamed pets and NPC pets are usually weak breeding foundations. Legacy notes strongly recommend starting with any traited pet over a forest tame when you can.",
+    "Once a player is serious about advancement, the goal is usually to move from wild stock into bred-line stock and then keep lifting that line forward."
+  ]) {
+    list.append(createElement("li", undefined, line));
+  }
+
+  panel.append(
+    createElement("h3", undefined, "Breeding stock: wild-tamed versus bred-line"),
+    createElement(
+      "p",
+      "plan-note",
+      "Inside bonded pets, there is another important split: some animals are just bonded companions, while others are part of a deliberately improved breeding line."
     ),
     list
   );

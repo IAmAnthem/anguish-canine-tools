@@ -218,9 +218,13 @@ This is a separate workflow from the Phase 2D one-breeding Planner. The Planner 
 - [x] Split guidance into beginner-friendly panes instead of one dense reference block.
 - [x] Add a newcomer-oriented "how advancing pets works" guidance panel.
 - [x] Add beginner-oriented bonded-wolf and wolf-training guidance panels.
+- [x] Distinguish pet role guidance such as disposable versus bonded pets.
+- [x] Distinguish breeding-origin guidance such as wild-tamed stock versus bred-line stock.
+- [x] Distinguish wild-tame bonding time from bred-puppy instant bonding.
 - [x] Keep collar timing/setup as its own dedicated guidance pane.
 - [x] Add an app-orientation pane that explains what each tab is for and a recommended workflow through the site.
 - [x] Use first-mention expansion for newcomer-facing abbreviations such as Very Large, Stage 2 (`VL2`).
+- [ ] Consider splitting current Guidance into a larger Ranger Class reference surface plus a separate App Directions surface as ranger-specific material grows.
 
 ### Phase 2H: App Quality Checks
 
