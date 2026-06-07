@@ -1,9 +1,11 @@
-import type { CanineSummary, DataStore } from "./dataStore.js";
+import { isBreedingPoolCanine, type CanineSummary, type DataStore } from "./dataStore.js";
 import { compareLineage } from "../domain/lineage/lineage.js";
 
 export type HerdHealthOverview = {
   totalCanines: number;
   activeCanines: number;
+  breedingCadreCanines: number;
+  activeOutsideBreedingCadre: number;
   inactiveCanines: number;
   unknownStatusCanines: number;
   activeMales: number;
@@ -42,7 +44,7 @@ export type HerdHealthReport = {
 
 export function createHerdHealthReport(store: DataStore): HerdHealthReport {
   const activeSummaries = store.data.canonical.canines
-    .filter((canine) => canine.status === "active")
+    .filter(isBreedingPoolCanine)
     .map((canine) => store.getCanineSummary(canine.id))
     .filter((summary): summary is CanineSummary => Boolean(summary));
 
@@ -64,7 +66,11 @@ function createOverview(store: DataStore, activeSummaries: readonly CanineSummar
 
   return {
     totalCanines: store.data.canonical.canines.length,
-    activeCanines: activeSummaries.length,
+    activeCanines: store.data.canonical.canines.filter((canine) => canine.status === "active").length,
+    breedingCadreCanines: activeSummaries.length,
+    activeOutsideBreedingCadre: store.data.canonical.canines.filter(
+      (canine) => canine.status === "active" && !isBreedingPoolCanine(canine)
+    ).length,
     inactiveCanines: store.data.canonical.canines.filter((canine) => canine.status === "inactive").length,
     unknownStatusCanines: store.data.canonical.canines.filter((canine) => canine.status === "unknown").length,
     activeMales: activeSummaries.filter((summary) => summary.canine.gender === "M").length,

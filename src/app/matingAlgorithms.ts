@@ -1,5 +1,5 @@
 import { planBreedingForCanine, type BreedingCanineOption, type PlannerCandidate } from "./breedingPlanner.js";
-import type { CanineSummary, DataStore } from "./dataStore.js";
+import { isBreedingPoolCanine, type CanineSummary, type DataStore } from "./dataStore.js";
 import { compareLineage, type LineageProfile } from "../domain/lineage/lineage.js";
 import { traitNames, type TraitName } from "../domain/traits/traitNames.js";
 
@@ -73,7 +73,7 @@ export type AlgorithmPriorityOptions = {
 
 export function getAlgorithmCanineOptions(store: DataStore): AlgorithmCanineOption[] {
   return store.data.canonical.canines
-    .filter((canine) => canine.status === "active")
+    .filter(isBreedingPoolCanine)
     .filter((canine) => canine.gender === "M" || canine.gender === "F")
     .filter((canine) => {
       const profile = store.traitProfilesByCanineId.get(canine.id);
@@ -83,7 +83,7 @@ export function getAlgorithmCanineOptions(store: DataStore): AlgorithmCanineOpti
       const summary = store.getCanineSummary(canine.id);
       return {
         canineId: canine.id,
-        label: `${canine.displayName} | ${summary?.character?.name ?? "unknown"} | ${summary?.totalLabel ?? "unknown"}/${summary?.procreationLabel ?? "unknown"}`,
+        label: `${canine.displayName} | ${summary?.character?.name ?? "unknown"} | ${canine.canineType ?? "unknown"} | ${summary?.totalLabel ?? "unknown"}/${summary?.procreationLabel ?? "unknown"}`,
         aliases: [canine.callName, canine.displayName, summary?.character?.name, summary?.human?.displayName].filter(
           (alias): alias is string => Boolean(alias?.trim())
         )

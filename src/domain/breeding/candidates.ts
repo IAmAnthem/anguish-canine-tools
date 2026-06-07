@@ -15,6 +15,7 @@ export type CanineRecord = {
   gender: Gender;
   canineType: string | null;
   status: string;
+  breedingRole?: string;
 };
 
 export type CharacterRecord = {
@@ -141,6 +142,10 @@ function compareTypes(selectedCanine: CanineRecord, candidateCanine: CanineRecor
   return `Mixed canine type: ${selectedCanine.canineType} to ${candidateCanine.canineType}.`;
 }
 
+function isBreedingPoolRole(role: string): boolean {
+  return role === "breeding" || role === "unknown";
+}
+
 export function evaluateBreedingCandidate(
   selectedCanine: CanineRecord,
   candidateCanine: CanineRecord,
@@ -191,6 +196,7 @@ export function findBreedingCandidates(input: FindBreedingCandidatesInput): Bree
     .filter((candidate) => candidate.id !== input.selectedCanine.id)
     .filter((candidate) => candidate.gender === requiredGender)
     .filter((candidate) => input.includeInactiveCandidates || candidate.status === "active")
+    .filter((candidate) => isBreedingPoolRole(candidate.breedingRole ?? "unknown"))
     .map((candidate) => evaluateBreedingCandidate(input.selectedCanine, candidate, input))
     .filter((candidate) => input.includeRelatedCandidates || candidate.isGeneticallySafe)
     .filter((candidate) => input.includeSameHumanCandidates || candidate.isDirectBreedingPractical)

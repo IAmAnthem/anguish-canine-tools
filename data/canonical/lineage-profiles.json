@@ -361,7 +361,7 @@
   },
   {
     "canineId": "canine-jeanie-brat-720",
-    "sireId": "canine-tree-snickerz-715",
+    "sireId": "canine-treehugger-snickerz-715",
     "damId": "canine-refrain-hobby-714",
     "paternalGrandSireId": null,
     "paternalGrandDamId": null,
@@ -2293,15 +2293,6 @@
     "paternalGrandDamId": "canine-toccato-misty",
     "maternalGrandSireId": "canine-dancer-step2-1090",
     "maternalGrandDamId": "canine-izen-ara-1116"
-  },
-  {
-    "canineId": "canine-tree-snickerz-715",
-    "sireId": null,
-    "damId": null,
-    "paternalGrandSireId": null,
-    "paternalGrandDamId": null,
-    "maternalGrandSireId": null,
-    "maternalGrandDamId": null
   },
   {
     "canineId": "canine-refrain-hobby-714",

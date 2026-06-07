@@ -8,6 +8,7 @@ This project should move from legacy PowerShell tools to a public, static web ap
 - Canonical public data should live in Git, not in an open writable database.
 - Data changes should be reviewable through commits or pull requests.
 - The app should distinguish genetic relationship safety from practical breeding availability.
+- The app should distinguish a current pet from a breeding-pool pet; not every active pet is part of the breeding cadre.
 - The app should distinguish relationship penalties from mixed-type breeding penalties.
 - The app should treat Procreation as a first-class breeding priority, not just another trait in a total score.
 - The app should support breeding decisions, not become a general canine time-tracking system.
@@ -29,6 +30,10 @@ This project should move from legacy PowerShell tools to a public, static web ap
 - [x] Import collar/gem reference data.
 - [x] Ignore private planning workbooks and local-only source material.
 - [x] Validate canonical data references manually.
+- [ ] Add canonical `canineType` (wolf, fox, coyote, jackal, dog, etc.) to canine records.
+- [ ] Add canonical breeding-pool participation field for canines, separate from `status`.
+- [ ] Define breeding-role values such as `breeding`, `play-only`, `retired`, and `unknown`.
+- [ ] Decide importer defaults for records that are active but not yet known to be in or out of the breeding cadre.
 
 ### Phase 1B: Trait Calculator Rules
 
@@ -69,6 +74,8 @@ This project should move from legacy PowerShell tools to a public, static web ap
 - [x] Surface Procreation independently from total score.
 - [x] Preserve estimated puppy values as estimates, not predictions.
 - [x] Keep planned puppies separate from actual statted canines.
+- [ ] Default breeding candidate pools to canines marked as part of the breeding cadre, not every merely active pet.
+- [ ] Decide whether Planner can optionally include `play-only` pets as an override instead of by default.
 
 ### Phase 1E: Reference Data Guidance
 
@@ -89,6 +96,9 @@ This project should move from legacy PowerShell tools to a public, static web ap
 - [x] Check every lineage parent/grandparent reference points to an existing canine or is null.
 - [x] Check reference data parses cleanly.
 - [x] Make the checks easy to run before every commit.
+- [ ] Check every canine has a valid `canineType`.
+- [ ] Check every canine has a valid breeding-role value.
+- [ ] Check there is no impossible combination such as `inactive` plus `breeding` unless explicitly allowed by policy.
 
 Initial repository data layout:
 
@@ -121,6 +131,7 @@ Verification commands:
 - [x] Show a visible data-load failure state.
 - [x] Run integrity checks during development or app startup.
 - [x] Keep private workbook/source material out of the app bundle.
+- [ ] Load and expose canonical `canineType` and breeding-role fields through app store helpers.
 
 ### Phase 2C: Trait Calculator UI
 
@@ -145,6 +156,9 @@ Verification commands:
 - [x] Show estimated puppy total/Procreation as an estimate, not a prediction.
 - [x] Generate hypothetical puppy lineage preview.
 - [x] Keep planned puppies visually separate from canonical canines.
+- [ ] Show canine type/race prominently in planner target and candidate summaries.
+- [ ] Exclude `play-only` and other non-breeding-role pets from planner selectors by default.
+- [ ] Add a clear override if maintainers want to inspect non-breeding-role pets without making them default breeding candidates.
 
 ### Phase 2E: Multi-Step Plan Mode
 
@@ -207,6 +221,9 @@ This is a separate workflow from the Phase 2D one-breeding Planner. The Planner 
 - [x] Keep canonical data read-only in the public app.
 - [x] Show source observations for selected canine records when available.
 - [x] Add app-level tests for data browser search, filters, sorting, and appearance display.
+- [ ] Show canine type/race in browser table and detail.
+- [ ] Show breeding-role in browser table and detail.
+- [ ] Add browser filters for canine type and breeding-role.
 
 ### Phase 2G: Reference Guidance UI
 
@@ -228,6 +245,9 @@ This is a separate workflow from the Phase 2D one-breeding Planner. The Planner 
 - [x] Add live breeding-cycle guidance including `encourage`, birth timing, puppy feeding risk, and Lessa cleanup.
 - [x] Add litter statting and triage workflow guidance that reflects real compare-driven breeding sessions.
 - [x] Add an app-directions workflow for live litter sessions rather than only static tab descriptions.
+- [x] Replace the breeding-trait note dump with a proper Trait/Descriptor reference table that stands on its own from collar history.
+- [x] Restore the full eye-color transition table, including outcomes such as `crimson`, `coppery`, `dark blue`, and `light grey`.
+- [x] Add explicit guidance for the common player question of how to improve a fully maxed pet.
 
 Follow-on opportunities from the real breeding workflow:
 
@@ -287,6 +307,11 @@ Domain rule:
 
 Current data note: initial status curation cleared all multiple-active-canine ownership conflicts. Historical pets confirmed gone should be `inactive`; old records with no current confirmation may remain `unknown`.
 
+Breeding-cadre rule:
+
+- [ ] Distinguish `active` from `in breeding cadre`; a player may actively use a pet without offering it to the herd breeding pool.
+- [ ] Decide whether breeding-role curation belongs in the same maintainer workflow as status curation or in a later adjacent mode.
+
 Status Curation UI:
 
 - [x] Add a maintainer/status-curation view separate from public breeding tools.
@@ -327,6 +352,8 @@ Later Expansion:
 - [ ] Include optional notes/source date in status patch export.
 - [ ] Support bulk spreadsheet import or update review.
 - [ ] Support trait, appearance, lineage, and ownership edits after status curation is proven safe.
+- [ ] Add breeding-role curation so maintainers can mark active pets as `breeding` versus `play-only` without changing historical status.
+- [ ] Add canine-type curation for records missing race/species.
 
 Ownership Review:
 
@@ -343,6 +370,8 @@ Ownership Review:
 - [x] Identify overused bloodlines and underrepresented clean lines.
 - [x] Show stale, inactive, or unknown-status records separately from current breeding stock.
 - [x] Add warnings when a proposed breeding path narrows future mate options.
+- [ ] Distinguish full active ownership from the smaller breeding cadre in herd summaries.
+- [ ] Let Herd Health default to the breeding cadre while still showing how many active pets are intentionally outside it.
 
 ### Phase 4C: Mating Algorithms
 
@@ -354,6 +383,8 @@ Mating Algorithms Tab:
 - [x] Add an algorithm selector so different recommendation styles can share one workflow surface.
 - [x] Add a target-canine picker for ranking mates against a specific active canine.
 - [x] Make algorithm intent explicit in the UI so users understand what the selected mode is optimizing for.
+- [ ] Default algorithm target/candidate pickers to breeding-cadre pets, not every active pet.
+- [ ] Surface canine type/race in algorithm target and candidate summaries where mixed-type tradeoffs matter.
 
 Compensatory Pairing:
 
@@ -383,18 +414,88 @@ Optimum Contribution Selection:
 - [x] Decide how to explain herd-level math in player terms users can trust.
 - [ ] Show why an OCS-ranked mate differs from compensatory or assortative rankings.
 
-## Phase 5: Custom Domain Later
+## Phase 5: AutoPlan Mode
+
+Goal: move from one-target planning into a higher-order breeding coordinator that can produce a practical roadmap for multiple cooperating players and multiple advancing alts at once.
+
+### Phase 5A: AutoPlan Domain Model
+
+- [ ] Define an AutoPlan request model separate from one-line Multi-Step plans.
+- [ ] Model cooperating players as a planning unit such as `John + Jeanie`.
+- [ ] Model the advancing player explicitly, separate from helper/breeding-support players.
+- [ ] Model the requested number of parallel advancing alts or bloodlines.
+- [ ] Model the requested number of cycles per advancing line.
+- [ ] Decide which assumptions are fixed defaults versus explicit user inputs.
+- [ ] Keep AutoPlan IDs visibly separate from canonical canine IDs and from existing Multi-Step local plan IDs.
+- [ ] Decide how AutoPlan request data references breeding-cadre pets versus active play-only pets.
+
+### Phase 5B: Candidate Pool And Constraints
+
+- [ ] Build an AutoPlan candidate pool from active canonical data.
+- [ ] Reuse existing practical filters: same-human alt blocking, genetic relationship safety, and actual canine gender.
+- [ ] Reuse herd-health data where helpful so AutoPlan avoids collapsing into the same overused lines.
+- [ ] Decide how AutoPlan treats stale, inactive, or unknown-status records.
+- [ ] Detect when the requested player pair does not have enough safe opposite-gender support to satisfy the requested roadmap.
+- [ ] Build AutoPlan from breeding-cadre records by default, while allowing explicit inclusion of active play-only pets only when the planner requests it.
+- [ ] Use canonical canine type/race in support-line selection where mixed-type penalties or goals matter.
+
+### Phase 5C: Roadmap Generation Logic
+
+- [ ] Generate an AutoPlan roadmap instead of a single pairing recommendation.
+- [ ] Support a request such as: player pair `John + Jeanie`, advancing player `John`, alts to advance `3`.
+- [ ] Produce a roadmap showing three advancing characters/pet lines being lifted through three breeding cycles each.
+- [ ] Decide how AutoPlan selects the initial advancing stock for each requested alt line.
+- [ ] Decide how AutoPlan chooses support mates from the cooperating herd without overusing one narrow line.
+- [ ] Show which player is expected to provide the time-gated female-cycle work versus which player is receiving the advancing bloodline benefit.
+- [ ] Keep the roadmap grounded in actual safe mate options from the current canonical pool.
+- [ ] Indicate where the roadmap is trying to flush ancestry out of the remembered parent/grandparent window.
+
+### Phase 5D: Roadmap Presentation
+
+- [ ] Add a dedicated AutoPlan UI surface separate from Planner, Multi-Step, and Algorithms.
+- [ ] Add selectors for player pair, advancing player, number of advancing alts, and cycles.
+- [ ] Group the generated roadmap by advancing character or pet line so parallel tracks are readable.
+- [ ] Show each cycle as a concrete breeding step, not abstract math.
+- [ ] Explain the plan in human terms: who breeds what, who keeps what, and what the next cycle depends on.
+- [ ] Surface warnings when the requested number of advancing alts is unrealistic for the available safe mate pool.
+- [ ] Make clear which steps are estimates and which later become confirmed by real litter outcomes.
+
+### Phase 5E: Shareable Plan Exchange
+
+- [ ] Define an exportable AutoPlan package format that a human can download and share with another player.
+- [ ] Keep the package local/file-based so the static app does not require a writable backend.
+- [ ] Include enough context in the package for another player to import and review the roadmap without guessing what herd assumptions were used.
+- [ ] Include canonical source date or export timestamp so recipients know how stale the plan might be.
+- [ ] Distinguish planner-owned estimated puppies from later real evaluated puppies inside the package.
+- [ ] Make the package safe to pass between players such as a herdmaster sending a proposed roadmap to John and Jeanie.
+
+### Phase 5F: Execution And Feedback Loop
+
+- [ ] Allow a recipient player to import a shared AutoPlan package and review the roadmap locally.
+- [ ] Let players record actual litter outcomes against the roadmap after real breeding sessions.
+- [ ] Reuse the existing compare-solving and puppy-slot workflows so real puppy evaluations can be attached to the shared plan.
+- [ ] Allow players to export updated puppy results back out for another coordinator or herdmaster to review.
+- [ ] Support a loop where Dave builds the initial roadmap, John and Jeanie execute/evaluate litters, then Dave reimports the updated results and revises the next cycle.
+- [ ] Preserve the distinction between estimated roadmap state and confirmed executed state at every handoff.
+
+### Phase 5G: Handoff To Existing Planning Tools
+
+- [ ] Let an AutoPlan roadmap hand off into existing Multi-Step workflows when one line needs detailed manual management.
+- [ ] Let AutoPlan consume existing Multi-Step results when a user has already partially executed a line.
+- [ ] Reuse Planner and Algorithms output where that improves specific cycle-level recommendations inside the roadmap.
+- [ ] Decide whether AutoPlan should call existing recommendation engines directly or materialize its own intermediate planning layer first.
+
+## Phase 6: Custom Domain Later
 
 - [ ] Decide whether to use GitHub Pages custom domain or wait for Cloudflare Pages.
 - [ ] Pick final hostname or subdomain.
 - [ ] Configure DNS.
 - [ ] Verify HTTPS.
 
-## Phase 6: Later Ideas
+## Phase 7: Later Ideas
 
 - Optional local private data import.
 - Optional submission generator for players to send curated data updates.
-- Multi-generation breeding path suggestions.
 - Ranking weights for total score versus Procreation.
 - Cosmetic/appearance goal filtering.
 - Collar/birth-influence planning notes.

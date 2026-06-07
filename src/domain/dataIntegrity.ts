@@ -14,6 +14,8 @@ export type CanineRecord = {
   id: string;
   characterId: string;
   status?: string;
+  canineType?: string | null;
+  breedingRole?: string;
 };
 
 export type TraitProfileRecord = {
@@ -56,6 +58,7 @@ const lineageReferenceFields = [
   "maternalGrandSireId",
   "maternalGrandDamId"
 ] as const;
+const validBreedingRoles = new Set(["breeding", "play-only", "retired", "unknown"]);
 
 function duplicateValues(values: readonly string[]): string[] {
   const seen = new Set<string>();
@@ -137,6 +140,18 @@ export function validateCanonicalData(data: CanonicalDataSet): DataIntegrityRepo
   for (const canine of data.canines) {
     if (!characterIds.has(canine.characterId)) {
       addMissingReferenceError(errors, "Canine", canine.id, "characterId", canine.characterId);
+    }
+
+    if (canine.breedingRole !== undefined && !validBreedingRoles.has(canine.breedingRole)) {
+      errors.push(`Canine '${canine.id}' has invalid breedingRole '${String(canine.breedingRole)}'.`);
+    }
+
+    if (canine.canineType !== null && canine.canineType !== undefined && typeof canine.canineType !== "string") {
+      errors.push(`Canine '${canine.id}' has non-string canineType.`);
+    }
+
+    if (canine.status === "inactive" && canine.breedingRole === "breeding") {
+      errors.push(`Canine '${canine.id}' is inactive but marked as breeding.`);
     }
   }
 

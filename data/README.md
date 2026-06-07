@@ -35,6 +35,21 @@ Do not use canine names as primary keys. Some players rename every canine, while
 
 External IDs, such as anguish.org `wolfid`, are optional enrichment and should not replace internal IDs.
 
+## Current Pet Versus Breeding Pet
+
+`status` and breeding participation are separate concerns.
+
+- `status` tracks whether a canine is current, historical, or uncertain.
+- `breedingRole` tracks whether a current canine belongs to the breeding cadre.
+
+Examples:
+
+- `active` + `breeding`: current pet that should appear in breeding tools
+- `active` + `play-only`: current pet that is being used or played, but not offered to the breeding pool
+- `inactive` + `retired`: historical pet kept for records and lineage only
+
+This split is important because players often keep one or two characters in the breeding cadre while actively playing a different current pet on other characters.
+
 ## Missing Data
 
 Unknown, NPC, or untracked ancestors should be represented as `null` lineage references.

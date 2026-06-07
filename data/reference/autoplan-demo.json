@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "kind": "autoplan-package",
+  "exportedAt": "2026-06-07T16:30:00.000Z",
+  "packageId": "autoplan:john-jeanie-john-3x3-demo",
+  "packageName": "John + Jeanie / John advancing / 3 lines x 3 cycles",
+  "sourceSnapshot": {
+    "source": "canonical-repo-data",
+    "integrity": "verified",
+    "notes": "Demo package for AutoPlan phase 5A shape work."
+  },
+  "request": {
+    "cooperatingHumanIds": ["human-john", "human-jeanie"],
+    "advancingHumanId": "human-john",
+    "advancingCharacterIds": ["character-doli", "character-pom", "character-repo"],
+    "requestedAltCount": 3,
+    "cyclesPerLine": 3,
+    "notes": "Herdmaster wants three John lines advanced with Jeanie supporting time-gated breeding cycles."
+  },
+  "lines": [
+    {
+      "lineId": "autoplan:john-jeanie-john-3x3-demo:line-1",
+      "advancingCharacterId": "character-doli",
+      "lineLabel": "Doli line",
+      "status": "planned",
+      "cycles": [
+        {
+          "cycleId": "autoplan:john-jeanie-john-3x3-demo:line-1:cycle-1",
+          "cycleNumber": 1,
+          "advancingCharacterId": "character-doli",
+          "supportCharacterId": "character-whap",
+          "goal": "Produce a first carry-forward puppy from Doli stock using Jeanie support.",
+          "estimatedCarryForwardId": "autoplan:john-jeanie-john-3x3-demo:line-1:cycle-1:carry-forward",
+          "status": "planned"
+        },
+        {
+          "cycleId": "autoplan:john-jeanie-john-3x3-demo:line-1:cycle-2",
+          "cycleNumber": 2,
+          "advancingCharacterId": "character-doli",
+          "supportCharacterId": "character-storm",
+          "goal": "Push the selected Doli carry-forward deeper into the supporting herd.",
+          "estimatedCarryForwardId": "autoplan:john-jeanie-john-3x3-demo:line-1:cycle-2:carry-forward",
+          "status": "planned"
+        },
+        {
+          "cycleId": "autoplan:john-jeanie-john-3x3-demo:line-1:cycle-3",
+          "cycleNumber": 3,
+          "advancingCharacterId": "character-doli",
+          "supportCharacterId": "character-jeanie",
+          "goal": "Flush starting ancestry and produce the third-cycle output for the Doli line.",
+          "estimatedCarryForwardId": "autoplan:john-jeanie-john-3x3-demo:line-1:cycle-3:carry-forward",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "lineId": "autoplan:john-jeanie-john-3x3-demo:line-2",
+      "advancingCharacterId": "character-pom",
+      "lineLabel": "Pom line",
+      "status": "planned",
+      "cycles": [
+        {
+          "cycleId": "autoplan:john-jeanie-john-3x3-demo:line-2:cycle-1",
+          "cycleNumber": 1,
+          "advancingCharacterId": "character-pom",
+          "supportCharacterId": "character-arynia",
+          "goal": "Start the Pom line lift with a clean supporting female cycle.",
+          "estimatedCarryForwardId": "autoplan:john-jeanie-john-3x3-demo:line-2:cycle-1:carry-forward",
+          "status": "planned"
+        },
+        {
+          "cycleId": "autoplan:john-jeanie-john-3x3-demo:line-2:cycle-2",
+          "cycleNumber": 2,
+          "advancingCharacterId": "character-pom",
+          "supportCharacterId": "character-whap",
+          "goal": "Continue Pom through a second cooperating support line.",
+          "estimatedCarryForwardId": "autoplan:john-jeanie-john-3x3-demo:line-2:cycle-2:carry-forward",
+          "status": "planned"
+        },
+        {
+          "cycleId": "autoplan:john-jeanie-john-3x3-demo:line-2:cycle-3",
+          "cycleNumber": 3,
+          "advancingCharacterId": "character-pom",
+          "supportCharacterId": "character-stormsong",
+          "goal": "Finish the Pom roadmap with a third flush cycle.",
+          "estimatedCarryForwardId": "autoplan:john-jeanie-john-3x3-demo:line-2:cycle-3:carry-forward",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "lineId": "autoplan:john-jeanie-john-3x3-demo:line-3",
+      "advancingCharacterId": "character-repo",
+      "lineLabel": "Repo line",
+      "status": "planned",
+      "cycles": [
+        {
+          "cycleId": "autoplan:john-jeanie-john-3x3-demo:line-3:cycle-1",
+          "cycleNumber": 1,
+          "advancingCharacterId": "character-repo",
+          "supportCharacterId": "character-rain",
+          "goal": "Start the Repo line against current Jeanie support stock.",
+          "estimatedCarryForwardId": "autoplan:john-jeanie-john-3x3-demo:line-3:cycle-1:carry-forward",
+          "status": "planned"
+        },
+        {
+          "cycleId": "autoplan:john-jeanie-john-3x3-demo:line-3:cycle-2",
+          "cycleNumber": 2,
+          "advancingCharacterId": "character-repo",
+          "supportCharacterId": "character-jackal",
+          "goal": "Carry the Repo line through a second safe support cycle.",
+          "estimatedCarryForwardId": "autoplan:john-jeanie-john-3x3-demo:line-3:cycle-2:carry-forward",
+          "status": "planned"
+        },
+        {
+          "cycleId": "autoplan:john-jeanie-john-3x3-demo:line-3:cycle-3",
+          "cycleNumber": 3,
+          "advancingCharacterId": "character-repo",
+          "supportCharacterId": "character-storm",
+          "goal": "Produce the third-cycle Repo output after the starting line has been diluted through the herd.",
+          "estimatedCarryForwardId": "autoplan:john-jeanie-john-3x3-demo:line-3:cycle-3:carry-forward",
+          "status": "planned"
+        }
+      ]
+    }
+  ]
+}

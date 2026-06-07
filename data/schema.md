@@ -42,7 +42,8 @@ Use `"humanId": null` when a character or historical canine should remain in lin
     "secondaryColor": "Silver",
     "eyeColor": "Turquoise"
   },
-  "status": "active"
+  "status": "active",
+  "breedingRole": "breeding"
 }
 ```
 
@@ -56,6 +57,8 @@ Notes:
 - `appearance` stores visible observed appearance only. It should not be treated as the full inherited appearance state.
 - Hidden color/appearance data may exist but is not currently modeled in canonical records.
 - A character can have only one active canine at a time. Historical canines for that character should be `inactive` or `unknown`.
+- `status` answers whether the record is current, historical, or uncertain.
+- `breedingRole` answers whether a current pet is part of the breeding cadre. Not every active pet is available for breeding suggestions.
 
 ## `trait-profiles.json`
 

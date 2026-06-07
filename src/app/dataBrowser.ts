@@ -1,9 +1,20 @@
-import { formatValue, type CanineSummary, type DataStore, type Gender, type RecordStatus, type TraitValue } from "./dataStore.js";
+import {
+  formatBreedingRole,
+  formatValue,
+  type BreedingRole,
+  type CanineSummary,
+  type DataStore,
+  type Gender,
+  type RecordStatus,
+  type TraitValue
+} from "./dataStore.js";
 
 export type DataBrowserFilters = {
   query: string;
   gender: "all" | Gender;
   status: "all" | RecordStatus;
+  breedingRole: "all" | BreedingRole;
+  canineType: "all" | string;
   humanId: "all" | string;
   minTotal: number | null;
   minProcreation: number | null;
@@ -34,6 +45,8 @@ export type DataBrowserResult = {
   selected: DataBrowserRow | null;
   genderOptions: DataBrowserOption[];
   statusOptions: DataBrowserOption[];
+  breedingRoleOptions: DataBrowserOption[];
+  canineTypeOptions: DataBrowserOption[];
   humanOptions: DataBrowserOption[];
   primaryColorOptions: DataBrowserOption[];
   secondaryColorOptions: DataBrowserOption[];
@@ -44,6 +57,8 @@ export const defaultDataBrowserFilters: DataBrowserFilters = {
   query: "",
   gender: "all",
   status: "all",
+  breedingRole: "all",
+  canineType: "all",
   humanId: "all",
   minTotal: null,
   minProcreation: null,
@@ -71,6 +86,11 @@ export function getDataBrowserResult(
     selected,
     genderOptions: buildOptions(allRows.map((row) => row.canine.gender), formatGenderOption),
     statusOptions: buildOptions(allRows.map((row) => row.canine.status), formatStatusOption),
+    breedingRoleOptions: buildOptions(allRows.map((row) => row.canine.breedingRole ?? "unknown"), formatBreedingRole),
+    canineTypeOptions: buildOptions(
+      allRows.map((row) => row.canine.canineType?.trim() || "unknown"),
+      (value) => value
+    ),
     humanOptions: buildHumanOptions(allRows),
     primaryColorOptions: buildOptions(allRows.map((row) => row.primaryColorLabel), formatAppearanceOption),
     secondaryColorOptions: buildOptions(allRows.map((row) => row.secondaryColorLabel), formatAppearanceOption),
@@ -92,6 +112,7 @@ export function createDataBrowserRow(summary: CanineSummary): DataBrowserRow {
     summary.canine.id,
     summary.canine.gender,
     summary.canine.status,
+    summary.canine.breedingRole ?? "unknown",
     summary.canine.canineType,
     summary.character?.name,
     summary.human?.displayName,
@@ -130,6 +151,14 @@ export function matchesDataBrowserFilters(row: DataBrowserRow, filters: DataBrow
   }
 
   if (filters.status !== "all" && row.canine.status !== filters.status) {
+    return false;
+  }
+
+  if (filters.breedingRole !== "all" && (row.canine.breedingRole ?? "unknown") !== filters.breedingRole) {
+    return false;
+  }
+
+  if (filters.canineType !== "all" && (row.canine.canineType?.trim() || "unknown") !== filters.canineType) {
     return false;
   }
 

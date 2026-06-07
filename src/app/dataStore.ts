@@ -19,6 +19,7 @@ import type { TraitName } from "../domain/traits/traitNames.js";
 
 export type RecordStatus = "active" | "inactive" | "unknown" | "known" | "summary" | string;
 export type Gender = "M" | "F" | "U" | "A" | string;
+export type BreedingRole = "breeding" | "play-only" | "retired" | "unknown" | string;
 export type RangeValue = {
   min: number;
   max: number;
@@ -56,6 +57,7 @@ export type Canine = {
   canineType: string | null;
   appearance: CanineAppearance | null;
   status: RecordStatus;
+  breedingRole?: BreedingRole;
 };
 
 export type TraitProfile = {
@@ -116,6 +118,7 @@ export type DataStore = {
     characters: number;
     canines: number;
     activeCanines: number;
+    breedingCanines: number;
     knownTraitProfiles: number;
     lineageProfiles: number;
     collarReferences: number;
@@ -206,6 +209,7 @@ export function createDataStore(data: RepositoryData = loadRepositoryData()): Da
       characters: data.canonical.characters.length,
       canines: data.canonical.canines.length,
       activeCanines: data.canonical.canines.filter((canine) => canine.status === "active").length,
+      breedingCanines: data.canonical.canines.filter(isBreedingPoolCanine).length,
       knownTraitProfiles: data.canonical.traitProfiles.filter((profile) => profile.status === "known").length,
       lineageProfiles: data.canonical.lineageProfiles.length,
       collarReferences: data.reference.collars.length
@@ -223,6 +227,18 @@ export function formatValue(value: TotalValue | undefined): string {
   }
 
   return "unknown";
+}
+
+export function isBreedingPoolRole(role: BreedingRole): boolean {
+  return role === "breeding" || role === "unknown";
+}
+
+export function isBreedingPoolCanine(canine: Pick<Canine, "status" | "breedingRole">): boolean {
+  return canine.status === "active" && isBreedingPoolRole(canine.breedingRole ?? "unknown");
+}
+
+export function formatBreedingRole(value: BreedingRole): string {
+  return value.replaceAll("-", " ");
 }
 
 function indexById<T extends { id: string }>(records: readonly T[]): ReadonlyMap<string, T> {

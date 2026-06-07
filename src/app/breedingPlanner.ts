@@ -1,4 +1,4 @@
-import type { Canine, DataStore, TraitProfile } from "./dataStore.js";
+import { isBreedingPoolCanine, type Canine, type DataStore, type TraitProfile } from "./dataStore.js";
 import {
   estimatePuppyBreedingValue,
   findBreedingCandidates,
@@ -36,12 +36,12 @@ export type PlannerOptions = {
 export function getBreedingCanineOptions(store: DataStore): BreedingCanineOption[] {
   return store.data.canonical.canines
     .filter((canine) => canine.gender === "M" || canine.gender === "F" || canine.id === "canine-an-untraited-canine")
-    .filter((canine) => canine.status === "active")
+    .filter((canine) => canine.id === "canine-an-untraited-canine" || isBreedingPoolCanine(canine))
     .map((canine) => {
       const summary = store.getCanineSummary(canine.id);
       return {
         canineId: canine.id,
-        label: `${canine.displayName} | ${summary?.character?.name ?? "unknown"} | ${summary?.totalLabel ?? "unknown"}/${summary?.procreationLabel ?? "unknown"}`,
+        label: `${canine.displayName} | ${summary?.character?.name ?? "unknown"} | ${canine.canineType ?? "unknown"} | ${summary?.totalLabel ?? "unknown"}/${summary?.procreationLabel ?? "unknown"}`,
         aliases: [canine.callName, canine.displayName, summary?.character?.name, summary?.human?.displayName].filter(
           (alias): alias is string => Boolean(alias?.trim())
         )
@@ -165,7 +165,8 @@ function toCandidateRecord(canine: Canine): CanineRecord {
     characterId: canine.characterId,
     gender: canine.gender as CanineRecord["gender"],
     canineType: canine.canineType,
-    status: canine.status
+    status: canine.status,
+    breedingRole: canine.breedingRole ?? "unknown"
   };
 }
 
