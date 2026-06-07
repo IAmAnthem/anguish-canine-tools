@@ -3355,5 +3355,32 @@
     "paternalGrandDamId": null,
     "maternalGrandSireId": null,
     "maternalGrandDamId": null
+  },
+  {
+    "canineId": "canine-jonsnow-ghost-1124",
+    "sireId": null,
+    "damId": null,
+    "paternalGrandSireId": null,
+    "paternalGrandDamId": null,
+    "maternalGrandSireId": null,
+    "maternalGrandDamId": null
+  },
+  {
+    "canineId": "canine-repo-boomer-1125",
+    "sireId": null,
+    "damId": null,
+    "paternalGrandSireId": null,
+    "paternalGrandDamId": null,
+    "maternalGrandSireId": null,
+    "maternalGrandDamId": null
+  },
+  {
+    "canineId": "canine-grogu-mando-1119",
+    "sireId": null,
+    "damId": null,
+    "paternalGrandSireId": null,
+    "paternalGrandDamId": null,
+    "maternalGrandSireId": null,
+    "maternalGrandDamId": null
   }
 ]

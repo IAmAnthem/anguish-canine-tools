@@ -6,6 +6,7 @@ import {
   type PlannerCandidate
 } from "./app/breedingPlanner.js";
 import {
+  createDataBrowserRow,
   defaultDataBrowserFilters,
   formatTraitValue,
   getDataBrowserResult,
@@ -15,6 +16,7 @@ import {
 import {
   createDataStore,
   formatBreedingRole,
+  type CanineAppearance,
   type BreedingRole,
   type CanineSummary,
   type DataStore
@@ -89,7 +91,8 @@ import { traitNames } from "./domain/traits/traitNames.js";
 type AppView = "calculator" | "planner" | "multi-step" | "browser" | "herd" | "autoplan" | "algorithms" | "ranger" | "directions" | "contribute";
 type CuratedCanineStatus = "active" | "inactive" | "unknown";
 type CuratedBreedingRole = "breeding" | "play-only" | "retired" | "unknown";
-type CurationMode = "status" | "ownership" | "breeding-role" | "canine-type";
+type CuratedGender = "M" | "F" | "U" | "A";
+type CurationMode = "status" | "ownership" | "breeding-role" | "canine-type" | "gender" | "appearance";
 type HerdPane = "health" | "curate";
 type RangerPane = "overview" | "abilities" | "companions" | "breeding" | "appearance" | "gear";
 
@@ -148,7 +151,7 @@ const views: ViewDefinition[] = [
     label: "AutoPlan",
     eyebrow: "Roadmap generation",
     title: "AutoPlan mode",
-    status: "Placeholder surface for multi-player, multi-cycle breeding roadmaps and shareable plan exchange.",
+    status: "First-pass roadmap builder for multi-player, multi-cycle breeding plans and shareable handoff packages.",
     items: ["Players", "Cycles", "Roadmap", "Exchange"]
   },
   {
@@ -156,7 +159,7 @@ const views: ViewDefinition[] = [
     label: "Algorithms",
     eyebrow: "Mate finder",
     title: "Mating algorithms",
-    status: "Compensatory, positive assortative, and first-pass OCS ranking are all available for side-by-side mate review.",
+    status: "OCS is the default general-breeding ranking, with compensatory and assortative modes for special goals.",
     items: ["Algorithm", "Target canine", "Ranked mates", "Tradeoffs"]
   },
   {
@@ -195,17 +198,33 @@ const breedingTargetSelectId = "breeding-target-select";
 const calculatorState: {
   selectedKnownId: string;
   knownFilter: string;
+  knownHumanId: "all" | string;
+  hideRetiredKnowns: boolean;
   directionMode: CalculatorDirectionMode;
   comparisonText: string;
   resultName: string;
+  humanName: string;
+  characterName: string;
+  callName: string;
+  observedDescription: string;
+  exportStatus: CuratedCanineStatus;
+  exportBreedingRole: CuratedBreedingRole;
   history: CalculatorHistoryEntry[];
   draftWarnings: string[];
 } = {
   selectedKnownId: knownCanineOptions[0]?.canineId ?? "",
   knownFilter: "",
+  knownHumanId: "all",
+  hideRetiredKnowns: true,
   directionMode: "auto",
   comparisonText: "",
   resultName: "",
+  humanName: "",
+  characterName: "",
+  callName: "",
+  observedDescription: "",
+  exportStatus: "active",
+  exportBreedingRole: "breeding",
   history: [],
   draftWarnings: []
 };
@@ -244,16 +263,36 @@ const dataBrowserState: {
 };
 const curationState: {
   mode: CurationMode;
+  hideInactive: boolean;
+  filters: Pick<DataBrowserFilters, "query" | "gender" | "status" | "breedingRole" | "canineType" | "humanId"> & {
+    characterId: "all" | string;
+  };
+  selectedCanineId: string;
   statusUpdatesByCanineId: Record<string, CuratedCanineStatus>;
   breedingRoleUpdatesByCanineId: Record<string, CuratedBreedingRole>;
   canineTypeUpdatesByCanineId: Record<string, string | null>;
+  genderUpdatesByCanineId: Record<string, CuratedGender>;
+  appearanceUpdatesByCanineId: Record<string, CanineAppearance>;
   humanUpdatesByCharacterId: Record<string, string | null>;
   copiedPatch: boolean;
 } = {
   mode: "status",
+  hideInactive: true,
+  filters: {
+    query: "",
+    gender: "all",
+    status: "all",
+    breedingRole: "all",
+    canineType: "all",
+    humanId: "all",
+    characterId: "all"
+  },
+  selectedCanineId: "",
   statusUpdatesByCanineId: {},
   breedingRoleUpdatesByCanineId: {},
   canineTypeUpdatesByCanineId: {},
+  genderUpdatesByCanineId: {},
+  appearanceUpdatesByCanineId: {},
   humanUpdatesByCharacterId: {},
   copiedPatch: false
 };
@@ -261,6 +300,23 @@ const herdState: {
   activePane: HerdPane;
 } = {
   activePane: "health"
+};
+const autoPlanDemoPackage = getAutoPlanDemoPackage();
+const autoPlanState: {
+  cooperatingHumanIds: [string, string];
+  advancingHumanId: string;
+  advancingStrategy: "lowest" | "highest";
+  requestedAltCount: number;
+  cyclesPerLine: number;
+} = {
+  cooperatingHumanIds: [
+    autoPlanDemoPackage.request.cooperatingHumanIds[0] ?? dataStore.data.canonical.humans[0]?.id ?? "",
+    autoPlanDemoPackage.request.cooperatingHumanIds[1] ?? dataStore.data.canonical.humans[1]?.id ?? ""
+  ],
+  advancingHumanId: autoPlanDemoPackage.request.advancingHumanId,
+  advancingStrategy: "lowest",
+  requestedAltCount: autoPlanDemoPackage.request.requestedAltCount,
+  cyclesPerLine: autoPlanDemoPackage.request.cyclesPerLine
 };
 const rangerState: {
   activePane: RangerPane;
@@ -311,7 +367,10 @@ function render(): void {
 function createShell(): HTMLElement {
   const shell = createElement("main", "app-shell");
   const header = createHeader(dataStore);
-  const layout = createElement("section", activeView === "herd" ? "workspace workspace-wide" : "workspace");
+  const layout = createElement(
+    "section",
+    activeView === "herd" || activeView === "autoplan" ? "workspace workspace-wide" : "workspace"
+  );
   const nav = createNavigation();
   const panel = createPanel(views.find((view) => view.id === activeView) ?? views[0], dataStore);
 
@@ -331,23 +390,37 @@ function createHeader(store: DataStore): HTMLElement {
     "summary",
     "A small public workspace for canine trait solving, breeding checks, and shared reference data."
   );
+  const links = createElement("p", "summary header-links");
+  const siteLink = document.createElement("a");
+  const telnetLink = document.createElement("a");
   const status = createElement("div", "status-strip");
   const statusItems = [
-    ["Canines", String(store.stats.canines)],
-    ["Active", String(store.stats.activeCanines)],
-    ["Breeding", String(store.stats.breedingCanines)],
-    ["Profiles", String(store.stats.knownTraitProfiles)],
-    ["Refs", String(store.stats.collarReferences)],
-    ["Data", store.integrity.isValid ? "Verified" : "Needs Work"]
+    ["Canines", String(store.stats.canines), "Total canonical canine records currently loaded into the app."],
+    ["Active", String(store.stats.activeCanines), "Canines currently marked active in the dataset, whether or not they are part of the breeding cadre."],
+    ["Breeding", String(store.stats.breedingCanines), "Active canines currently treated as part of the breeding cadre for planner, herd, and algorithm views."],
+    ["Profiles", String(store.stats.knownTraitProfiles), "Known trait profiles with usable solved stat data."],
+    ["Refs", String(store.stats.collarReferences), "Reference rows loaded for collars, gems, and related guidance tables."],
+    ["Data", store.integrity.isValid ? "Verified" : "Needs Work", "Repository data integrity status based on the built-in validation checks."]
   ];
 
-  for (const [label, value] of statusItems) {
+  for (const [label, value, tooltip] of statusItems) {
     const item = createElement("div", "status-item");
+    item.title = tooltip;
     item.append(createElement("span", "status-label", label), createElement("strong", undefined, value));
     status.append(item);
   }
 
-  titleGroup.append(eyebrow, title, summary);
+  siteLink.href = "https://anguish.org/";
+  siteLink.target = "_blank";
+  siteLink.rel = "noreferrer";
+  siteLink.textContent = "https://anguish.org/";
+
+  telnetLink.href = "telnet://ancient.anguish.org:2222";
+  telnetLink.textContent = "telnet://ancient.anguish.org:2222";
+
+  links.append("Website: ", siteLink, " | Telnet: ", telnetLink);
+
+  titleGroup.append(eyebrow, title, summary, links);
   header.append(titleGroup, status);
 
   return header;
@@ -449,37 +522,122 @@ function createHerdPaneToggle(): HTMLElement {
 
 function createAutoPlanPlaceholderWorkflow(): HTMLElement {
   const section = createElement("section", "workflow-section guidance-layout");
-  const panel = createElement("section", "plan-panel");
-  const demoPackage = getAutoPlanDemoPackage();
-  const summary = getAutoPlanSummary(demoPackage);
-  const list = createElement("ul", "compact-list");
+  const generatedPackage = createAutoPlanPreviewPackage(dataStore);
+  const summary = getAutoPlanSummary(generatedPackage);
+  section.append(
+    createAutoPlanRequestPanel(dataStore),
+    createAutoPlanSummaryPanel(summary),
+    createAutoPlanPackageShapePanel(generatedPackage),
+    createAutoPlanLinePreviewPanel(generatedPackage, dataStore)
+  );
+  return section;
+}
 
-  for (const line of [
-    "Select a cooperating player pair such as John and Jeanie.",
-    "Choose which player is primarily advancing their own bloodlines.",
-    "Choose how many alts or parallel pet lines should be advanced.",
-    "Generate a shareable roadmap covering multiple cycles, carry-forward choices, and execution handoffs."
-  ]) {
-    list.append(createElement("li", undefined, line));
+function createAutoPlanRequestPanel(store: DataStore): HTMLElement {
+  const panel = createElement("section", "plan-panel");
+  const controls = createElement("div", "field-grid algorithm-controls");
+  const firstHumanSelect = createElement("select", "field-control");
+  const secondHumanSelect = createElement("select", "field-control");
+  const advancingHumanSelect = createElement("select", "field-control");
+  const advancingStrategySelect = createElement("select", "field-control");
+  const altCountSelect = createElement("select", "field-control");
+  const cycleCountSelect = createElement("select", "field-control");
+  const humanOptions = store.data.canonical.humans
+    .filter((human) => human.id !== "human-unknown")
+    .sort((left, right) => left.displayName.localeCompare(right.displayName, undefined, { sensitivity: "base" }));
+
+  for (const human of humanOptions) {
+    const firstOption = document.createElement("option");
+    firstOption.value = human.id;
+    firstOption.textContent = human.displayName;
+    firstOption.selected = autoPlanState.cooperatingHumanIds[0] === human.id;
+    firstHumanSelect.append(firstOption);
+
+    const secondOption = document.createElement("option");
+    secondOption.value = human.id;
+    secondOption.textContent = human.displayName;
+    secondOption.selected = autoPlanState.cooperatingHumanIds[1] === human.id;
+    secondHumanSelect.append(secondOption);
+
+    const advancingOption = document.createElement("option");
+    advancingOption.value = human.id;
+    advancingOption.textContent = human.displayName;
+    advancingOption.selected = autoPlanState.advancingHumanId === human.id;
+    advancingHumanSelect.append(advancingOption);
   }
 
+  for (let count = 1; count <= 4; count += 1) {
+    const option = document.createElement("option");
+    option.value = String(count);
+    option.textContent = String(count);
+    option.selected = autoPlanState.requestedAltCount === count;
+    altCountSelect.append(option);
+  }
+
+  for (let count = 1; count <= 4; count += 1) {
+    const option = document.createElement("option");
+    option.value = String(count);
+    option.textContent = String(count);
+    option.selected = autoPlanState.cyclesPerLine === count;
+    cycleCountSelect.append(option);
+  }
+
+  for (const [value, label] of [
+    ["lowest", "Autopick lowest active characters"],
+    ["highest", "Autopick highest active characters"]
+  ] as const) {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = label;
+    option.selected = autoPlanState.advancingStrategy === value;
+    advancingStrategySelect.append(option);
+  }
+
+  firstHumanSelect.addEventListener("change", () => {
+    autoPlanState.cooperatingHumanIds[0] = firstHumanSelect.value;
+    render();
+  });
+  secondHumanSelect.addEventListener("change", () => {
+    autoPlanState.cooperatingHumanIds[1] = secondHumanSelect.value;
+    render();
+  });
+  advancingHumanSelect.addEventListener("change", () => {
+    autoPlanState.advancingHumanId = advancingHumanSelect.value;
+    render();
+  });
+  advancingStrategySelect.addEventListener("change", () => {
+    autoPlanState.advancingStrategy = advancingStrategySelect.value as typeof autoPlanState.advancingStrategy;
+    render();
+  });
+  altCountSelect.addEventListener("change", () => {
+    autoPlanState.requestedAltCount = Number(altCountSelect.value);
+    render();
+  });
+  cycleCountSelect.addEventListener("change", () => {
+    autoPlanState.cyclesPerLine = Number(cycleCountSelect.value);
+    render();
+  });
+
+  controls.append(
+    createLabel("Player 1", firstHumanSelect),
+    createLabel("Player 2", secondHumanSelect),
+    createLabel("Advancing player", advancingHumanSelect),
+    createLabel("Advancing strategy", advancingStrategySelect),
+    createLabel("Alts to advance", altCountSelect),
+    createLabel("Cycles per line", cycleCountSelect)
+  );
+
   panel.append(
-    createElement("h3", undefined, "AutoPlan placeholder"),
+    createElement("h3", undefined, "AutoPlan request"),
     createElement(
       "p",
       "plan-note",
-      "This tab is reserved for roadmap generation across multiple players and multiple breeding cycles. The underlying model is planned, but the executable workflow is not built yet."
+      "This first pass builds a shareable roadmap skeleton. The default planning assumption is OCS-style general breeding, then the human herdmaster reviews and adjusts the specific pairings. By default, AutoPlan starts from the advancing player's lowest active lines."
     ),
-    list
+    controls
   );
 
-  section.append(
-    panel,
-    createAutoPlanSummaryPanel(summary),
-    createAutoPlanPackageShapePanel(demoPackage),
-    createAutoPlanLinePreviewPanel(demoPackage)
-  );
-  return section;
+  return panel;
 }
 
 function createAutoPlanSummaryPanel(summary: ReturnType<typeof getAutoPlanSummary>): HTMLElement {
@@ -489,6 +647,7 @@ function createAutoPlanSummaryPanel(summary: ReturnType<typeof getAutoPlanSummar
     ["Package", summary.packageName],
     ["Cooperating humans", summary.cooperatingHumans.join(" + ")],
     ["Advancing human", summary.advancingHumanId],
+    ["Advancing strategy", autoPlanState.advancingStrategy === "lowest" ? "Lowest active lines first" : "Highest active lines first"],
     ["Line count", String(summary.lineCount)],
     ["Cycles per line", String(summary.cyclesPerLine)],
     ["Total cycles", String(summary.totalCycles)]
@@ -499,8 +658,8 @@ function createAutoPlanSummaryPanel(summary: ReturnType<typeof getAutoPlanSummar
   }
 
   panel.append(
-    createElement("h3", undefined, "Phase 5A package summary"),
-    createElement("p", "plan-note", "This is the first-pass AutoPlan package shape: request, roadmap lines, and cycle skeletons."),
+    createElement("h3", undefined, "AutoPlan roadmap summary"),
+    createElement("p", "plan-note", "This is the first-pass AutoPlan package shape: request, roadmap lines, and cycle skeletons generated from the current player choices."),
     list
   );
 
@@ -523,26 +682,39 @@ function createAutoPlanPackageShapePanel(pkg: AutoPlanPackage): HTMLElement {
   );
 }
 
-function createAutoPlanLinePreviewPanel(pkg: AutoPlanPackage): HTMLElement {
+function createAutoPlanLinePreviewPanel(pkg: AutoPlanPackage, store: DataStore): HTMLElement {
   const section = createElement("section", "guidance-layout");
 
   for (const line of pkg.lines) {
     const panel = createElement("section", "plan-panel");
+    const lineActivePet = getPrimaryActivePetForCharacter(store, line.advancingCharacterId);
     const rows = line.cycles.map((cycle) => [
       String(cycle.cycleNumber),
       cycle.advancingCharacterId,
+      cycle.cycleNumber === 1
+        ? describeCharacterPets(store, cycle.advancingCharacterId)
+        : `${line.lineId}:carry-${cycle.cycleNumber - 1}`,
       cycle.supportCharacterId ?? "unassigned",
+      cycle.supportCharacterId ? describeCharacterPets(store, cycle.supportCharacterId) : "unassigned",
       cycle.estimatedCarryForwardId.replace(`${line.lineId}:`, ""),
       cycle.goal
     ]);
 
     panel.append(
       createElement("h3", undefined, line.lineLabel),
-      createElement("p", "plan-note", `Line id: ${line.lineId}`),
+      createElement(
+        "p",
+        "plan-note",
+        `Line id: ${line.lineId} | Starting pet: ${describeCharacterPets(store, line.advancingCharacterId)}${
+          lineActivePet?.traitProfile && typeof lineActivePet.traitProfile.total === "number"
+            ? ` | Total ${lineActivePet.traitProfile.total} / Proc ${formatTraitValue(lineActivePet.traitProfile.traits?.Procreation)}`
+            : ""
+        }`
+      ),
       createSimpleTablePanel(
         "Cycle roadmap",
         "Each cycle is a concrete breeding step with an expected carry-forward result, even before the real litter exists.",
-        ["Cycle", "Advancing character", "Support character", "Estimated carry-forward", "Goal"],
+        ["Cycle", "Advancing character", "Advancing pet(s)", "Support character", "Support pet(s)", "Estimated carry-forward", "Goal"],
         rows
       )
     );
@@ -551,6 +723,177 @@ function createAutoPlanLinePreviewPanel(pkg: AutoPlanPackage): HTMLElement {
   }
 
   return section;
+}
+
+function describeCharacterPets(store: DataStore, characterId: string): string {
+  const activePets = store.data.canonical.canines
+    .filter((canine) => canine.characterId === characterId && canine.status === "active")
+    .sort((left, right) => left.displayName.localeCompare(right.displayName, undefined, { sensitivity: "base" }))
+    .map((canine) => `${canine.displayName} (${formatBreedingRole(normalizeCuratedBreedingRole(canine.breedingRole))})`);
+
+  if (activePets.length > 0) {
+    return activePets.join(" | ");
+  }
+
+  const unknownPets = store.data.canonical.canines
+    .filter((canine) => canine.characterId === characterId && canine.status === "unknown")
+    .sort((left, right) => left.displayName.localeCompare(right.displayName, undefined, { sensitivity: "base" }))
+    .map((canine) => `${canine.displayName} (${formatBreedingRole(normalizeCuratedBreedingRole(canine.breedingRole))})`);
+
+  if (unknownPets.length > 0) {
+    return `${unknownPets[0]} (no active pet marked)`;
+  }
+
+  return "no active pet record";
+}
+
+function createAutoPlanPreviewPackage(store: DataStore): AutoPlanPackage {
+  const cooperatingHumanIds = Array.from(new Set(autoPlanState.cooperatingHumanIds.filter(Boolean)));
+  const primaryHumanId = autoPlanState.advancingHumanId || cooperatingHumanIds[0] || "";
+  const supportHumanIds = cooperatingHumanIds.filter((humanId) => humanId !== primaryHumanId);
+  const advancingCharacters = getAutoPlanAdvancingCharacters(store, primaryHumanId, autoPlanState.requestedAltCount);
+  const lines = advancingCharacters.map((characterId, index) => {
+    const lineId = `line-${index + 1}`;
+    const lineLabel = `${lookupCharacterName(store, characterId)} roadmap`;
+    const lineActivePet = getPrimaryActivePetForCharacter(store, characterId);
+    const supportCharacters = supportHumanIds.flatMap((humanId) =>
+      getAutoPlanSupportCharacters(store, humanId, lineActivePet?.canine.gender ?? null)
+    );
+    return {
+      lineId,
+      advancingCharacterId: characterId,
+      lineLabel,
+      status: "planned" as const,
+      cycles: Array.from({ length: autoPlanState.cyclesPerLine }, (_, cycleIndex) => {
+        const supportCharacterId = supportCharacters.length > 0 ? supportCharacters[cycleIndex % supportCharacters.length] : null;
+        return {
+          cycleId: `${lineId}:cycle-${cycleIndex + 1}`,
+          cycleNumber: cycleIndex + 1,
+          advancingCharacterId: characterId,
+          supportCharacterId,
+          goal:
+            cycleIndex === 0
+              ? "Use general OCS-safe pairing to start the line cleanly."
+              : cycleIndex === autoPlanState.cyclesPerLine - 1
+                ? "Produce the cycle output and prepare the keeper for play or the next roadmap."
+                : "Carry the best keeper forward while preserving herd diversity.",
+          estimatedCarryForwardId: `${lineId}:carry-${cycleIndex + 1}`,
+          status: "planned" as const
+        };
+      })
+    };
+  });
+
+  return {
+    schemaVersion: 1,
+    kind: "autoplan-package",
+    exportedAt: new Date().toISOString(),
+    packageId: `autoplan-${primaryHumanId || "unknown"}`,
+    packageName: `${lookupHumanName(store, primaryHumanId)} AutoPlan`,
+    sourceSnapshot: {
+      source: "canonical-repo-data",
+      integrity: store.integrity.isValid ? "verified" : "needs-work",
+      notes: "Generated from the current static repository snapshot."
+    },
+    request: {
+      cooperatingHumanIds,
+      advancingHumanId: primaryHumanId,
+      advancingCharacterIds: advancingCharacters,
+      requestedAltCount: autoPlanState.requestedAltCount,
+      cyclesPerLine: autoPlanState.cyclesPerLine,
+      notes: "Default planning assumption: OCS-style general breeding, then human review for actual pairing choices."
+    },
+    lines
+  };
+}
+
+function getAutoPlanAdvancingCharacters(store: DataStore, humanId: string, limit: number): string[] {
+  return getHumanCharacterPets(store, humanId)
+    .sort((left, right) => {
+      const leftTotal = typeof left.traitProfile?.total === "number" ? left.traitProfile.total : -1;
+      const rightTotal = typeof right.traitProfile?.total === "number" ? right.traitProfile.total : -1;
+      const totalOrder = autoPlanState.advancingStrategy === "lowest" ? leftTotal - rightTotal : rightTotal - leftTotal;
+      return (
+        totalOrder ||
+        lookupCharacterName(store, left.character!.id).localeCompare(lookupCharacterName(store, right.character!.id), undefined, {
+          sensitivity: "base"
+        })
+      );
+    })
+    .map((summary) => summary.character!.id)
+    .slice(0, limit);
+}
+
+function getAutoPlanSupportCharacters(store: DataStore, humanId: string, advancingGender: string | null): string[] {
+  return getHumanCharacterPets(store, humanId)
+    .filter((summary) => {
+      if (!advancingGender || advancingGender === "U" || summary.canine.gender === "U") {
+        return true;
+      }
+      return summary.canine.gender !== advancingGender;
+    })
+    .sort((left, right) => {
+      const leftTotal = typeof left.traitProfile?.total === "number" ? left.traitProfile.total : -1;
+      const rightTotal = typeof right.traitProfile?.total === "number" ? right.traitProfile.total : -1;
+      return (
+        rightTotal - leftTotal ||
+        lookupCharacterName(store, left.character!.id).localeCompare(lookupCharacterName(store, right.character!.id), undefined, {
+          sensitivity: "base"
+        })
+      );
+    })
+    .map((summary) => summary.character!.id);
+}
+
+function getHumanCharacterPets(store: DataStore, humanId: string): CanineSummary[] {
+  const rows = store.data.canonical.canines
+    .map((canine) => store.getCanineSummary(canine.id))
+    .filter((summary): summary is CanineSummary => Boolean(summary))
+    .filter((summary) => summary.character?.humanId === humanId)
+    .filter((summary) => summary.canine.status === "active")
+    .filter((summary) => normalizeCuratedBreedingRole(summary.canine.breedingRole) === "breeding");
+
+  const bestByCharacter = new Map<string, CanineSummary>();
+  for (const summary of rows) {
+    const existing = bestByCharacter.get(summary.character!.id);
+    const existingTotal = typeof existing?.traitProfile?.total === "number" ? existing.traitProfile.total : -1;
+    const nextTotal = typeof summary.traitProfile?.total === "number" ? summary.traitProfile.total : -1;
+    if (!existing || nextTotal > existingTotal) {
+      bestByCharacter.set(summary.character!.id, summary);
+    }
+  }
+
+  return Array.from(bestByCharacter.values());
+}
+
+function getPrimaryActivePetForCharacter(store: DataStore, characterId: string): CanineSummary | null {
+  const candidates = store.data.canonical.canines
+    .map((canine) => store.getCanineSummary(canine.id))
+    .filter((summary): summary is CanineSummary => Boolean(summary))
+    .filter((summary) => summary.canine.characterId === characterId && summary.canine.status === "active")
+    .sort((left, right) => {
+      const leftRole = normalizeCuratedBreedingRole(left.canine.breedingRole);
+      const rightRole = normalizeCuratedBreedingRole(right.canine.breedingRole);
+      const leftRoleRank = leftRole === "breeding" ? 0 : leftRole === "play-only" ? 1 : leftRole === "unknown" ? 2 : 3;
+      const rightRoleRank = rightRole === "breeding" ? 0 : rightRole === "play-only" ? 1 : rightRole === "unknown" ? 2 : 3;
+      const leftTotal = typeof left.traitProfile?.total === "number" ? left.traitProfile.total : -1;
+      const rightTotal = typeof right.traitProfile?.total === "number" ? right.traitProfile.total : -1;
+      return (
+        leftRoleRank - rightRoleRank ||
+        rightTotal - leftTotal ||
+        left.canine.displayName.localeCompare(right.canine.displayName, undefined, { sensitivity: "base" })
+      );
+    });
+
+  return candidates[0] ?? null;
+}
+
+function lookupHumanName(store: DataStore, humanId: string): string {
+  return store.humansById.get(humanId)?.displayName ?? humanId ?? "Unknown";
+}
+
+function lookupCharacterName(store: DataStore, characterId: string): string {
+  return store.charactersById.get(characterId)?.name ?? characterId;
 }
 
 function createRangerClassWorkflow(store: DataStore): HTMLElement {
@@ -1291,9 +1634,43 @@ type CanineTypePatchUpdate = {
   canineType: string | null;
 };
 
+type GenderReviewEntry = {
+  canineId: string;
+  displayName: string;
+  characterName: string;
+  humanName: string;
+  status: string;
+  breedingRole: BreedingRole;
+  currentGender: CuratedGender;
+};
+
+type CanineGenderPatchUpdate = {
+  canineId: string;
+  gender: CuratedGender;
+};
+
+type AppearanceReviewEntry = {
+  canineId: string;
+  displayName: string;
+  characterName: string;
+  humanName: string;
+  status: string;
+  breedingRole: BreedingRole;
+  currentAppearance: CanineAppearance | null;
+};
+
+type CanineAppearancePatchUpdate = {
+  canineId: string;
+  appearance: CanineAppearance | null;
+};
+
 function createCurationWorkflow(store: DataStore): HTMLElement {
   const section = createElement("section", "workflow-section guidance-layout");
   section.append(createElement("h3", undefined, "Records curation"), createCurationModeToggle());
+  section.append(createCurationFilterControls(store));
+  if (curationState.mode !== "status" && curationState.mode !== "ownership") {
+    section.append(createCurationInactiveToggle());
+  }
 
   if (curationState.mode === "status") {
     const conflicts = getActiveCanineConflicts(store);
@@ -1316,16 +1693,173 @@ function createCurationWorkflow(store: DataStore): HTMLElement {
       createBreedingRoleReviewTable(entries),
       createPendingBreedingRolePatchPanel(store)
     );
-  } else {
+  } else if (curationState.mode === "canine-type") {
     const entries = getCanineTypeReviewEntries(store);
     section.append(
       createCanineTypeReviewNotice(entries.length),
       createCanineTypeReviewTable(entries),
       createPendingCanineTypePatchPanel(store)
     );
+  } else if (curationState.mode === "gender") {
+    const entries = getGenderReviewEntries(store);
+    section.append(
+      createGenderReviewNotice(entries.length),
+      createGenderReviewTable(entries),
+      createPendingGenderPatchPanel(store)
+    );
+  } else {
+    const entries = getAppearanceReviewEntries(store);
+    section.append(
+      createAppearanceReviewNotice(entries.length),
+      createAppearanceReviewTable(entries),
+      createPendingAppearancePatchPanel(store)
+    );
   }
 
+  section.append(createCurationSelectedCanineDetail(store));
+
   return section;
+}
+
+function createCurationFilterControls(store: DataStore): HTMLElement {
+  const controls = createElement("div", "calculator-form");
+  const summaries = getCurationFilteredSourceSummaries(store);
+  const characterOptions = buildCurationOptions(
+    summaries.map((summary) => ({
+      value: summary.character?.id ?? "unknown",
+      label: summary.character?.name ?? "unknown"
+    }))
+  );
+  const humanOptions = buildCurationOptions(
+    summaries.map((summary) => ({
+      value: summary.human?.id ?? "unknown",
+      label: summary.human?.displayName ?? "unknown"
+    }))
+  );
+  const statusOptions = buildCurationOptions(
+    summaries.map((summary) => ({ value: summary.canine.status, label: summary.canine.status }))
+  );
+  const roleOptions = buildCurationOptions(
+    summaries.map((summary) => ({
+      value: normalizeCuratedBreedingRole(summary.canine.breedingRole),
+      label: formatBreedingRole(normalizeCuratedBreedingRole(summary.canine.breedingRole))
+    }))
+  );
+  const typeOptions = buildCurationOptions(
+    summaries.map((summary) => ({
+      value: formatCanineTypeLabel(summary.canine.canineType),
+      label: formatCanineTypeLabel(summary.canine.canineType)
+    }))
+  );
+  const genderOptions = buildCurationOptions(
+    summaries.map((summary) => ({
+      value: normalizeCuratedGender(summary.canine.gender),
+      label: formatGenderLabel(normalizeCuratedGender(summary.canine.gender))
+    }))
+  );
+
+  controls.append(
+    createLabel("Search", createCurationTextInput()),
+    createLabel("Character", createCurationSelect("characterId", characterOptions)),
+    createLabel("Human", createCurationSelect("humanId", humanOptions)),
+    createLabel("Status", createCurationSelect("status", statusOptions)),
+    createLabel("Activity type", createCurationSelect("breedingRole", roleOptions)),
+    createLabel("Race / type", createCurationSelect("canineType", typeOptions)),
+    createLabel("Gender", createCurationSelect("gender", genderOptions)),
+    createCurationFilterActions()
+  );
+
+  return controls;
+}
+
+function createCurationTextInput(): HTMLInputElement {
+  const input = createElement("input", "field-control") as HTMLInputElement;
+  input.value = curationState.filters.query;
+  input.placeholder = "name, human, id...";
+  input.addEventListener("input", () => {
+    curationState.filters.query = input.value;
+    render();
+  });
+  return input;
+}
+
+function createCurationSelect(
+  field: keyof typeof curationState.filters,
+  options: readonly { value: string; label: string }[]
+): HTMLSelectElement {
+  const select = createElement("select", "field-control") as HTMLSelectElement;
+  const allOption = document.createElement("option");
+  allOption.value = "all";
+  allOption.textContent = "All";
+  select.append(allOption);
+
+  for (const option of options) {
+    const element = document.createElement("option");
+    element.value = option.value;
+    element.textContent = option.label;
+    select.append(element);
+  }
+
+  select.value = String(curationState.filters[field]);
+  select.addEventListener("change", () => {
+    (curationState.filters as Record<string, string>)[field] = select.value;
+    render();
+  });
+
+  return select;
+}
+
+function createCurationFilterActions(): HTMLElement {
+  const actions = createElement("div", "button-row");
+  const resetButton = createElement("button", "secondary-button", "Reset filters") as HTMLButtonElement;
+  resetButton.type = "button";
+  resetButton.addEventListener("click", () => {
+    curationState.filters = {
+      query: "",
+      gender: "all",
+      status: "all",
+      breedingRole: "all",
+      canineType: "all",
+      humanId: "all",
+      characterId: "all"
+    };
+    curationState.selectedCanineId = "";
+    render();
+  });
+  actions.append(resetButton);
+  return actions;
+}
+
+function buildCurationOptions(options: readonly { value: string; label: string }[]): Array<{ value: string; label: string }> {
+  const seen = new Set<string>();
+  return options
+    .filter((option) => {
+      if (!option.value || seen.has(option.value)) {
+        return false;
+      }
+      seen.add(option.value);
+      return true;
+    })
+    .sort((left, right) => left.label.localeCompare(right.label, undefined, { sensitivity: "base" }));
+}
+
+function isInteractiveCurationTarget(target: EventTarget | null): boolean {
+  return target instanceof Element && Boolean(target.closest("button, select, input, textarea, label, option"));
+}
+
+function createCurationInactiveToggle(): HTMLElement {
+  const button = createToggleButton(
+    curationState.hideInactive ? "Show inactive" : "Hide inactive",
+    curationState.hideInactive,
+    () => {
+      curationState.hideInactive = !curationState.hideInactive;
+      render();
+    }
+  );
+
+  const wrap = createElement("div", "button-row");
+  wrap.append(button);
+  return wrap;
 }
 
 function createBulletPanel(title: string, note: string, lines: readonly string[]): HTMLElement {
@@ -1380,9 +1914,9 @@ function createMatingAlgorithmsWorkflow(store: DataStore): HTMLElement {
   const isPriorityApplicable = algorithmState.selectedAlgorithm !== "ocs";
 
   for (const algorithm of [
-    ["compensatory", "Compensatory"],
-    ["assortative", "Positive assortative"],
-    ["ocs", "Optimum contribution"]
+    ["ocs", "General breeding (OCS)"],
+    ["compensatory", "Fix weak traits (Compensatory)"],
+    ["assortative", "Stack strong traits (Assortative)"]
   ] as const) {
     const option = document.createElement("option");
     option.value = algorithm[0];
@@ -1485,7 +2019,7 @@ function createCompensatoryAlgorithmOutput(store: DataStore): HTMLElement {
     ["Target", analysis.selectedLabel, "The active canine whose weaknesses we are trying to cover."],
     ["Weak spots shown", String(analysis.weaknessTraits.length), "Lowest recorded traits used to explain the compensatory ranking."],
     ["Safe candidates", String(analysis.candidates.length), "Opposite-gender active mates that remain after relatedness and same-human filters."],
-    ["Algorithm", "Compensatory", "Prefers mates that are strongest where the target canine is weakest."],
+    ["Algorithm", "Fix weak traits", "Prefers mates that are strongest where the target canine is weakest."],
     [
       "Priority",
       algorithmState.prioritizedTrait || "Automatic",
@@ -1508,7 +2042,7 @@ function createCompensatoryAlgorithmOutput(store: DataStore): HTMLElement {
     createElement(
       "p",
       "plan-note",
-      "This first-pass ranking looks for safe mates whose strongest traits land where the selected canine is weakest."
+      "Use this when a player has a clear weakness to repair. The ranking looks for safe mates whose strongest traits land where the selected canine is weakest."
     ),
     summaryCards,
     createWeaknessSummaryPanel(analysis.weaknessTraits)
@@ -1529,7 +2063,7 @@ function createOcsAlgorithmOutput(store: DataStore): HTMLElement {
 
   if (!analysis) {
     section.append(
-      createElement("h3", undefined, "Optimum contribution selection"),
+      createElement("h3", undefined, "General breeding (OCS)"),
       createElement("p", undefined, "Choose an active male or female canine with known stats to rank safe mates.")
     );
     return section;
@@ -1539,8 +2073,8 @@ function createOcsAlgorithmOutput(store: DataStore): HTMLElement {
   for (const [label, value, tooltip] of [
     ["Target", analysis.selectedLabel, "The active canine being matched against herd-preserving mate choices."],
     ["Safe candidates", String(analysis.candidates.length), "Opposite-gender active mates that remain after relatedness and same-human filters."],
-    ["Algorithm", "OCS", "Balances estimated puppy quality against herd concentration and future flexibility penalties."],
-    ["Goal", "Herd balance", "Favors improvement without pouring too much progress into already dominant lines."]
+    ["Algorithm", "General breeding", "Balances estimated puppy quality against herd concentration and future flexibility penalties."],
+    ["Goal", "Herd balance", "This is the default recommendation mode for general breeding because it improves pets without pouring too much progress into already dominant lines."]
   ] as const) {
     const card = createElement("div", "result-card");
     card.title = tooltip;
@@ -1549,11 +2083,11 @@ function createOcsAlgorithmOutput(store: DataStore): HTMLElement {
   }
 
   section.append(
-    createElement("h3", undefined, "Optimum contribution selection"),
+    createElement("h3", undefined, "General breeding (OCS)"),
     createElement(
       "p",
       "plan-note",
-      "This first pass treats OCS as quality minus diversity penalties: better puppies still matter, but repeated bloodlines and constrained lines are pushed downward."
+      "This is the default general-breeding ranking. It treats OCS as quality minus diversity penalties: better puppies still matter, but repeated bloodlines and constrained lines are pushed downward."
     ),
     summaryCards
   );
@@ -1576,7 +2110,7 @@ function createAssortativeAlgorithmOutput(store: DataStore): HTMLElement {
 
   if (!analysis) {
     section.append(
-      createElement("h3", undefined, "Positive assortative mating"),
+      createElement("h3", undefined, "Stack strong traits"),
       createElement("p", undefined, "Choose an active male or female canine with known stats to rank safe mates.")
     );
     return section;
@@ -1587,7 +2121,7 @@ function createAssortativeAlgorithmOutput(store: DataStore): HTMLElement {
     ["Target", analysis.selectedLabel, "The active canine whose strongest traits we are trying to intensify."],
     ["Strong traits shown", String(analysis.targetStrengthTraits.length), "Highest recorded traits used to explain the assortative ranking."],
     ["Safe candidates", String(analysis.candidates.length), "Opposite-gender active mates that remain after relatedness and same-human filters."],
-    ["Algorithm", "Positive assortative", "Prefers mates that are already strongest in the same areas as the target canine."],
+    ["Algorithm", "Stack strong traits", "Prefers mates that are already strongest in the same areas as the target canine."],
     [
       "Priority",
       algorithmState.prioritizedTrait || "Automatic",
@@ -1606,11 +2140,11 @@ function createAssortativeAlgorithmOutput(store: DataStore): HTMLElement {
   }
 
   section.append(
-    createElement("h3", undefined, "Positive assortative mating"),
+    createElement("h3", undefined, "Stack strong traits"),
     createElement(
       "p",
       "plan-note",
-      "This ranking looks for safe mates that reinforce the target canine's best traits, which can push a line upward quickly but may narrow future diversity."
+      "Use this when a player wants to intensify a line's best traits. It can push a line upward quickly, but it may narrow future diversity."
     ),
     summaryCards,
     createStrengthSummaryPanel(analysis.targetStrengthTraits)
@@ -1916,7 +2450,9 @@ function createCurationModeToggle(): HTMLElement {
     ["status", "Multiple active pets"],
     ["ownership", "Ownership review"],
     ["breeding-role", "Activity type"],
-    ["canine-type", "Race / type"]
+    ["canine-type", "Race / type"],
+    ["gender", "Gender"],
+    ["appearance", "Cosmetics"]
   ] as const) {
     const button = createElement(
       "button",
@@ -1951,6 +2487,7 @@ function createCurationNotice(conflictCount: number): HTMLElement {
 
 function createActiveCanineConflictTable(conflicts: readonly ActiveCanineConflict[]): HTMLElement {
   const section = createElement("section", "data-table-section compact-table-section");
+  const tablePane = createElement("div", "data-browser-table-section");
   const table = createElement("table", "data-table curation-table");
   const head = document.createElement("thead");
   const headRow = document.createElement("tr");
@@ -1982,7 +2519,8 @@ function createActiveCanineConflictTable(conflicts: readonly ActiveCanineConflic
   }
 
   table.append(head, body);
-  section.append(createElement("h3", undefined, "Multiple active canines by character"), table);
+  tablePane.append(table);
+  section.append(createElement("h3", undefined, "Multiple active canines by character"), tablePane);
 
   return section;
 }
@@ -2017,6 +2555,13 @@ function createConflictCanineListCell(canines: readonly CanineSummary[]): HTMLTa
     });
 
     buttonRow.append(keepButton, inactiveButton, unknownButton);
+    item.addEventListener("click", (event) => {
+      if (isInteractiveCurationTarget(event.target)) {
+        return;
+      }
+      curationState.selectedCanineId = summary.canine.id;
+      render();
+    });
     item.append(
       createElement(
         "strong",
@@ -2130,6 +2675,7 @@ function createOwnershipReviewNotice(entryCount: number): HTMLElement {
 
 function createOwnershipReviewTable(store: DataStore, entries: readonly OwnershipReviewEntry[]): HTMLElement {
   const section = createElement("section", "data-table-section compact-table-section");
+  const tablePane = createElement("div", "data-browser-table-section");
   const table = createElement("table", "data-table curation-table");
   const head = document.createElement("thead");
   const headRow = document.createElement("tr");
@@ -2160,7 +2706,8 @@ function createOwnershipReviewTable(store: DataStore, entries: readonly Ownershi
   }
 
   table.append(head, body);
-  section.append(createElement("h3", undefined, "Unknown and unattributed ownership"), table);
+  tablePane.append(table);
+  section.append(createElement("h3", undefined, "Unknown and unattributed ownership"), tablePane);
 
   return section;
 }
@@ -2170,13 +2717,19 @@ function createOwnershipCanineListCell(canines: readonly CanineSummary[]): HTMLT
   const list = createElement("ul", "compact-list");
 
   for (const summary of canines) {
-    list.append(
-      createElement(
-        "li",
-        undefined,
-        `${summary.canine.displayName} | ${formatGenderLabel(summary.canine.gender)} | ${summary.canine.status}`
-      )
+    const item = createElement(
+      "li",
+      undefined,
+      `${summary.canine.displayName} | ${formatGenderLabel(summary.canine.gender)} | ${summary.canine.status}`
     );
+    item.addEventListener("click", (event) => {
+      if (isInteractiveCurationTarget(event.target)) {
+        return;
+      }
+      curationState.selectedCanineId = summary.canine.id;
+      render();
+    });
+    list.append(item);
   }
 
   cell.append(list);
@@ -2313,6 +2866,7 @@ function createBreedingRoleReviewNotice(entryCount: number): HTMLElement {
 
 function createBreedingRoleReviewTable(entries: readonly BreedingRoleReviewEntry[]): HTMLElement {
   const section = createElement("section", "data-table-section compact-table-section");
+  const tablePane = createElement("div", "data-browser-table-section");
   const table = createElement("table", "data-table curation-table");
   const head = document.createElement("thead");
   const headRow = document.createElement("tr");
@@ -2333,6 +2887,14 @@ function createBreedingRoleReviewTable(entries: readonly BreedingRoleReviewEntry
 
   for (const entry of entries) {
     const row = document.createElement("tr");
+    row.className = entry.canineId === curationState.selectedCanineId ? "selected-row" : "";
+    row.addEventListener("click", (event) => {
+      if (isInteractiveCurationTarget(event.target)) {
+        return;
+      }
+      curationState.selectedCanineId = entry.canineId;
+      render();
+    });
     row.append(
       createElement("td", undefined, entry.displayName),
       createElement("td", undefined, `${entry.characterName} / ${entry.humanName}`),
@@ -2346,7 +2908,8 @@ function createBreedingRoleReviewTable(entries: readonly BreedingRoleReviewEntry
   }
 
   table.append(head, body);
-  section.append(createElement("h3", undefined, "Current pet versus breeding pet"), table);
+  tablePane.append(table);
+  section.append(createElement("h3", undefined, "Current pet versus breeding pet"), tablePane);
 
   return section;
 }
@@ -2479,6 +3042,7 @@ function createCanineTypeReviewNotice(entryCount: number): HTMLElement {
 
 function createCanineTypeReviewTable(entries: readonly CanineTypeReviewEntry[]): HTMLElement {
   const section = createElement("section", "data-table-section compact-table-section");
+  const tablePane = createElement("div", "data-browser-table-section");
   const table = createElement("table", "data-table curation-table");
   const head = document.createElement("thead");
   const headRow = document.createElement("tr");
@@ -2499,6 +3063,14 @@ function createCanineTypeReviewTable(entries: readonly CanineTypeReviewEntry[]):
 
   for (const entry of entries) {
     const row = document.createElement("tr");
+    row.className = entry.canineId === curationState.selectedCanineId ? "selected-row" : "";
+    row.addEventListener("click", (event) => {
+      if (isInteractiveCurationTarget(event.target)) {
+        return;
+      }
+      curationState.selectedCanineId = entry.canineId;
+      render();
+    });
     row.append(
       createElement("td", undefined, entry.displayName),
       createElement("td", undefined, `${entry.characterName} / ${entry.humanName}`),
@@ -2512,7 +3084,8 @@ function createCanineTypeReviewTable(entries: readonly CanineTypeReviewEntry[]):
   }
 
   table.append(head, body);
-  section.append(createElement("h3", undefined, "Canine race and type"), table);
+  tablePane.append(table);
+  section.append(createElement("h3", undefined, "Canine race and type"), tablePane);
 
   return section;
 }
@@ -2629,6 +3202,317 @@ function createPendingCanineTypePatchPanel(store: DataStore): HTMLElement {
   return panel;
 }
 
+function createGenderReviewNotice(entryCount: number): HTMLElement {
+  const notice = createElement("section", entryCount > 0 ? "warning-box" : "data-health data-health-ok");
+  notice.append(
+    createElement("h3", undefined, `${entryCount} current-ish canine${entryCount === 1 ? "" : "s"} need gender review`),
+    createElement("p", undefined, "Use this mode to correct canine gender on records that still matter operationally. This stages a patch only.")
+  );
+  return notice;
+}
+
+function createGenderReviewTable(entries: readonly GenderReviewEntry[]): HTMLElement {
+  const section = createElement("section", "data-table-section compact-table-section");
+  const tablePane = createElement("div", "data-browser-table-section");
+  const table = createElement("table", "data-table curation-table");
+  const head = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  const body = document.createElement("tbody");
+
+  for (const label of ["Canine", "Owner", "Status", "Activity type", "Current gender", "Set gender"]) {
+    headRow.append(createElement("th", undefined, label));
+  }
+  head.append(headRow);
+
+  if (entries.length === 0) {
+    const row = document.createElement("tr");
+    const cell = createElement("td", undefined, "No active or unknown-status canines need gender review.");
+    cell.colSpan = 6;
+    row.append(cell);
+    body.append(row);
+  }
+
+  for (const entry of entries) {
+    const row = document.createElement("tr");
+    row.className = entry.canineId === curationState.selectedCanineId ? "selected-row" : "";
+    row.addEventListener("click", (event) => {
+      if (isInteractiveCurationTarget(event.target)) {
+        return;
+      }
+      curationState.selectedCanineId = entry.canineId;
+      render();
+    });
+    row.append(
+      createElement("td", undefined, entry.displayName),
+      createElement("td", undefined, `${entry.characterName} / ${entry.humanName}`),
+      createElement("td", undefined, entry.status),
+      createElement("td", undefined, formatBreedingRole(entry.breedingRole)),
+      createElement("td", undefined, formatGenderLabel(entry.currentGender)),
+      createGenderAssignmentCell(entry)
+    );
+    body.append(row);
+  }
+
+  table.append(head, body);
+  tablePane.append(table);
+  section.append(createElement("h3", undefined, "Canine gender"), tablePane);
+  return section;
+}
+
+function createGenderAssignmentCell(entry: GenderReviewEntry): HTMLTableCellElement {
+  const cell = createElement("td");
+  const wrap = createElement("div", "ownership-cell");
+  const select = createElement("select", "field-control");
+  const pendingGender = getEffectiveGender(entry.canineId, entry.currentGender);
+
+  for (const [value, label] of [
+    ["M", "Male"],
+    ["F", "Female"],
+    ["U", "Unknown"],
+    ["A", "Any/neutral"]
+  ] as const) {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = label;
+    select.append(option);
+  }
+
+  select.value = pendingGender;
+  select.addEventListener("change", () => {
+    stageCanineGender(entry.canineId, select.value as CuratedGender);
+    render();
+  });
+
+  wrap.append(select);
+  if (curationState.genderUpdatesByCanineId[entry.canineId] !== undefined) {
+    wrap.append(createElement("span", "pending-status", `Pending: ${formatGenderLabel(curationState.genderUpdatesByCanineId[entry.canineId])}`));
+  }
+  cell.append(wrap);
+  return cell;
+}
+
+function createPendingGenderPatchPanel(store: DataStore): HTMLElement {
+  const panel = createElement("section", "plan-panel curation-patch-panel");
+  const updates = getPendingGenderUpdates(store);
+  const output = createElement("textarea", "field-control plan-json-output");
+  const resetButton = createElement("button", "secondary-button", "Reset gender changes");
+  const copyButton = createElement("button", "primary-button", curationState.copiedPatch ? "Copied" : "Copy patch JSON");
+  const table = createElement("table", "data-table pending-change-table");
+  const head = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  const body = document.createElement("tbody");
+  const patch = { schemaVersion: 1, kind: "canine-gender-patch", updates };
+
+  output.readOnly = true;
+  output.value = JSON.stringify(patch, null, 2);
+  for (const label of ["Canine", "From", "To"]) {
+    headRow.append(createElement("th", undefined, label));
+  }
+  head.append(headRow);
+
+  if (updates.length === 0) {
+    const row = document.createElement("tr");
+    const cell = createElement("td", undefined, "No pending gender changes.");
+    cell.colSpan = 3;
+    row.append(cell);
+    body.append(row);
+  }
+
+  for (const update of updates) {
+    const canine = store.caninesById.get(update.canineId);
+    const row = document.createElement("tr");
+    row.append(
+      createElement("td", undefined, canine?.displayName ?? update.canineId),
+      createElement("td", undefined, formatGenderLabel((canine?.gender as CuratedGender | undefined) ?? "U")),
+      createElement("td", undefined, formatGenderLabel(update.gender))
+    );
+    body.append(row);
+  }
+
+  resetButton.type = "button";
+  resetButton.disabled = updates.length === 0;
+  resetButton.addEventListener("click", () => {
+    curationState.genderUpdatesByCanineId = {};
+    curationState.copiedPatch = false;
+    render();
+  });
+  copyButton.type = "button";
+  copyButton.disabled = updates.length === 0;
+  copyButton.addEventListener("click", () => {
+    void navigator.clipboard.writeText(output.value).then(() => {
+      curationState.copiedPatch = true;
+      render();
+    });
+  });
+
+  table.append(head, body);
+  panel.append(
+    createElement("h3", undefined, "Pending gender patch"),
+    createElement("p", "plan-note", "This prepares a canine gender patch for repo review. It does not edit canonical data directly."),
+    table,
+    createElement("p", "plan-note", `${updates.length} changed canine gender value${updates.length === 1 ? "" : "s"}.`),
+    output,
+    createButtonRow([copyButton, resetButton])
+  );
+  return panel;
+}
+
+function createAppearanceReviewNotice(entryCount: number): HTMLElement {
+  const notice = createElement("section", entryCount > 0 ? "warning-box" : "data-health data-health-ok");
+  notice.append(
+    createElement("h3", undefined, `${entryCount} current-ish canine${entryCount === 1 ? "" : "s"} need cosmetic review`),
+    createElement("p", undefined, "Use this mode to correct primary color, secondary color, and eye color. This stages a patch only.")
+  );
+  return notice;
+}
+
+function createAppearanceReviewTable(entries: readonly AppearanceReviewEntry[]): HTMLElement {
+  const section = createElement("section", "data-table-section compact-table-section");
+  const tablePane = createElement("div", "data-browser-table-section");
+  const table = createElement("table", "data-table curation-table");
+  const head = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  const body = document.createElement("tbody");
+
+  for (const label of ["Canine", "Owner", "Status", "Activity type", "Current cosmetics", "Edit cosmetics"]) {
+    headRow.append(createElement("th", undefined, label));
+  }
+  head.append(headRow);
+
+  if (entries.length === 0) {
+    const row = document.createElement("tr");
+    const cell = createElement("td", undefined, "No active or unknown-status canines need cosmetic review.");
+    cell.colSpan = 6;
+    row.append(cell);
+    body.append(row);
+  }
+
+  for (const entry of entries) {
+    const row = document.createElement("tr");
+    row.className = entry.canineId === curationState.selectedCanineId ? "selected-row" : "";
+    row.addEventListener("click", (event) => {
+      if (isInteractiveCurationTarget(event.target)) {
+        return;
+      }
+      curationState.selectedCanineId = entry.canineId;
+      render();
+    });
+    row.append(
+      createElement("td", undefined, entry.displayName),
+      createElement("td", undefined, `${entry.characterName} / ${entry.humanName}`),
+      createElement("td", undefined, entry.status),
+      createElement("td", undefined, formatBreedingRole(entry.breedingRole)),
+      createElement("td", undefined, formatAppearanceSummary(entry.currentAppearance)),
+      createAppearanceAssignmentCell(entry)
+    );
+    body.append(row);
+  }
+
+  table.append(head, body);
+  tablePane.append(table);
+  section.append(createElement("h3", undefined, "Canine cosmetics"), tablePane);
+  return section;
+}
+
+function createAppearanceAssignmentCell(entry: AppearanceReviewEntry): HTMLTableCellElement {
+  const cell = createElement("td");
+  const wrap = createElement("div", "ownership-cell");
+  const current = getEffectiveAppearance(entry.canineId, entry.currentAppearance);
+  const primaryInput = createElement("input", "field-control") as HTMLInputElement;
+  const secondaryInput = createElement("input", "field-control") as HTMLInputElement;
+  const eyeInput = createElement("input", "field-control") as HTMLInputElement;
+  const button = createElement("button", "secondary-button", "Stage cosmetics") as HTMLButtonElement;
+
+  primaryInput.placeholder = "Primary";
+  secondaryInput.placeholder = "Secondary";
+  eyeInput.placeholder = "Eyes";
+  primaryInput.value = current?.primaryColor ?? "";
+  secondaryInput.value = current?.secondaryColor ?? "";
+  eyeInput.value = current?.eyeColor ?? "";
+  button.type = "button";
+  button.addEventListener("click", () => {
+    stageCanineAppearance(entry.canineId, {
+      primaryColor: primaryInput.value.trim() || null,
+      secondaryColor: secondaryInput.value.trim() || null,
+      eyeColor: eyeInput.value.trim() || null
+    });
+    render();
+  });
+
+  wrap.append(primaryInput, secondaryInput, eyeInput, button);
+  if (Object.prototype.hasOwnProperty.call(curationState.appearanceUpdatesByCanineId, entry.canineId)) {
+    wrap.append(createElement("span", "pending-status", `Pending: ${formatAppearanceSummary(curationState.appearanceUpdatesByCanineId[entry.canineId])}`));
+  }
+  cell.append(wrap);
+  return cell;
+}
+
+function createPendingAppearancePatchPanel(store: DataStore): HTMLElement {
+  const panel = createElement("section", "plan-panel curation-patch-panel");
+  const updates = getPendingAppearanceUpdates(store);
+  const output = createElement("textarea", "field-control plan-json-output");
+  const resetButton = createElement("button", "secondary-button", "Reset cosmetic changes");
+  const copyButton = createElement("button", "primary-button", curationState.copiedPatch ? "Copied" : "Copy patch JSON");
+  const table = createElement("table", "data-table pending-change-table");
+  const head = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  const body = document.createElement("tbody");
+  const patch = { schemaVersion: 1, kind: "canine-appearance-patch", updates };
+
+  output.readOnly = true;
+  output.value = JSON.stringify(patch, null, 2);
+  for (const label of ["Canine", "From", "To"]) {
+    headRow.append(createElement("th", undefined, label));
+  }
+  head.append(headRow);
+
+  if (updates.length === 0) {
+    const row = document.createElement("tr");
+    const cell = createElement("td", undefined, "No pending cosmetic changes.");
+    cell.colSpan = 3;
+    row.append(cell);
+    body.append(row);
+  }
+
+  for (const update of updates) {
+    const canine = store.caninesById.get(update.canineId);
+    const row = document.createElement("tr");
+    row.append(
+      createElement("td", undefined, canine?.displayName ?? update.canineId),
+      createElement("td", undefined, formatAppearanceSummary(canine?.appearance ?? null)),
+      createElement("td", undefined, formatAppearanceSummary(update.appearance))
+    );
+    body.append(row);
+  }
+
+  resetButton.type = "button";
+  resetButton.disabled = updates.length === 0;
+  resetButton.addEventListener("click", () => {
+    curationState.appearanceUpdatesByCanineId = {};
+    curationState.copiedPatch = false;
+    render();
+  });
+  copyButton.type = "button";
+  copyButton.disabled = updates.length === 0;
+  copyButton.addEventListener("click", () => {
+    void navigator.clipboard.writeText(output.value).then(() => {
+      curationState.copiedPatch = true;
+      render();
+    });
+  });
+
+  table.append(head, body);
+  panel.append(
+    createElement("h3", undefined, "Pending cosmetic patch"),
+    createElement("p", "plan-note", "This prepares a canine appearance patch for repo review. It does not edit canonical data directly."),
+    table,
+    createElement("p", "plan-note", `${updates.length} changed canine cosmetic value${updates.length === 1 ? "" : "s"}.`),
+    output,
+    createButtonRow([copyButton, resetButton])
+  );
+  return panel;
+}
+
 function createButtonRow(buttons: readonly HTMLButtonElement[]): HTMLElement {
   const row = createElement("div", "button-row");
   row.append(...buttons);
@@ -2654,14 +3538,17 @@ function getActiveCanineConflicts(store: DataStore): ActiveCanineConflict[] {
   }
 
   return Array.from(activeSummariesByCharacter.entries())
-    .filter(([, summaries]) => summaries.length > 1)
-    .map(([, summaries]) => ({
-      characterName: summaries[0]?.character?.name ?? "unknown",
-      humanName: summaries[0]?.human?.displayName ?? "unknown",
-      activeCanines: summaries.sort((left, right) =>
-        left.canine.displayName.localeCompare(right.canine.displayName, undefined, { sensitivity: "base" })
-      )
-    }))
+    .map(([, summaries]) => {
+      const filtered = summaries
+        .filter(matchesCurationFilters)
+        .sort((left, right) => left.canine.displayName.localeCompare(right.canine.displayName, undefined, { sensitivity: "base" }));
+      return {
+        characterName: summaries[0]?.character?.name ?? "unknown",
+        humanName: summaries[0]?.human?.displayName ?? "unknown",
+        activeCanines: filtered
+      };
+    })
+    .filter((entry) => entry.activeCanines.length > 0)
     .sort(
       (left, right) =>
         right.activeCanines.length - left.activeCanines.length ||
@@ -2732,6 +3619,7 @@ function getOwnershipReviewEntries(store: DataStore): OwnershipReviewEntry[] {
         .filter((canine) => canine.characterId === character.id)
         .map((canine) => store.getCanineSummary(canine.id))
         .filter((summary): summary is CanineSummary => Boolean(summary))
+        .filter(matchesCurationFilters)
         .sort((left, right) => left.canine.displayName.localeCompare(right.canine.displayName, undefined, { sensitivity: "base" }));
 
       return {
@@ -2803,10 +3691,7 @@ function getPendingHumanUpdates(store: DataStore): CharacterHumanPatchUpdate[] {
 }
 
 function getBreedingRoleReviewEntries(store: DataStore): BreedingRoleReviewEntry[] {
-  return store.data.canonical.canines
-    .filter((canine) => canine.status !== "inactive")
-    .map((canine) => store.getCanineSummary(canine.id))
-    .filter((summary): summary is CanineSummary => Boolean(summary))
+  return getCurrentishCanineSummaries(store)
     .map((summary) => ({
       canineId: summary.canine.id,
       displayName: summary.canine.displayName,
@@ -2870,10 +3755,7 @@ function getPendingBreedingRoleUpdates(store: DataStore): CanineBreedingRolePatc
 }
 
 function getCanineTypeReviewEntries(store: DataStore): CanineTypeReviewEntry[] {
-  return store.data.canonical.canines
-    .filter((canine) => canine.status !== "inactive")
-    .map((canine) => store.getCanineSummary(canine.id))
-    .filter((summary): summary is CanineSummary => Boolean(summary))
+  return getCurrentishCanineSummaries(store)
     .map((summary) => ({
       canineId: summary.canine.id,
       displayName: summary.canine.displayName,
@@ -2933,6 +3815,182 @@ function getPendingCanineTypeUpdates(store: DataStore): CanineTypePatchUpdate[] 
   return Object.entries(curationState.canineTypeUpdatesByCanineId)
     .filter(([canineId, canineType]) => (store.caninesById.get(canineId)?.canineType ?? null) !== canineType)
     .map(([canineId, canineType]) => ({ canineId, canineType }))
+    .sort((left, right) => {
+      const leftName = store.caninesById.get(left.canineId)?.displayName ?? left.canineId;
+      const rightName = store.caninesById.get(right.canineId)?.displayName ?? right.canineId;
+      return leftName.localeCompare(rightName, undefined, { sensitivity: "base" });
+    });
+}
+
+function getCurrentishCanineSummaries(store: DataStore): CanineSummary[] {
+  return store.data.canonical.canines
+    .filter((canine) => !curationState.hideInactive || canine.status !== "inactive")
+    .map((canine) => store.getCanineSummary(canine.id))
+    .filter((summary): summary is CanineSummary => Boolean(summary))
+    .filter(matchesCurationFilters)
+    .sort(
+      (left, right) =>
+        left.character!.name.localeCompare(right.character!.name, undefined, { sensitivity: "base" }) ||
+        left.canine.displayName.localeCompare(right.canine.displayName, undefined, { sensitivity: "base" })
+    );
+}
+
+function getCurationFilteredSourceSummaries(store: DataStore): CanineSummary[] {
+  return store.data.canonical.canines
+    .map((canine) => store.getCanineSummary(canine.id))
+    .filter((summary): summary is CanineSummary => Boolean(summary))
+    .filter((summary) => !curationState.hideInactive || summary.canine.status !== "inactive");
+}
+
+function matchesCurationFilters(summary: CanineSummary): boolean {
+  const query = curationState.filters.query.trim().toLowerCase();
+  const searchText = [
+    summary.canine.displayName,
+    summary.canine.callName,
+    summary.canine.id,
+    summary.character?.name,
+    summary.human?.displayName,
+    summary.canine.status,
+    summary.canine.canineType,
+    summary.canine.gender,
+    summary.canine.breedingRole
+  ]
+    .filter((value): value is string => Boolean(value))
+    .join(" ")
+    .toLowerCase();
+
+  if (query) {
+    const queryTokens = query.split(/\s+/).filter(Boolean);
+    if (queryTokens.some((token) => !searchText.includes(token))) {
+      return false;
+    }
+  }
+
+  if (curationState.filters.characterId !== "all" && summary.character?.id !== curationState.filters.characterId) {
+    return false;
+  }
+  if (curationState.filters.humanId !== "all" && (summary.human?.id ?? "unknown") !== curationState.filters.humanId) {
+    return false;
+  }
+  if (curationState.filters.status !== "all" && summary.canine.status !== curationState.filters.status) {
+    return false;
+  }
+  if (
+    curationState.filters.breedingRole !== "all" &&
+    normalizeCuratedBreedingRole(summary.canine.breedingRole) !== curationState.filters.breedingRole
+  ) {
+    return false;
+  }
+  if (
+    curationState.filters.canineType !== "all" &&
+    formatCanineTypeLabel(summary.canine.canineType) !== curationState.filters.canineType
+  ) {
+    return false;
+  }
+  if (curationState.filters.gender !== "all" && normalizeCuratedGender(summary.canine.gender) !== curationState.filters.gender) {
+    return false;
+  }
+
+  return true;
+}
+
+function getGenderReviewEntries(store: DataStore): GenderReviewEntry[] {
+  return getCurrentishCanineSummaries(store).map((summary) => ({
+    canineId: summary.canine.id,
+    displayName: summary.canine.displayName,
+    characterName: summary.character?.name ?? "unknown",
+    humanName: summary.human?.displayName ?? "unknown",
+    status: summary.canine.status,
+    breedingRole: summary.canine.breedingRole ?? "unknown",
+    currentGender: normalizeCuratedGender(summary.canine.gender)
+  }));
+}
+
+function normalizeCuratedGender(value: string | null | undefined): CuratedGender {
+  return value === "M" || value === "F" || value === "A" ? value : "U";
+}
+
+function getEffectiveGender(canineId: string, originalGender: CuratedGender): CuratedGender {
+  return curationState.genderUpdatesByCanineId[canineId] ?? originalGender;
+}
+
+function stageCanineGender(canineId: string, gender: CuratedGender): void {
+  const canine = dataStore.caninesById.get(canineId);
+  if (!canine) return;
+  curationState.copiedPatch = false;
+  if (normalizeCuratedGender(canine.gender) === gender) {
+    delete curationState.genderUpdatesByCanineId[canineId];
+    return;
+  }
+  curationState.genderUpdatesByCanineId[canineId] = gender;
+}
+
+function getPendingGenderUpdates(store: DataStore): CanineGenderPatchUpdate[] {
+  return Object.entries(curationState.genderUpdatesByCanineId)
+    .filter(([canineId, gender]) => normalizeCuratedGender(store.caninesById.get(canineId)?.gender) !== gender)
+    .map(([canineId, gender]) => ({ canineId, gender }))
+    .sort((left, right) => {
+      const leftName = store.caninesById.get(left.canineId)?.displayName ?? left.canineId;
+      const rightName = store.caninesById.get(right.canineId)?.displayName ?? right.canineId;
+      return leftName.localeCompare(rightName, undefined, { sensitivity: "base" });
+    });
+}
+
+function getAppearanceReviewEntries(store: DataStore): AppearanceReviewEntry[] {
+  return getCurrentishCanineSummaries(store).map((summary) => ({
+    canineId: summary.canine.id,
+    displayName: summary.canine.displayName,
+    characterName: summary.character?.name ?? "unknown",
+    humanName: summary.human?.displayName ?? "unknown",
+    status: summary.canine.status,
+    breedingRole: summary.canine.breedingRole ?? "unknown",
+    currentAppearance: summary.canine.appearance ?? null
+  }));
+}
+
+function normalizeAppearance(appearance: CanineAppearance | null): CanineAppearance | null {
+  if (!appearance) {
+    return null;
+  }
+  return {
+    primaryColor: appearance.primaryColor?.trim() || null,
+    secondaryColor: appearance.secondaryColor?.trim() || null,
+    eyeColor: appearance.eyeColor?.trim() || null
+  };
+}
+
+function appearancesEqual(left: CanineAppearance | null, right: CanineAppearance | null): boolean {
+  const normalizedLeft = normalizeAppearance(left);
+  const normalizedRight = normalizeAppearance(right);
+  return (
+    (normalizedLeft?.primaryColor ?? null) === (normalizedRight?.primaryColor ?? null) &&
+    (normalizedLeft?.secondaryColor ?? null) === (normalizedRight?.secondaryColor ?? null) &&
+    (normalizedLeft?.eyeColor ?? null) === (normalizedRight?.eyeColor ?? null)
+  );
+}
+
+function getEffectiveAppearance(canineId: string, originalAppearance: CanineAppearance | null): CanineAppearance | null {
+  return Object.prototype.hasOwnProperty.call(curationState.appearanceUpdatesByCanineId, canineId)
+    ? curationState.appearanceUpdatesByCanineId[canineId]
+    : originalAppearance;
+}
+
+function stageCanineAppearance(canineId: string, appearance: CanineAppearance): void {
+  const canine = dataStore.caninesById.get(canineId);
+  if (!canine) return;
+  curationState.copiedPatch = false;
+  const normalized = normalizeAppearance(appearance);
+  if (appearancesEqual(canine.appearance ?? null, normalized)) {
+    delete curationState.appearanceUpdatesByCanineId[canineId];
+    return;
+  }
+  curationState.appearanceUpdatesByCanineId[canineId] = normalized ?? { primaryColor: null, secondaryColor: null, eyeColor: null };
+}
+
+function getPendingAppearanceUpdates(store: DataStore): CanineAppearancePatchUpdate[] {
+  return Object.entries(curationState.appearanceUpdatesByCanineId)
+    .filter(([canineId, appearance]) => !appearancesEqual(store.caninesById.get(canineId)?.appearance ?? null, appearance))
+    .map(([canineId, appearance]) => ({ canineId, appearance: normalizeAppearance(appearance) }))
     .sort((left, right) => {
       const leftName = store.caninesById.get(left.canineId)?.displayName ?? left.canineId;
       const rightName = store.caninesById.get(right.canineId)?.displayName ?? right.canineId;
@@ -4558,12 +5616,194 @@ function formatCanineTypeLabel(canineType: string | null): string {
   return canineType?.trim() || "unknown";
 }
 
+function formatAppearanceSummary(appearance: CanineAppearance | null): string {
+  const normalized = normalizeAppearance(appearance);
+  return [
+    `primary ${normalized?.primaryColor ?? "unknown"}`,
+    `secondary ${normalized?.secondaryColor ?? "unknown"}`,
+    `eyes ${normalized?.eyeColor ?? "unknown"}`
+  ].join(", ");
+}
+
 function normalizeCuratedBreedingRole(value: string | null | undefined): CuratedBreedingRole {
   if (value === "breeding" || value === "play-only" || value === "retired" || value === "unknown") {
     return value;
   }
 
   return "unknown";
+}
+
+function createCalculatorCanonicalDraft(row: Record<string, string>): {
+  payload: Record<string, unknown>;
+  warnings: string[];
+} {
+  const warnings: string[] = [];
+  const exactTraits = parseExactTraitValuesFromRow(row);
+  const total = Number.parseInt(row.TOTAL, 10);
+  const humanName = calculatorState.humanName.trim();
+  const characterName = calculatorState.characterName.trim();
+  const callName = calculatorState.callName.trim();
+  const observedDescription = calculatorState.observedDescription.trim();
+  const inferred = inferCanineDetailsFromDescription(observedDescription);
+  const humanId = humanName ? `human-${slugifyIdentifier(humanName)}` : null;
+  const characterId = characterName ? `character-${slugifyIdentifier(characterName)}` : null;
+  const canineId =
+    characterName && callName && Number.isFinite(total)
+      ? `canine-${slugifyIdentifier(characterName)}-${slugifyIdentifier(callName)}-${total}`
+      : null;
+
+  if (!humanName) warnings.push("Add the human name to generate a stable human record.");
+  if (!characterName) warnings.push("Add the character/player name to generate a stable character record.");
+  if (!callName) warnings.push("Add the pet call name to generate a stable canine record.");
+  if (!exactTraits) warnings.push("The solved profile is not exact yet, so the trait profile draft is incomplete.");
+  if (!Number.isFinite(total)) warnings.push("TOTAL is not exact yet, so the canine id/display name draft is incomplete.");
+  if (!observedDescription) warnings.push("Paste the observed long description to infer gender, type, and visible appearance.");
+
+  const canine = {
+    id: canineId ?? "canine-missing-id",
+    externalIds: {},
+    callName: callName || "UNKNOWN",
+    displayName:
+      characterName && callName && Number.isFinite(total)
+        ? `${characterName} ${callName} ${total}`
+        : row.Name || "Solved canine",
+    characterId: characterId ?? "character-missing-id",
+    gender: inferred.gender,
+    canineType: inferred.canineType,
+    appearance: inferred.appearance,
+    status: calculatorState.exportStatus,
+    breedingRole: calculatorState.exportBreedingRole
+  };
+
+  const payload: Record<string, unknown> = {
+    schemaVersion: 1,
+    kind: "canonical-canine-draft",
+    human: humanId
+      ? {
+          id: humanId,
+          displayName: humanName,
+          contact: null,
+          status: "active"
+        }
+      : null,
+    character: characterId
+      ? {
+          id: characterId,
+          name: characterName,
+          humanId,
+          status: "active"
+        }
+      : null,
+    canine,
+    traitProfile:
+      canineId && exactTraits
+        ? {
+            canineId,
+            status: "known",
+            total,
+            traits: exactTraits
+          }
+        : null,
+    sourceObservation: canineId
+      ? {
+          id: `source-manual-calculator-${canineId}`,
+          entityType: "canine",
+          entityId: canineId,
+          source: "manual/calculator",
+          sourceObservedAt: "2026-06-07",
+          sourceLag: null,
+          externalId: null,
+          notes: buildCalculatorSourceNotes(observedDescription, inferred.notes)
+        }
+      : null
+  };
+
+  return { payload, warnings };
+}
+
+function parseExactTraitValuesFromRow(row: Record<string, string>): Record<string, number> | null {
+  const traits: Record<string, number> = {};
+  for (const trait of traitNames) {
+    const value = Number.parseInt(row[trait], 10);
+    if (!Number.isFinite(value)) {
+      return null;
+    }
+    traits[trait] = value;
+  }
+  return traits;
+}
+
+function slugifyIdentifier(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function inferCanineDetailsFromDescription(description: string): {
+  gender: CuratedGender;
+  canineType: string | null;
+  appearance: CanineAppearance | null;
+  notes: string[];
+} {
+  const notes: string[] = [];
+  const normalized = description.replace(/\s+/g, " ").trim();
+  const lower = normalized.toLowerCase();
+
+  const canineTypeMatch = lower.match(/\b(wolf|fox|coyote|jackal|dog)\b/);
+  const canineType = canineTypeMatch?.[1] ?? null;
+  if (!canineType) {
+    notes.push("Could not infer canine type from description.");
+  }
+
+  const gender: CuratedGender = /\bher\b/.test(lower) ? "F" : /\bhis\b/.test(lower) ? "M" : "U";
+  if (gender === "U") {
+    notes.push("Could not infer gender pronoun from description.");
+  }
+
+  const primaryColorMatch = normalized.match(/\bhas a ([A-Za-z]+(?: [A-Za-z]+)?) coat\b/i);
+  const eyeColorMatch = normalized.match(/\b([A-Za-z]+(?: [A-Za-z]+)?) eyes\b/i);
+  const secondaryColorMatch = normalized.match(/\bwith ([A-Za-z]+(?: [A-Za-z]+)?) (?:stripes|spots|markings|ear|ears)\b/i);
+
+  const appearance = normalizeAppearance({
+    primaryColor: primaryColorMatch?.[1] ?? null,
+    secondaryColor: secondaryColorMatch?.[1] ?? null,
+    eyeColor: eyeColorMatch?.[1] ?? null
+  });
+
+  if (!appearance?.primaryColor) notes.push("Could not infer primary coat color from description.");
+  if (!appearance?.secondaryColor) notes.push("Could not infer a simplified secondary color from description.");
+  if (!appearance?.eyeColor) notes.push("Could not infer eye color from description.");
+
+  return { gender, canineType, appearance, notes };
+}
+
+function buildCalculatorSourceNotes(description: string, notes: readonly string[]): string {
+  const parts: string[] = ["Solved from calculator workflow."];
+  if (description) {
+    parts.push(`Observed description: ${description.replace(/\s+/g, " ").trim()}`);
+  }
+  if (notes.length > 0) {
+    parts.push(`Inference notes: ${notes.join(" ")}`);
+  }
+  return parts.join(" ");
+}
+
+function createCurationSelectedCanineDetail(store: DataStore): HTMLElement {
+  const summary = curationState.selectedCanineId ? store.getCanineSummary(curationState.selectedCanineId) : undefined;
+  if (!summary) {
+    const detail = createElement("section", "candidate-detail");
+    detail.append(createElement("h3", undefined, "Selected pet detail"), createElement("p", undefined, "No pet selected."));
+    return detail;
+  }
+  const row = createDataBrowserRow(summary);
+  const detail = createDataBrowserDetail(row, store);
+  const heading = detail.querySelector("h3");
+  if (heading) {
+    heading.textContent = `Selected pet detail: ${summary.canine.displayName}`;
+  }
+  return detail;
 }
 
 function createPlaceholderGrid(view: ViewDefinition): HTMLElement {
@@ -4647,9 +5887,12 @@ function createCalculatorWorkflow(): HTMLElement {
 
   form.append(
     createLabel("Known canine filter", createKnownCanineFilterInput()),
+    createLabel("Known human", createKnownHumanSelect()),
+    createKnownRetiredToggle(),
     createLabel("Known canine", createKnownCanineSelect()),
     createLabel("Comparison direction", createDirectionSelect()),
     createLabel("Result name", createResultNameInput()),
+    createCalculatorRecordFields(),
     createLabel("Comparison text", createComparisonTextArea()),
     createCalculatorActions()
   );
@@ -4661,7 +5904,11 @@ function createCalculatorWorkflow(): HTMLElement {
   );
 
   if (result.resultRow) {
-    output.append(createResultCards(result.resultRow), createTraitResultTable(result.resultRow), createExportBlock(result.exportText));
+    output.append(
+      createResultCards(result.resultRow),
+      createTraitResultTable(result.resultRow),
+      createExportBlock(result.resultRow, result.exportText)
+    );
   } else {
     output.append(createElement("div", "empty-state", "Add comparisons to build a merged solved profile."));
   }
@@ -4700,8 +5947,75 @@ function createKnownCanineFilterInput(): HTMLInputElement {
   return input;
 }
 
+function createKnownHumanSelect(): HTMLSelectElement {
+  const select = createElement("select", "field-control") as HTMLSelectElement;
+  const allOption = document.createElement("option");
+  allOption.value = "all";
+  allOption.textContent = "All humans";
+  select.append(allOption);
+
+  const seen = new Set<string>();
+  const options = knownCanineOptions
+    .filter((option) => Boolean(option.humanId) && !seen.has(option.humanId as string))
+    .sort((left, right) => (left.humanLabel ?? "").localeCompare(right.humanLabel ?? "", undefined, { sensitivity: "base" }));
+
+  for (const option of options) {
+    const humanId = option.humanId ?? null;
+    if (!humanId || seen.has(humanId)) {
+      continue;
+    }
+    seen.add(humanId);
+    const element = document.createElement("option");
+    element.value = humanId;
+    element.textContent = option.humanLabel ?? humanId;
+    select.append(element);
+  }
+
+  select.value = calculatorState.knownHumanId;
+  select.addEventListener("change", () => {
+    calculatorState.knownHumanId = select.value;
+    const knownSelect = document.querySelector<HTMLSelectElement>(`#${knownCanineSelectId}`);
+    if (knownSelect) {
+      updateKnownCanineSelectOptions(knownSelect);
+    }
+    render();
+  });
+
+  return select;
+}
+
+function createKnownRetiredToggle(): HTMLElement {
+  const wrap = createElement("div", "button-row");
+  wrap.append(
+    createToggleButton(
+      calculatorState.hideRetiredKnowns ? "Show retired knowns" : "Hide retired knowns",
+      calculatorState.hideRetiredKnowns,
+      () => {
+        calculatorState.hideRetiredKnowns = !calculatorState.hideRetiredKnowns;
+        const knownSelect = document.querySelector<HTMLSelectElement>(`#${knownCanineSelectId}`);
+        if (knownSelect) {
+          updateKnownCanineSelectOptions(knownSelect);
+        }
+        render();
+      }
+    )
+  );
+  return wrap;
+}
+
 function getFilteredKnownCanineOptions(): KnownCanineOption[] {
-  return filterKnownCanineOptions(knownCanineOptions, calculatorState.knownFilter);
+  return filterKnownCanineOptions(
+    knownCanineOptions.filter((option) => {
+      if (calculatorState.knownHumanId !== "all" && option.humanId !== calculatorState.knownHumanId) {
+        return false;
+      }
+      if (calculatorState.hideRetiredKnowns && option.breedingRole === "retired") {
+        return false;
+      }
+      return true;
+    }),
+    calculatorState.knownFilter
+  );
 }
 
 function updateKnownCanineSelectOptions(select: HTMLSelectElement): void {
@@ -4768,6 +6082,81 @@ function createResultNameInput(): HTMLInputElement {
   return input;
 }
 
+function createCalculatorRecordFields(): HTMLElement {
+  const group = createElement("div", "field-grid");
+  group.append(
+    createLabel("Human", createCalculatorMetadataInput("humanName", "Bob")),
+    createLabel("Character / player", createCalculatorMetadataInput("characterName", "Blurgy")),
+    createLabel("Pet call name", createCalculatorMetadataInput("callName", "Lucy")),
+    createLabel("Record status", createCalculatorStatusSelect()),
+    createLabel("Activity type", createCalculatorBreedingRoleSelect()),
+    createLabel("Observed long description", createCalculatorDescriptionTextArea())
+  );
+  return group;
+}
+
+function createCalculatorMetadataInput(
+  field: "humanName" | "characterName" | "callName",
+  placeholder: string
+): HTMLInputElement {
+  const input = createElement("input", "field-control") as HTMLInputElement;
+  input.value = calculatorState[field];
+  input.placeholder = placeholder;
+  input.addEventListener("input", () => {
+    calculatorState[field] = input.value;
+    render();
+  });
+  return input;
+}
+
+function createCalculatorStatusSelect(): HTMLSelectElement {
+  const select = createElement("select", "field-control") as HTMLSelectElement;
+  for (const [value, label] of [
+    ["active", "Active"],
+    ["unknown", "Unknown"],
+    ["inactive", "Inactive"]
+  ] as const) {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = label;
+    select.append(option);
+  }
+  select.value = calculatorState.exportStatus;
+  select.addEventListener("change", () => {
+    calculatorState.exportStatus = select.value as CuratedCanineStatus;
+    render();
+  });
+  return select;
+}
+
+function createCalculatorBreedingRoleSelect(): HTMLSelectElement {
+  const select = createElement("select", "field-control") as HTMLSelectElement;
+  for (const option of getBreedingRoleOptions()) {
+    const element = document.createElement("option");
+    element.value = option.value;
+    element.textContent = option.label;
+    select.append(element);
+  }
+  select.value = calculatorState.exportBreedingRole;
+  select.addEventListener("change", () => {
+    calculatorState.exportBreedingRole = select.value as CuratedBreedingRole;
+    render();
+  });
+  return select;
+}
+
+function createCalculatorDescriptionTextArea(): HTMLTextAreaElement {
+  const textarea = createElement("textarea", "field-control comparison-input") as HTMLTextAreaElement;
+  textarea.value = calculatorState.observedDescription;
+  textarea.placeholder = "Paste the pet's observed long description here.";
+  textarea.spellcheck = false;
+  textarea.addEventListener("input", () => {
+    calculatorState.observedDescription = textarea.value;
+    render();
+  });
+  return textarea;
+}
+
 function createComparisonTextArea(): HTMLTextAreaElement {
   const textarea = createElement("textarea", "field-control comparison-input");
   textarea.value = calculatorState.comparisonText;
@@ -4793,6 +6182,13 @@ function createCalculatorActions(): HTMLElement {
   resetButton.addEventListener("click", () => {
     calculatorState.history = [];
     calculatorState.comparisonText = "";
+    calculatorState.resultName = "";
+    calculatorState.humanName = "";
+    calculatorState.characterName = "";
+    calculatorState.callName = "";
+    calculatorState.observedDescription = "";
+    calculatorState.exportStatus = "active";
+    calculatorState.exportBreedingRole = "breeding";
     calculatorState.draftWarnings = [];
     render();
   });
@@ -4938,19 +6334,37 @@ function createTraitResultTable(row: Record<string, string>): HTMLElement {
   return table;
 }
 
-function createExportBlock(exportText: string): HTMLElement {
+function createExportBlock(row: Record<string, string>, exportText: string): HTMLElement {
   const block = createElement("div", "export-block");
-  const textarea = createElement("textarea", "field-control export-output");
-  const button = createElement("button", "secondary-button", "Copy row");
+  const draft = createCalculatorCanonicalDraft(row);
+  const jsonOutput = createElement("textarea", "field-control export-output") as HTMLTextAreaElement;
+  const copyJsonButton = createElement("button", "primary-button", "Copy JSON draft") as HTMLButtonElement;
+  const legacyOutput = createElement("textarea", "field-control export-output") as HTMLTextAreaElement;
+  const copyLegacyButton = createElement("button", "secondary-button", "Copy legacy row") as HTMLButtonElement;
 
-  textarea.readOnly = true;
-  textarea.value = exportText;
-  button.type = "button";
-  button.addEventListener("click", () => {
+  jsonOutput.readOnly = true;
+  jsonOutput.value = JSON.stringify(draft.payload, null, 2);
+  copyJsonButton.type = "button";
+  copyJsonButton.addEventListener("click", () => {
+    void navigator.clipboard?.writeText(jsonOutput.value);
+  });
+
+  legacyOutput.readOnly = true;
+  legacyOutput.value = exportText;
+  copyLegacyButton.type = "button";
+  copyLegacyButton.addEventListener("click", () => {
     void navigator.clipboard?.writeText(exportText);
   });
 
-  block.append(createElement("h3", undefined, "Export row"), textarea, button);
+  block.append(createElement("h3", undefined, "Import-ready JSON draft"));
+  if (draft.warnings.length > 0) {
+    const warningList = createElement("ul", "error-list");
+    for (const warning of draft.warnings) {
+      warningList.append(createElement("li", undefined, warning));
+    }
+    block.append(warningList);
+  }
+  block.append(jsonOutput, copyJsonButton, createElement("h3", undefined, "Legacy spreadsheet row"), legacyOutput, copyLegacyButton);
   return block;
 }
 

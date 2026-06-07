@@ -368,8 +368,8 @@
       "secondaryColor": "Cinnamon",
       "eyeColor": "Emerald"
     },
-    "status": "active",
-    "breedingRole": "breeding"
+    "status": "inactive",
+    "breedingRole": "retired"
   },
   {
     "id": "canine-baggins-bilbo-753",
@@ -841,8 +841,8 @@
     "callName": "Baconator",
     "displayName": "Angrynerd Baconator 1116",
     "characterId": "character-angrynerd",
-    "gender": "F",
-    "canineType": null,
+    "gender": "M",
+    "canineType": "wolf",
     "appearance": {
       "primaryColor": "Silver",
       "secondaryColor": "Black",
@@ -864,8 +864,8 @@
       "secondaryColor": "Pearl",
       "eyeColor": null
     },
-    "status": "active",
-    "breedingRole": "breeding"
+    "status": "inactive",
+    "breedingRole": "retired"
   },
   {
     "id": "canine-grogu-mando-1122",
@@ -880,8 +880,8 @@
       "secondaryColor": "Silver",
       "eyeColor": null
     },
-    "status": "active",
-    "breedingRole": "breeding"
+    "status": "inactive",
+    "breedingRole": "retired"
   },
   {
     "id": "canine-jonsnow-ghost-1107",
@@ -896,8 +896,8 @@
       "secondaryColor": "Ivory",
       "eyeColor": null
     },
-    "status": "active",
-    "breedingRole": "breeding"
+    "status": "inactive",
+    "breedingRole": "retired"
   },
   {
     "id": "canine-pom-fuppy-1085",
@@ -928,8 +928,8 @@
       "secondaryColor": "Darker",
       "eyeColor": null
     },
-    "status": "active",
-    "breedingRole": "breeding"
+    "status": "inactive",
+    "breedingRole": "retired"
   },
   {
     "id": "canine-treehugger-snickerz-1106",
@@ -945,7 +945,7 @@
       "eyeColor": null
     },
     "status": "active",
-    "breedingRole": "breeding"
+    "breedingRole": "play-only"
   },
   {
     "id": "canine-arynia-dingding-1103",
@@ -1341,7 +1341,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+      "breedingRole": "retired"
   },
   {
     "id": "canine-repo-boomer-123-22",
@@ -2097,7 +2097,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-rain-beauty",
@@ -2433,7 +2433,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-mulapin-catch-971",
@@ -2457,7 +2457,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-ballad-dame-970",
@@ -2505,7 +2505,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+      "breedingRole": "breeding"
   },
   {
     "id": "canine-storm-windy-1082",
@@ -2517,7 +2517,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+      "breedingRole": "retired"
   },
   {
     "id": "canine-portamento-svt-1045",
@@ -2541,7 +2541,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+      "breedingRole": "retired"
   },
   {
     "id": "canine-lullaby-pamd-1057",
@@ -2589,7 +2589,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-quack-step5",
@@ -2629,7 +2629,7 @@
       "eyeColor": "Turquoise"
     },
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "breeding"
   },
   {
     "id": "canine-zyrika-step1-1104",
@@ -2677,7 +2677,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-crescendo-fly-1062",
@@ -2701,7 +2701,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-ballad-draw-1087",
@@ -2725,7 +2725,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-toccato-misty",
@@ -2765,7 +2765,7 @@
       "eyeColor": null
     },
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "breeding"
   },
   {
     "id": "canine-dancer-step2-1090",
@@ -2777,7 +2777,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-cipe-epic-1091",
@@ -2793,7 +2793,7 @@
       "eyeColor": null
     },
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "breeding"
   },
   {
     "id": "canine-bromine-shades-1041",
@@ -2805,7 +2805,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-stormsong-thrina-1081",
@@ -2817,7 +2817,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-lullaby-bondo-721",
@@ -3057,7 +3057,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-exie-swap-1055",
@@ -3081,7 +3081,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-cover-facts-1073",
@@ -3121,7 +3121,7 @@
       "eyeColor": null
     },
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-toccato-repl-1110",
@@ -3185,7 +3185,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-jackal-step2-1068",
@@ -3233,7 +3233,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-dancer-step4",
@@ -3245,7 +3245,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-refrain-hobby-714",
@@ -3293,7 +3293,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-refrain-oui-1026",
@@ -3317,7 +3317,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-rain-flippy-1048",
@@ -3353,7 +3353,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-nuisance-step2-1082",
@@ -3365,7 +3365,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-toccato-glub-1087",
@@ -3401,7 +3401,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-zazaz-step2",
@@ -3525,7 +3525,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "breeding"
   },
   {
     "id": "canine-dancer-unnamed",
@@ -3537,7 +3537,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-izen-ara",
@@ -3582,9 +3582,9 @@
     "displayName": "Doli Kiska XXXV 1131",
     "characterId": "character-doli",
     "gender": "M",
-    "canineType": null,
+    "canineType": "wolf",
     "appearance": null,
-    "status": "unknown",
+    "status": "active",
     "breedingRole": "play-only"
   },
   {
@@ -3633,7 +3633,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-baggins-pearl1",
@@ -3645,7 +3645,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-pom-step1-1085",
@@ -3657,7 +3657,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-pom-step2",
@@ -3702,14 +3702,14 @@
     "displayName": "Baggins Pearl 1101",
     "characterId": "character-baggins",
     "gender": "F",
-    "canineType": null,
+    "canineType": "coyote",
     "appearance": {
       "primaryColor": "Pearl",
       "secondaryColor": null,
       "eyeColor": null
     },
-    "status": "unknown",
-    "breedingRole": "unknown"
+    "status": "active",
+    "breedingRole": "breeding"
   },
   {
     "id": "canine-izen-sarulf-1090",
@@ -4069,7 +4069,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-pupimp-gen5-751",
@@ -4217,7 +4217,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-refrain-jackpot-777",
@@ -4293,7 +4293,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-    "breedingRole": "unknown"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-toccato-betti-705",
@@ -4702,5 +4702,41 @@
     "appearance": null,
     "status": "unknown",
     "breedingRole": "retired"
+  },
+  {
+    "id": "canine-jonsnow-ghost-1124",
+    "externalIds": {},
+    "callName": "Ghost",
+    "displayName": "Jonsnow Ghost 1124",
+    "characterId": "character-jonsnow",
+    "gender": "F",
+    "canineType": "coyote",
+    "appearance": null,
+    "status": "active",
+    "breedingRole": "breeding"
+  },
+  {
+    "id": "canine-repo-boomer-1125",
+    "externalIds": {},
+    "callName": "Boomer",
+    "displayName": "Repo Boomer 1125",
+    "characterId": "character-repo",
+    "gender": "M",
+    "canineType": "wolf",
+    "appearance": null,
+    "status": "active",
+    "breedingRole": "breeding"
+  },
+  {
+    "id": "canine-grogu-mando-1119",
+    "externalIds": {},
+    "callName": "Mando",
+    "displayName": "Grogu Mando 1119",
+    "characterId": "character-grogu",
+    "gender": "F",
+    "canineType": "fox",
+    "appearance": null,
+    "status": "active",
+    "breedingRole": "breeding"
   }
 ]

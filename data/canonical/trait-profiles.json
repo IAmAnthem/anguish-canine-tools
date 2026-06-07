@@ -1639,23 +1639,23 @@
     "status": "known",
     "total": 1085,
     "traits": {
-      "Alertness": 54,
-      "Appetite": 67,
-      "Brutality": 43,
-      "Development": 63,
-      "Eluding": 79,
-      "Energy": 59,
-      "Evasion": 77,
-      "Ferocity": 63,
-      "Fortitude": 62,
-      "Insight": 53,
-      "Might": 66,
-      "Nimbleness": 70,
+      "Alertness": 52,
+      "Appetite": 63,
+      "Brutality": 48,
+      "Development": 60,
+      "Eluding": 82,
+      "Energy": 55,
+      "Evasion": 78,
+      "Ferocity": 60,
+      "Fortitude": 60,
+      "Insight": 56,
+      "Might": 62,
+      "Nimbleness": 75,
       "Patience": 54,
-      "Procreation": 92,
-      "Sufficiency": 50,
-      "Targeting": 56,
-      "Toughness": 77
+      "Procreation": 95,
+      "Sufficiency": 52,
+      "Targeting": 57,
+      "Toughness": 76
     }
   },
   {
@@ -2500,9 +2500,27 @@
   },
   {
     "canineId": "canine-doli-kiska-xxxv-1131",
-    "status": "summary",
+    "status": "known",
     "total": 1131,
-    "traits": null
+    "traits": {
+      "Alertness": 50,
+      "Appetite": 68,
+      "Brutality": 50,
+      "Development": 61,
+      "Eluding": 84,
+      "Energy": 56,
+      "Evasion": 84,
+      "Ferocity": 68,
+      "Fortitude": 68,
+      "Insight": 65,
+      "Might": 62,
+      "Nimbleness": 71,
+      "Patience": 52,
+      "Procreation": 98,
+      "Sufficiency": 58,
+      "Targeting": 58,
+      "Toughness": 78
+    }
   },
   {
     "canineId": "canine-pom-step1-1085",
@@ -2869,5 +2887,77 @@
     "status": "summary",
     "total": 885,
     "traits": null
+  },
+  {
+    "canineId": "canine-jonsnow-ghost-1124",
+    "status": "known",
+    "total": 1124,
+    "traits": {
+      "Alertness": 54,
+      "Appetite": 70,
+      "Brutality": 54,
+      "Development": 62,
+      "Eluding": 83,
+      "Energy": 55,
+      "Evasion": 81,
+      "Ferocity": 62,
+      "Fortitude": 64,
+      "Insight": 63,
+      "Might": 60,
+      "Nimbleness": 74,
+      "Patience": 51,
+      "Procreation": 95,
+      "Sufficiency": 57,
+      "Targeting": 60,
+      "Toughness": 79
+    }
+  },
+  {
+    "canineId": "canine-repo-boomer-1125",
+    "status": "known",
+    "total": 1125,
+    "traits": {
+      "Alertness": 51,
+      "Appetite": 68,
+      "Brutality": 50,
+      "Development": 61,
+      "Eluding": 88,
+      "Energy": 57,
+      "Evasion": 82,
+      "Ferocity": 66,
+      "Fortitude": 71,
+      "Insight": 62,
+      "Might": 57,
+      "Nimbleness": 70,
+      "Patience": 52,
+      "Procreation": 96,
+      "Sufficiency": 57,
+      "Targeting": 57,
+      "Toughness": 80
+    }
+  },
+  {
+    "canineId": "canine-grogu-mando-1119",
+    "status": "known",
+    "total": 1119,
+    "traits": {
+      "Alertness": 51,
+      "Appetite": 67,
+      "Brutality": 48,
+      "Development": 60,
+      "Eluding": 90,
+      "Energy": 57,
+      "Evasion": 83,
+      "Ferocity": 63,
+      "Fortitude": 67,
+      "Insight": 59,
+      "Might": 65,
+      "Nimbleness": 67,
+      "Patience": 54,
+      "Procreation": 99,
+      "Sufficiency": 57,
+      "Targeting": 54,
+      "Toughness": 78
+    }
   }
 ]

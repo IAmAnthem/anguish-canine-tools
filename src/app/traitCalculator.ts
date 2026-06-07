@@ -19,6 +19,10 @@ export type KnownCanineOption = {
   label: string;
   aliases: string[];
   profile: ExactTraitProfile;
+  humanId?: string | null;
+  humanLabel?: string;
+  status?: string;
+  breedingRole?: string;
 };
 
 export type CalculatorResult = {
@@ -52,7 +56,7 @@ export type CalculatorHistoryResult = {
 
 export function getKnownCanineOptions(store: DataStore): KnownCanineOption[] {
   return store.data.canonical.canines
-    .map((canine) => {
+    .map<KnownCanineOption | null>((canine) => {
       const summary = store.getCanineSummary(canine.id);
       const profile = summary?.traitProfile ? toExactTraitProfile(summary.traitProfile) : null;
 
@@ -66,10 +70,14 @@ export function getKnownCanineOptions(store: DataStore): KnownCanineOption[] {
         aliases: [canine.callName, canine.displayName, summary.character?.name, `${summary.character?.name ?? ""} ${canine.callName}`].filter(
           (alias): alias is string => Boolean(alias?.trim())
         ),
-        profile
+        profile,
+        humanId: summary.human?.id ?? null,
+        humanLabel: summary.human?.displayName ?? "unknown",
+        status: canine.status,
+        breedingRole: canine.breedingRole ?? "unknown"
       };
     })
-    .filter((option): option is KnownCanineOption => Boolean(option))
+    .filter((option): option is KnownCanineOption => option !== null)
     .sort((left, right) => left.label.localeCompare(right.label, undefined, { sensitivity: "base" }));
 }
 

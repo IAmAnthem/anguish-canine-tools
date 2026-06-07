@@ -88,6 +88,22 @@ h3 {
   color: inherit;
 }
 
+.header-links {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: #f0d9b5;
+}
+
+.header-links a {
+  color: #f7f2e8;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.header-links a:hover {
+  color: #ffd89b;
+}
+
 .status-strip {
   display: grid;
   grid-template-columns: repeat(5, minmax(78px, 1fr));
