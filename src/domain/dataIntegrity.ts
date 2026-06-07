@@ -22,6 +22,12 @@ export type TraitProfileRecord = {
   canineId: string;
 };
 
+export type ComparisonObservationRecord = {
+  id: string;
+  targetCanineId: string | null;
+  knownCanineId: string | null;
+};
+
 export type LineageProfileRecord = {
   canineId: string;
   sireId: string | null;
@@ -38,6 +44,7 @@ export type CanonicalDataSet = {
   canines: readonly CanineRecord[];
   traitProfiles: readonly TraitProfileRecord[];
   lineageProfiles: readonly LineageProfileRecord[];
+  comparisonObservations?: readonly ComparisonObservationRecord[];
 };
 
 export type ReferenceDataSet = {
@@ -126,6 +133,11 @@ export function validateCanonicalData(data: CanonicalDataSet): DataIntegrityRepo
     "Lineage profile",
     data.lineageProfiles.map((profile) => profile.canineId)
   );
+  addDuplicateIdErrors(
+    errors,
+    "Comparison observation",
+    (data.comparisonObservations ?? []).map((observation) => observation.id)
+  );
 
   for (const character of data.characters) {
     if (character.humanId === null) {
@@ -177,6 +189,28 @@ export function validateCanonicalData(data: CanonicalDataSet): DataIntegrityRepo
           referencedCanineId
         );
       }
+    }
+  }
+
+  for (const observation of data.comparisonObservations ?? []) {
+    if (observation.targetCanineId !== null && !canineIds.has(observation.targetCanineId)) {
+      addMissingReferenceError(
+        errors,
+        "Comparison observation",
+        observation.id,
+        "targetCanineId",
+        observation.targetCanineId
+      );
+    }
+
+    if (observation.knownCanineId !== null && !canineIds.has(observation.knownCanineId)) {
+      addMissingReferenceError(
+        errors,
+        "Comparison observation",
+        observation.id,
+        "knownCanineId",
+        observation.knownCanineId
+      );
     }
   }
 

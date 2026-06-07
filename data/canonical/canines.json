@@ -709,7 +709,7 @@
     "canineType": null,
     "appearance": null,
     "status": "active",
-    "breedingRole": "breeding"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-exie-colo-1086",
@@ -773,7 +773,7 @@
       "eyeColor": "Crimson"
     },
     "status": "active",
-    "breedingRole": "breeding"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-portamento-amg-1095",
@@ -1341,7 +1341,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-      "breedingRole": "retired"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-repo-boomer-123-22",
@@ -2505,7 +2505,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-      "breedingRole": "breeding"
+    "breedingRole": "breeding"
   },
   {
     "id": "canine-storm-windy-1082",
@@ -2517,7 +2517,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-      "breedingRole": "retired"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-portamento-svt-1045",
@@ -2541,7 +2541,7 @@
     "canineType": null,
     "appearance": null,
     "status": "unknown",
-      "breedingRole": "retired"
+    "breedingRole": "retired"
   },
   {
     "id": "canine-lullaby-pamd-1057",
@@ -4736,6 +4736,26 @@
     "gender": "F",
     "canineType": "fox",
     "appearance": null,
+    "status": "active",
+    "breedingRole": "breeding"
+  },
+  {
+    "id": "canine-blurgy-lucy-1118",
+    "externalIds": {},
+    "callName": "Lucy",
+    "displayName": "Blurgy Lucy 1118",
+    "characterId": "character-blurgy",
+    "gender": "F",
+    "canineType": "fox",
+    "appearance": {
+      "primaryColor": "Pearl",
+      "secondaryColor": "Black",
+      "eyeColor": "Turquoise",
+      "markingTypes": [
+        "stripes",
+        "right ear"
+      ]
+    },
     "status": "active",
     "breedingRole": "breeding"
   }

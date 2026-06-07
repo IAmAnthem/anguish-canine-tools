@@ -194,11 +194,17 @@ export function matchesDataBrowserFilters(row: DataBrowserRow, filters: DataBrow
 }
 
 export function formatAppearance(appearance: CanineSummary["canine"]["appearance"]): string {
-  return [
+  const parts = [
     `primary ${formatAppearanceField(appearance?.primaryColor)}`,
     `secondary ${formatAppearanceField(appearance?.secondaryColor)}`,
     `eyes ${formatAppearanceField(appearance?.eyeColor)}`
-  ].join(", ");
+  ];
+
+  if (appearance?.markingTypes?.length) {
+    parts.push(`markings ${appearance.markingTypes.join(" + ")}`);
+  }
+
+  return parts.join(", ");
 }
 
 export function formatTraitValue(value: TraitValue | undefined): string {

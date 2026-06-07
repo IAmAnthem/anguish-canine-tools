@@ -144,6 +144,27 @@ Use `null` for unknown, NPC, or untracked ancestors. Do not represent all NPCs a
 
 Use source observations for delayed website data, legacy imports, or manual curation notes when the source matters.
 
+## `comparison-observations.json`
+
+```json
+{
+  "id": "compare-observation-1",
+  "targetCanineId": "canine-blurgy-lucy-1118",
+  "knownCanineId": "canine-cover-songs-1113",
+  "knownLabel": "Cover Songs 1113 | Cover | 1113/95",
+  "direction": "known-to-unknown",
+  "subject": "Songs1113",
+  "relationship": "unrelated",
+  "examinedDescription": null,
+  "referenceDescription": null,
+  "sniffedDescription": "a very large pearl trained fox",
+  "blockCount": 1,
+  "sourceObservedAt": "2026-06-07"
+}
+```
+
+Use comparison observations to preserve evidence gathered during compare sessions, especially when a target canine does not yet have canonical lineage data. These records are compare-based evidence, not lineage truth.
+
 ## `reference/collars.json`
 
 ```json

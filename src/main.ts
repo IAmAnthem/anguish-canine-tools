@@ -205,7 +205,6 @@ const calculatorState: {
   resultName: string;
   humanName: string;
   characterName: string;
-  callName: string;
   observedDescription: string;
   exportStatus: CuratedCanineStatus;
   exportBreedingRole: CuratedBreedingRole;
@@ -216,12 +215,11 @@ const calculatorState: {
   knownFilter: "",
   knownHumanId: "all",
   hideRetiredKnowns: true,
-  directionMode: "auto",
+  directionMode: "",
   comparisonText: "",
   resultName: "",
   humanName: "",
   characterName: "",
-  callName: "",
   observedDescription: "",
   exportStatus: "active",
   exportBreedingRole: "breeding",
@@ -1285,7 +1283,7 @@ function createUsingAppGuidancePanel(): HTMLElement {
   const list = createElement("ul", "compact-list");
 
   for (const line of [
-    "Calculator: solve a canine's 17 trait values from certain compare text against a known canine.",
+    "Calculator: solve a canine's 17 trait values from certain compare text against a known canine, then export an import-ready JSON draft.",
     "Planner: answer the immediate question, 'who can this canine breed with right now?'",
     "Multi-Step: build a multi-generation lift plan that pushes ancestry beyond the remembered relationship window.",
     "Data: search the canonical records for canines, ownership, traits, lineage, and appearance.",
@@ -1315,6 +1313,7 @@ function createRecommendedWorkflowPanel(): HTMLElement {
   for (const line of [
     "Use Data to confirm the canine, owner, and current lineage you are working with.",
     "Use Calculator when you have compare text and need to solve real trait values.",
+    "Once the solve is exact, copy the JSON draft and import it into canonical repo data.",
     "Use Planner for immediate safe mates, then Algorithms for ranked recommendations with a specific goal.",
     "Use Multi-Step when the goal is a breeding program lift rather than one litter.",
     "Use Herd Health when you need to understand what repeated lines or tight mate options are doing to the whole pool."
@@ -3952,10 +3951,14 @@ function normalizeAppearance(appearance: CanineAppearance | null): CanineAppeara
   if (!appearance) {
     return null;
   }
+  const markingTypes = Array.isArray(appearance.markingTypes)
+    ? appearance.markingTypes.map((value) => value.trim()).filter(Boolean)
+    : [];
   return {
     primaryColor: appearance.primaryColor?.trim() || null,
     secondaryColor: appearance.secondaryColor?.trim() || null,
-    eyeColor: appearance.eyeColor?.trim() || null
+    eyeColor: appearance.eyeColor?.trim() || null,
+    markingTypes: markingTypes.length > 0 ? markingTypes : null
   };
 }
 
@@ -3965,7 +3968,8 @@ function appearancesEqual(left: CanineAppearance | null, right: CanineAppearance
   return (
     (normalizedLeft?.primaryColor ?? null) === (normalizedRight?.primaryColor ?? null) &&
     (normalizedLeft?.secondaryColor ?? null) === (normalizedRight?.secondaryColor ?? null) &&
-    (normalizedLeft?.eyeColor ?? null) === (normalizedRight?.eyeColor ?? null)
+    (normalizedLeft?.eyeColor ?? null) === (normalizedRight?.eyeColor ?? null) &&
+    JSON.stringify(normalizedLeft?.markingTypes ?? null) === JSON.stringify(normalizedRight?.markingTypes ?? null)
   );
 }
 
@@ -3984,7 +3988,8 @@ function stageCanineAppearance(canineId: string, appearance: CanineAppearance): 
     delete curationState.appearanceUpdatesByCanineId[canineId];
     return;
   }
-  curationState.appearanceUpdatesByCanineId[canineId] = normalized ?? { primaryColor: null, secondaryColor: null, eyeColor: null };
+  curationState.appearanceUpdatesByCanineId[canineId] =
+    normalized ?? { primaryColor: null, secondaryColor: null, eyeColor: null, markingTypes: null };
 }
 
 function getPendingAppearanceUpdates(store: DataStore): CanineAppearancePatchUpdate[] {
@@ -4596,24 +4601,47 @@ function createDataBrowserLineagePanel(row: DataBrowserRow, store: DataStore): H
 function createDataBrowserSourcePanel(row: DataBrowserRow, store: DataStore): HTMLElement {
   const panel = createElement("section", "plan-panel");
   const observations = store.data.canonical.sourceObservations.filter((observation) => observation.entityId === row.canine.id);
+  const comparisonObservations = (store.data.canonical.comparisonObservations ?? []).filter(
+    (observation) => observation.targetCanineId === row.canine.id
+  );
   panel.append(createElement("h3", undefined, "Sources"));
 
-  if (observations.length === 0) {
+  if (observations.length === 0 && comparisonObservations.length === 0) {
     panel.append(createElement("p", "plan-note", "No source observations recorded."));
     return panel;
   }
 
-  const list = createElement("ul", "compact-list");
-  for (const observation of observations.slice(0, 6)) {
-    list.append(
-      createElement(
-        "li",
-        undefined,
-        `${observation.source}${observation.sourceObservedAt ? ` (${observation.sourceObservedAt})` : ""}${observation.externalId ? ` | external ${observation.externalId}` : ""}`
-      )
-    );
+  if (observations.length > 0) {
+    const list = createElement("ul", "compact-list");
+    for (const observation of observations.slice(0, 6)) {
+      list.append(
+        createElement(
+          "li",
+          undefined,
+          `${observation.source}${observation.sourceObservedAt ? ` (${observation.sourceObservedAt})` : ""}${observation.externalId ? ` | external ${observation.externalId}` : ""}`
+        )
+      );
+    }
+    panel.append(list);
   }
-  panel.append(list);
+
+  if (comparisonObservations.length > 0) {
+    panel.append(createElement("h4", undefined, "Compare observations"));
+    const list = createElement("ul", "compact-list");
+    for (const observation of comparisonObservations.slice(0, 8)) {
+      const relationship = observation.relationship ?? "unknown relationship";
+      const knownLabel = observation.knownLabel ?? observation.knownCanineId ?? "unknown comparator";
+      list.append(
+        createElement(
+          "li",
+          undefined,
+          `${knownLabel}: ${relationship}${observation.sourceObservedAt ? ` (${observation.sourceObservedAt})` : ""}`
+        )
+      );
+    }
+    panel.append(list);
+  }
+
   return panel;
 }
 
@@ -5618,11 +5646,15 @@ function formatCanineTypeLabel(canineType: string | null): string {
 
 function formatAppearanceSummary(appearance: CanineAppearance | null): string {
   const normalized = normalizeAppearance(appearance);
-  return [
+  const parts = [
     `primary ${normalized?.primaryColor ?? "unknown"}`,
     `secondary ${normalized?.secondaryColor ?? "unknown"}`,
     `eyes ${normalized?.eyeColor ?? "unknown"}`
-  ].join(", ");
+  ];
+  if (normalized?.markingTypes?.length) {
+    parts.push(`markings ${normalized.markingTypes.join(" + ")}`);
+  }
+  return parts.join(", ");
 }
 
 function normalizeCuratedBreedingRole(value: string | null | undefined): CuratedBreedingRole {
@@ -5642,22 +5674,30 @@ function createCalculatorCanonicalDraft(row: Record<string, string>): {
   const total = Number.parseInt(row.TOTAL, 10);
   const humanName = calculatorState.humanName.trim();
   const characterName = calculatorState.characterName.trim();
-  const callName = calculatorState.callName.trim();
+  const resultName = calculatorState.resultName.trim();
+  const callName = inferCallNameFromResultName(resultName);
   const observedDescription = calculatorState.observedDescription.trim();
-  const inferred = inferCanineDetailsFromDescription(observedDescription);
+  const comparisonContext = getCalculatorComparisonContext(calculatorState.history);
+  const inferred = inferCanineDetailsFromCalculatorSources(
+    observedDescription,
+    comparisonContext.examinedDescriptions[0] ?? comparisonContext.sniffedDescriptions[0] ?? null
+  );
   const humanId = humanName ? `human-${slugifyIdentifier(humanName)}` : null;
   const characterId = characterName ? `character-${slugifyIdentifier(characterName)}` : null;
   const canineId =
     characterName && callName && Number.isFinite(total)
       ? `canine-${slugifyIdentifier(characterName)}-${slugifyIdentifier(callName)}-${total}`
       : null;
+  const comparisonObservations = buildCalculatorComparisonObservations(calculatorState.history, canineId);
 
   if (!humanName) warnings.push("Add the human name to generate a stable human record.");
   if (!characterName) warnings.push("Add the character/player name to generate a stable character record.");
-  if (!callName) warnings.push("Add the pet call name to generate a stable canine record.");
+  if (!callName) warnings.push("Add the pet call name, or use the solved pet label as the pet name.");
   if (!exactTraits) warnings.push("The solved profile is not exact yet, so the trait profile draft is incomplete.");
   if (!Number.isFinite(total)) warnings.push("TOTAL is not exact yet, so the canine id/display name draft is incomplete.");
-  if (!observedDescription) warnings.push("Paste the observed long description to infer gender, type, and visible appearance.");
+  if (!observedDescription && comparisonContext.examinedDescriptions.length === 0 && comparisonContext.sniffedDescriptions.length === 0) {
+    warnings.push("Paste the observed long description to infer gender, type, and visible appearance.");
+  }
 
   const canine = {
     id: canineId ?? "canine-missing-id",
@@ -5666,7 +5706,7 @@ function createCalculatorCanonicalDraft(row: Record<string, string>): {
     displayName:
       characterName && callName && Number.isFinite(total)
         ? `${characterName} ${callName} ${total}`
-        : row.Name || "Solved canine",
+        : callName || row.Name || "Solved canine",
     characterId: characterId ?? "character-missing-id",
     gender: inferred.gender,
     canineType: inferred.canineType,
@@ -5704,6 +5744,7 @@ function createCalculatorCanonicalDraft(row: Record<string, string>): {
             traits: exactTraits
           }
         : null,
+    comparisonObservations,
     sourceObservation: canineId
       ? {
           id: `source-manual-calculator-${canineId}`,
@@ -5713,12 +5754,57 @@ function createCalculatorCanonicalDraft(row: Record<string, string>): {
           sourceObservedAt: "2026-06-07",
           sourceLag: null,
           externalId: null,
-          notes: buildCalculatorSourceNotes(observedDescription, inferred.notes)
+          notes: buildCalculatorSourceNotes(observedDescription, inferred.notes, comparisonContext)
         }
       : null
   };
 
   return { payload, warnings };
+}
+
+function buildCalculatorComparisonObservations(
+  entries: readonly CalculatorHistoryEntry[],
+  targetCanineId: string | null
+): Array<Record<string, string | number | null>> {
+  return entries.map((entry, index) => ({
+    id: `compare-observation-${index + 1}`,
+    targetCanineId,
+    knownCanineId: entry.knownCanineId,
+    knownLabel: entry.knownLabel,
+    direction: entry.direction,
+    subject: entry.subject,
+    relationship: entry.relationship,
+    examinedDescription: entry.examinedDescription,
+    referenceDescription: entry.referenceDescription,
+    sniffedDescription: entry.sniffedDescription,
+    blockCount: entry.blockCount,
+    sourceObservedAt: "2026-06-07"
+  }));
+}
+
+function getCalculatorComparisonContext(entries: readonly CalculatorHistoryEntry[]): {
+  relationships: string[];
+  examinedDescriptions: string[];
+  referenceDescriptions: string[];
+  sniffedDescriptions: string[];
+} {
+  const relationships = Array.from(new Set(entries.map((entry) => entry.relationship).filter((value): value is string => Boolean(value))));
+  const examinedDescriptions = Array.from(
+    new Set(entries.map((entry) => entry.examinedDescription).filter((value): value is string => Boolean(value?.trim())))
+  );
+  const referenceDescriptions = Array.from(
+    new Set(entries.map((entry) => entry.referenceDescription).filter((value): value is string => Boolean(value?.trim())))
+  );
+  const sniffedDescriptions = Array.from(
+    new Set(entries.map((entry) => entry.sniffedDescription).filter((value): value is string => Boolean(value?.trim())))
+  );
+
+  return {
+    relationships,
+    examinedDescriptions,
+    referenceDescriptions,
+    sniffedDescriptions
+  };
 }
 
 function parseExactTraitValuesFromRow(row: Record<string, string>): Record<string, number> | null {
@@ -5749,27 +5835,45 @@ function inferCanineDetailsFromDescription(description: string): {
 } {
   const notes: string[] = [];
   const normalized = description.replace(/\s+/g, " ").trim();
-  const lower = normalized.toLowerCase();
-
-  const canineTypeMatch = lower.match(/\b(wolf|fox|coyote|jackal|dog)\b/);
-  const canineType = canineTypeMatch?.[1] ?? null;
+  const typeSentenceMatch = normalized.match(/^This\s+(wolf|fox|coyote|jackal|dog)\s+seems\b/i);
+  const canineType = typeSentenceMatch?.[1]?.toLowerCase() ?? null;
   if (!canineType) {
     notes.push("Could not infer canine type from description.");
   }
 
-  const gender: CuratedGender = /\bher\b/.test(lower) ? "F" : /\bhis\b/.test(lower) ? "M" : "U";
+  const lower = normalized.toLowerCase();
+  const gender: CuratedGender =
+    /\b(she|her)\b/.test(lower) ? "F" : /\b(he|his)\b/.test(lower) ? "M" : /\b(they|their)\b/.test(lower) ? "A" : "U";
   if (gender === "U") {
     notes.push("Could not infer gender pronoun from description.");
   }
 
-  const primaryColorMatch = normalized.match(/\bhas a ([A-Za-z]+(?: [A-Za-z]+)?) coat\b/i);
-  const eyeColorMatch = normalized.match(/\b([A-Za-z]+(?: [A-Za-z]+)?) eyes\b/i);
-  const secondaryColorMatch = normalized.match(/\bwith ([A-Za-z]+(?: [A-Za-z]+)?) (?:stripes|spots|markings|ear|ears)\b/i);
+  const primaryColorMatch = normalized.match(/\bhas a\s+([A-Za-z]+(?: [A-Za-z]+)?)\s+coat\b/i);
+  const eyeColorMatch =
+    normalized.match(/\b(?:His|Her|Their)\s+([A-Za-z]+(?: [A-Za-z]+)?)\s+eyes\b/i) ??
+    normalized.match(/\b([A-Za-z]+(?: [A-Za-z]+)?)\s+eyes\b/i);
+
+  const secondaryMatches = extractSecondaryColorsFromDescription(normalized);
+
+  const uniqueSecondaryColors = Array.from(new Set(secondaryMatches.map((value) => value.toLowerCase()))).map((value) =>
+    normalizeDisplayWords(value)
+  ).filter((value): value is string => Boolean(value));
+
+  let secondaryColor: string | null = null;
+  if (uniqueSecondaryColors.length === 1) {
+    secondaryColor = uniqueSecondaryColors[0];
+  } else if (uniqueSecondaryColors.length > 1) {
+    secondaryColor = uniqueSecondaryColors[0];
+    notes.push(`Multiple secondary colors were detected (${uniqueSecondaryColors.join(", ")}); using the first value.`);
+  }
+
+  const markingTypes = extractMarkingTypesFromDescription(normalized);
 
   const appearance = normalizeAppearance({
-    primaryColor: primaryColorMatch?.[1] ?? null,
-    secondaryColor: secondaryColorMatch?.[1] ?? null,
-    eyeColor: eyeColorMatch?.[1] ?? null
+    primaryColor: normalizeDisplayWords(primaryColorMatch?.[1] ?? null),
+    secondaryColor,
+    eyeColor: normalizeDisplayWords(eyeColorMatch?.[1] ?? null),
+    markingTypes
   });
 
   if (!appearance?.primaryColor) notes.push("Could not infer primary coat color from description.");
@@ -5779,15 +5883,231 @@ function inferCanineDetailsFromDescription(description: string): {
   return { gender, canineType, appearance, notes };
 }
 
-function buildCalculatorSourceNotes(description: string, notes: readonly string[]): string {
+function inferCanineDetailsFromVisibleCompareDescription(description: string): {
+  canineType: string | null;
+  appearance: CanineAppearance | null;
+  notes: string[];
+} {
+  const notes: string[] = [];
+  const normalized = description.replace(/\s+/g, " ").trim();
+  const typeMatch = normalized.match(/\b(wolf|fox|coyote|jackal|dog)\b/i);
+  const canineType = typeMatch?.[1]?.toLowerCase() ?? null;
+  if (!canineType) {
+    notes.push("Could not infer canine type from visible compare description.");
+  }
+
+  const descriptorPrefix = normalized.match(/^(?:a|an)\s+(?:very\s+large|large|medium|small)\s+(.+?)\s+(?:trained\s+)?(?:wolf|fox|coyote|jackal|dog)\b/i);
+  const primaryColor = normalizeDisplayWords(descriptorPrefix?.[1] ?? null);
+  const appearance = normalizeAppearance({
+    primaryColor,
+    secondaryColor: null,
+    eyeColor: null,
+    markingTypes: null
+  });
+
+  if (!appearance?.primaryColor) {
+    notes.push("Could not infer primary coat color from visible compare description.");
+  }
+
+  return { canineType, appearance, notes };
+}
+
+function inferCanineDetailsFromCalculatorSources(
+  observedDescription: string,
+  visibleCompareDescription: string | null
+): {
+  gender: CuratedGender;
+  canineType: string | null;
+  appearance: CanineAppearance | null;
+  notes: string[];
+} {
+  const primaryInference = inferCanineDetailsFromDescription(observedDescription);
+
+  if (!visibleCompareDescription) {
+    return primaryInference;
+  }
+
+  const fallbackInference = inferCanineDetailsFromVisibleCompareDescription(visibleCompareDescription);
+  const baseAppearance = primaryInference.appearance ?? {
+    primaryColor: null,
+    secondaryColor: null,
+    eyeColor: null,
+    markingTypes: null
+  };
+
+  const mergedAppearance = normalizeAppearance({
+    primaryColor: baseAppearance.primaryColor ?? fallbackInference.appearance?.primaryColor ?? null,
+    secondaryColor: baseAppearance.secondaryColor ?? fallbackInference.appearance?.secondaryColor ?? null,
+    eyeColor: baseAppearance.eyeColor ?? fallbackInference.appearance?.eyeColor ?? null,
+    markingTypes: baseAppearance.markingTypes ?? fallbackInference.appearance?.markingTypes ?? null
+  });
+
+  return {
+    gender: primaryInference.gender,
+    canineType: primaryInference.canineType ?? fallbackInference.canineType,
+    appearance: mergedAppearance,
+    notes: primaryInference.notes
+      .filter((note) => !note.includes("Could not infer canine type from description.") || !fallbackInference.canineType)
+      .filter((note) => !note.includes("Could not infer primary coat color from description.") || !fallbackInference.appearance?.primaryColor)
+  };
+}
+
+function buildCalculatorSourceNotes(
+  description: string,
+  notes: readonly string[],
+  comparisonContext: {
+    relationships: string[];
+    examinedDescriptions: string[];
+    referenceDescriptions: string[];
+    sniffedDescriptions: string[];
+  }
+): string {
   const parts: string[] = ["Solved from calculator workflow."];
   if (description) {
     parts.push(`Observed description: ${description.replace(/\s+/g, " ").trim()}`);
+  }
+  if (comparisonContext.examinedDescriptions.length > 0) {
+    parts.push(`Observed compare target: ${comparisonContext.examinedDescriptions.join(" | ")}`);
+  }
+  if (comparisonContext.referenceDescriptions.length > 0) {
+    parts.push(`Observed compare reference: ${comparisonContext.referenceDescriptions.join(" | ")}`);
+  }
+  if (comparisonContext.sniffedDescriptions.length > 0) {
+    parts.push(`Observed sniff target: ${comparisonContext.sniffedDescriptions.join(" | ")}`);
+  }
+  if (comparisonContext.relationships.length > 0) {
+    parts.push(`Compared relationship text: ${comparisonContext.relationships.join(", ")}.`);
   }
   if (notes.length > 0) {
     parts.push(`Inference notes: ${notes.join(" ")}`);
   }
   return parts.join(" ");
+}
+
+function extractMarkingTypesFromDescription(description: string): string[] | null {
+  const descriptors = getFurDescriptorPatterns();
+
+  const found = descriptors.filter((descriptor) => descriptor.pattern.test(description)).map((descriptor) => descriptor.label);
+  return found.length > 0 ? found : null;
+}
+
+function extractSecondaryColorsFromDescription(description: string): string[] {
+  const matches: string[] = [];
+
+  for (const descriptor of getFurDescriptorPatterns()) {
+    for (const match of description.matchAll(descriptor.capturePattern)) {
+      const color = normalizeDisplayWords(match[1] ?? null);
+      if (color) {
+        matches.push(color);
+      }
+    }
+  }
+
+  return matches;
+}
+
+function getFurDescriptorPatterns(): Array<{ label: string; pattern: RegExp; capturePattern: RegExp }> {
+  return [
+    {
+      label: "marks",
+      pattern: /\bmarks\b/i,
+      capturePattern: /\b(?:with|and a|and an)\s+([A-Za-z]+(?: [A-Za-z]+)?)\s+marks\b/gi
+    },
+    {
+      label: "patches",
+      pattern: /\bpatches\b/i,
+      capturePattern: /\b(?:with|and a|and an)\s+([A-Za-z]+(?: [A-Za-z]+)?)\s+patches\b/gi
+    },
+    {
+      label: "streaks",
+      pattern: /\bstreaks\b/i,
+      capturePattern: /\b(?:with|and a|and an)\s+([A-Za-z]+(?: [A-Za-z]+)?)\s+streaks\b/gi
+    },
+    {
+      label: "stripes",
+      pattern: /\bstripes\b/i,
+      capturePattern: /\b(?:with|and a|and an)\s+([A-Za-z]+(?: [A-Za-z]+)?)\s+stripes\b/gi
+    },
+    {
+      label: "circle around left eye",
+      pattern: /\bcircle around (?:his|her|their) left eye\b/i,
+      capturePattern: /\b(?:with|and a|and an)\s+([A-Za-z]+(?: [A-Za-z]+)?)\s+circle around (?:his|her|their) left eye\b/gi
+    },
+    {
+      label: "circle around right eye",
+      pattern: /\bcircle around (?:his|her|their) right eye\b/i,
+      capturePattern: /\b(?:with|and a|and an)\s+([A-Za-z]+(?: [A-Za-z]+)?)\s+circle around (?:his|her|their) right eye\b/gi
+    },
+    {
+      label: "line down the spine",
+      pattern: /\bline down the spine\b/i,
+      capturePattern: /\b(?:with|and a|and an)\s+([A-Za-z]+(?: [A-Za-z]+)?)\s+line down the spine\b/gi
+    },
+    {
+      label: "muzzle",
+      pattern: /\bmuzzle\b/i,
+      capturePattern: /\b(?:with|and a|and an)\s+([A-Za-z]+(?: [A-Za-z]+)?)\s+muzzle\b/gi
+    },
+    {
+      label: "pair of socks on both forepaws",
+      pattern: /\bpair of socks on both forepaws\b/i,
+      capturePattern: /\b(?:with|and a|and an)\s+([A-Za-z]+(?: [A-Za-z]+)?)\s+pair of socks on both forepaws\b/gi
+    },
+    {
+      label: "pair of socks on both hind legs",
+      pattern: /\bpair of socks on both hind legs\b/i,
+      capturePattern: /\b(?:with|and a|and an)\s+([A-Za-z]+(?: [A-Za-z]+)?)\s+pair of socks on both hind legs\b/gi
+    },
+    {
+      label: "left ear",
+      pattern: /\bleft ear\b/i,
+      capturePattern: /\b(?:with|and a|and an)\s+([A-Za-z]+(?: [A-Za-z]+)?)\s+left ear\b/gi
+    },
+    {
+      label: "right ear",
+      pattern: /\bright ear\b/i,
+      capturePattern: /\b(?:with|and a|and an)\s+([A-Za-z]+(?: [A-Za-z]+)?)\s+right ear\b/gi
+    },
+    {
+      label: "set of socks on all paws",
+      pattern: /\bset of socks on all paws\b/i,
+      capturePattern: /\b(?:with|and a|and an)\s+([A-Za-z]+(?: [A-Za-z]+)?)\s+set of socks on all paws\b/gi
+    },
+    {
+      label: "star on the forehead",
+      pattern: /\bstar on the forehead\b/i,
+      capturePattern: /\b(?:with|and a|and an)\s+([A-Za-z]+(?: [A-Za-z]+)?)\s+star on the forehead\b/gi
+    },
+    {
+      label: "tip on the tail",
+      pattern: /\btip on the tail\b/i,
+      capturePattern: /\b(?:with|and a|and an)\s+([A-Za-z]+(?: [A-Za-z]+)?)\s+tip on the tail\b/gi
+    },
+    {
+      label: "underside",
+      pattern: /\bunderside\b/i,
+      capturePattern: /\b(?:with|and a|and an)\s+([A-Za-z]+(?: [A-Za-z]+)?)\s+underside\b/gi
+    }
+  ];
+}
+
+function inferCallNameFromResultName(resultName: string): string {
+  const trimmed = resultName.trim();
+  if (!trimmed || trimmed.toLowerCase() === "solved canine") {
+    return "";
+  }
+  return trimmed;
+}
+
+function normalizeDisplayWords(value: string | null): string | null {
+  if (!value) {
+    return null;
+  }
+  return value
+    .trim()
+    .split(/\s+/)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
 }
 
 function createCurationSelectedCanineDetail(store: DataStore): HTMLElement {
@@ -5891,10 +6211,10 @@ function createCalculatorWorkflow(): HTMLElement {
     createKnownRetiredToggle(),
     createLabel("Known canine", createKnownCanineSelect()),
     createLabel("Comparison direction", createDirectionSelect()),
-    createLabel("Result name", createResultNameInput()),
-    createCalculatorRecordFields(),
     createLabel("Comparison text", createComparisonTextArea()),
-    createCalculatorActions()
+    createCalculatorActions(),
+    createLabel("Solved pet label", createResultNameInput()),
+    createCalculatorRecordFields(),
   );
 
   output.append(
@@ -6049,7 +6369,7 @@ function updateKnownCanineSelectOptions(select: HTMLSelectElement): void {
 function createDirectionSelect(): HTMLSelectElement {
   const select = createElement("select", "field-control");
   const options: Array<[CalculatorDirectionMode, string]> = [
-    ["auto", "Auto-suggest"],
+    ["", "Select direction"],
     ["unknown-to-known", "Unknown to known"],
     ["known-to-unknown", "Known to unknown"]
   ];
@@ -6074,7 +6394,7 @@ function createDirectionSelect(): HTMLSelectElement {
 function createResultNameInput(): HTMLInputElement {
   const input = createElement("input", "field-control");
   input.value = calculatorState.resultName;
-  input.placeholder = "Solved canine";
+  input.placeholder = "Lucy";
   input.addEventListener("input", () => {
     calculatorState.resultName = input.value;
   });
@@ -6085,18 +6405,18 @@ function createResultNameInput(): HTMLInputElement {
 function createCalculatorRecordFields(): HTMLElement {
   const group = createElement("div", "field-grid");
   group.append(
-    createLabel("Human", createCalculatorMetadataInput("humanName", "Bob")),
-    createLabel("Character / player", createCalculatorMetadataInput("characterName", "Blurgy")),
-    createLabel("Pet call name", createCalculatorMetadataInput("callName", "Lucy")),
+    createLabel("Human name", createCalculatorMetadataInput("humanName", "Bob")),
+    createLabel("Character name", createCalculatorMetadataInput("characterName", "Blurgy")),
     createLabel("Record status", createCalculatorStatusSelect()),
     createLabel("Activity type", createCalculatorBreedingRoleSelect()),
-    createLabel("Observed long description", createCalculatorDescriptionTextArea())
+    createLabel("Observed long description", createCalculatorDescriptionTextArea()),
+    createCalculatorDraftRefreshButton()
   );
   return group;
 }
 
 function createCalculatorMetadataInput(
-  field: "humanName" | "characterName" | "callName",
+  field: "humanName" | "characterName",
   placeholder: string
 ): HTMLInputElement {
   const input = createElement("input", "field-control") as HTMLInputElement;
@@ -6104,7 +6424,6 @@ function createCalculatorMetadataInput(
   input.placeholder = placeholder;
   input.addEventListener("input", () => {
     calculatorState[field] = input.value;
-    render();
   });
   return input;
 }
@@ -6152,9 +6471,19 @@ function createCalculatorDescriptionTextArea(): HTMLTextAreaElement {
   textarea.spellcheck = false;
   textarea.addEventListener("input", () => {
     calculatorState.observedDescription = textarea.value;
-    render();
   });
   return textarea;
+}
+
+function createCalculatorDraftRefreshButton(): HTMLElement {
+  const wrap = createElement("div", "button-row");
+  const button = createElement("button", "secondary-button", "Update draft") as HTMLButtonElement;
+  button.type = "button";
+  button.addEventListener("click", () => {
+    render();
+  });
+  wrap.append(button);
+  return wrap;
 }
 
 function createComparisonTextArea(): HTMLTextAreaElement {
@@ -6185,8 +6514,8 @@ function createCalculatorActions(): HTMLElement {
     calculatorState.resultName = "";
     calculatorState.humanName = "";
     calculatorState.characterName = "";
-    calculatorState.callName = "";
     calculatorState.observedDescription = "";
+    calculatorState.directionMode = "";
     calculatorState.exportStatus = "active";
     calculatorState.exportBreedingRole = "breeding";
     calculatorState.draftWarnings = [];
@@ -6233,8 +6562,12 @@ function createDirectionHint(
       ? "Known to unknown"
       : direction === "unknown-to-known"
         ? "Unknown to known"
-        : "Waiting";
-  const reason = suggestion ? `${suggestion.confidence} suggestion: ${suggestion.reason}` : "Paste text to inspect direction.";
+        : "Choose direction";
+  const reason = direction
+    ? "Direction is locked to your explicit selection."
+    : suggestion
+      ? `Auto-detect is off. Choose a direction explicitly. Suggested: ${suggestion.direction === "known-to-unknown" ? "Known to unknown" : "Unknown to known"} (${suggestion.confidence}).`
+      : "Auto-detect is off. Choose a direction explicitly before solving.";
 
   hint.append(createElement("strong", undefined, directionLabel), createElement("span", undefined, reason));
 

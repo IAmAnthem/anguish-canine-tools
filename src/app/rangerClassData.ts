@@ -300,12 +300,19 @@ export const rangerEyeRows = [
 ] as const;
 
 export const rangerDescriptorRows = [
-  ["<color> marks / patches / streaks / stripes", "marking"],
-  ["<color> circle around left or right eye", "feature"],
+  ["<color> marks", "marking"],
+  ["<color> patches", "marking"],
+  ["<color> streaks", "marking"],
+  ["<color> stripes", "marking"],
+  ["<color> circle around his/her left eye", "feature"],
+  ["<color> circle around his/her right eye", "feature"],
   ["<color> line down the spine", "feature"],
   ["<color> muzzle", "feature"],
-  ["<color> socks on forepaws, hind legs, or all paws", "feature"],
+  ["<color> pair of socks on both forepaws", "feature"],
+  ["<color> pair of socks on both hind legs", "feature"],
+  ["<color> left ear", "feature"],
   ["<color> right ear", "feature"],
+  ["<color> set of socks on all paws", "feature"],
   ["<color> star on the forehead", "feature"],
   ["<color> tip on the tail", "feature"],
   ["<color> underside", "feature"]

@@ -20,6 +20,7 @@ Possible data update paths:
 2. Pull request.
 3. GitHub issue containing a generated submission.
 4. Out-of-band player submission that a maintainer converts into a commit.
+5. Calculator-generated `canonical-canine-draft` import reviewed and applied locally by a maintainer.
 
 ## App Behavior
 
@@ -43,6 +44,7 @@ Prefer:
 - small structured data files
 - generated submissions that are easy to inspect
 - reversible commits
+- structured drafts that keep compare evidence and solved traits together
 
 ## Raw Source Material
 
@@ -55,3 +57,4 @@ Guidelines:
 - Do not commit private planning workbooks.
 - Preserve source timestamps and source URLs when extracting facts from delayed website data.
 - Treat delayed website data as an observation, not guaranteed current game state.
+- Treat compare-session relatedness as evidence worth storing, especially when full lineage is private or unavailable.

@@ -12,7 +12,7 @@ import {
 import { formatTraitResultRow, type TraitResultRow } from "../domain/traits/resultRow.js";
 import { traitNames, type TraitName } from "../domain/traits/traitNames.js";
 
-export type CalculatorDirectionMode = "auto" | ComparisonDirection;
+export type CalculatorDirectionMode = "" | ComparisonDirection;
 
 export type KnownCanineOption = {
   canineId: string;
@@ -42,6 +42,10 @@ export type CalculatorHistoryEntry = {
   direction: ComparisonDirection;
   directionSuggestion: DirectionSuggestion;
   subject: string | null;
+  relationship: string | null;
+  examinedDescription: string | null;
+  referenceDescription: string | null;
+  sniffedDescription: string | null;
   blockCount: number;
   solved: SolvedTraitProfile;
   warnings: string[];
@@ -118,7 +122,12 @@ export function solveCalculatorInput(
   }
 
   const directionSuggestion = suggestComparisonDirection(blocks[0], knownOption.aliases);
-  const direction = directionMode === "auto" ? directionSuggestion.direction : directionMode;
+  const direction = directionMode || null;
+
+  if (!direction) {
+    return emptyResult(blocks, ["Choose the comparison direction before solving."]);
+  }
+
   const solved = solveTraitProfile(
     blocks.map((comparison) => ({
       comparison,
@@ -170,6 +179,10 @@ export function createCalculatorHistoryEntry(
       direction: result.direction,
       directionSuggestion: result.directionSuggestion,
       subject: result.blocks[0]?.subject ?? null,
+      relationship: result.blocks[0]?.relationship ?? null,
+      examinedDescription: result.blocks[0]?.examinedDescription ?? null,
+      referenceDescription: result.blocks[0]?.referenceDescription ?? null,
+      sniffedDescription: result.blocks[0]?.sniffedDescription ?? null,
       blockCount: result.blocks.length,
       solved: result.solved,
       warnings: result.warnings

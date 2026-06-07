@@ -165,6 +165,32 @@ Notes:
 - Parent and grandparent relationships are the core lineage data for practical breeding checks.
 - Deeper ancestry may be captured as source observations later, but should not block v1.
 
+### ComparisonObservation
+
+Structured compare-session evidence for a target canine.
+
+Fields:
+
+- `id`
+- `targetCanineId`
+- `knownCanineId`
+- `knownLabel`
+- `direction`
+- `subject`
+- `relationship`
+- `examinedDescription`
+- `referenceDescription`
+- `sniffedDescription`
+- `blockCount`
+- `sourceObservedAt`
+
+Notes:
+
+- This is where compare-based relatedness evidence belongs when lineage is unknown or private.
+- These records are not lineage truth. They are observed evidence from the in-game compare workflow.
+- They matter because one player-group may know internal relatedness that another group cannot derive from public lineage alone.
+- They are especially useful when separate breeding circles collaborate through exported solved records and compare results.
+
 ## Relationship Concepts
 
 ### Genetically Unrelated
@@ -271,6 +297,8 @@ Optional source metadata:
 The anguish.org player tools family tree is a useful source, but it updates roughly once per day. It may expose `wolfid` links for past canines while omitting those IDs for current canines. If a parent is gone before the website generates its delayed table, the source may never expose that parent's ID.
 
 The app should preserve website IDs when present, while still relying on internal IDs for canonical relationships. Missing external IDs should be normal, not an error.
+
+Calculator-generated solved-pet drafts may also produce `ComparisonObservation` records alongside the main source observation so the repo can retain compare-based relatedness evidence.
 
 ## Canonical Data
 

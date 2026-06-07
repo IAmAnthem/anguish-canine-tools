@@ -14,6 +14,9 @@ export type ParsedComparisonBlock = {
   subject: string | null;
   confidence: ComparisonConfidence;
   isCertain: boolean;
+  examinedDescription: string | null;
+  referenceDescription: string | null;
+  sniffedDescription: string | null;
   warnings: string[];
   traits: Partial<Record<TraitName, ParsedPhraseRange>>;
   traitCount: number;
@@ -59,6 +62,7 @@ export function splitComparisonBlocks(text: string): string[] {
   const lines = text.split(/\r?\n/);
   const blocks: string[] = [];
   let current: string[] = [];
+  let preamble: string[] = [];
   let insideBlock = false;
 
   for (const line of lines) {
@@ -68,11 +72,18 @@ export function splitComparisonBlocks(text: string): string[] {
         current = [];
       }
 
+      if (!insideBlock && preamble.length > 0) {
+        current.push(...preamble);
+        preamble = [];
+      }
+
       insideBlock = true;
     }
 
     if (insideBlock) {
       current.push(line);
+    } else if (line.trim()) {
+      preamble.push(line);
     }
 
     if (insideBlock && blockEndPattern.test(line)) {
@@ -99,8 +110,25 @@ export function parseComparisonBlock(
   const traits: Partial<Record<TraitName, ParsedPhraseRange>> = {};
   const unrecognized: string[] = [];
   let subject: string | null = null;
+  let examinedDescription: string | null = null;
+  let referenceDescription: string | null = null;
+  let sniffedDescription: string | null = null;
   let overall: ParsedPhraseRange | null = null;
   let relationship: string | null = null;
+  const normalizedText = text.replace(/\s+/g, " ").trim();
+
+  const compareDescriptionMatch = normalizedText.match(
+    /\bYou look hard at\s+(.+?)\s+comparing to\s+(.+?)\s+\.\.\.\s*$/i
+  );
+  if (compareDescriptionMatch) {
+    examinedDescription = compareDescriptionMatch[1].trim();
+    referenceDescription = compareDescriptionMatch[2].trim();
+  }
+
+  const sniffDescriptionMatch = normalizedText.match(/\b.+?\s+sniffs at\s+(.+?)\.\s*/i);
+  if (sniffDescriptionMatch) {
+    sniffedDescription = sniffDescriptionMatch[1].trim();
+  }
 
   for (const line of text.split(/\r?\n/)) {
     const certainSubject = line.match(/^\s*You are certain that\s+(.+?)\s+is:\s*$/i);
@@ -169,6 +197,9 @@ export function parseComparisonBlock(
     subject,
     confidence,
     isCertain: confidence === "certain",
+    examinedDescription,
+    referenceDescription,
+    sniffedDescription,
     warnings,
     traits,
     traitCount: Object.keys(traits).length,

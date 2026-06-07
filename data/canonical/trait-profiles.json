@@ -2959,5 +2959,29 @@
       "Targeting": 54,
       "Toughness": 78
     }
+  },
+  {
+    "canineId": "canine-blurgy-lucy-1118",
+    "status": "known",
+    "total": 1118,
+    "traits": {
+      "Alertness": 53,
+      "Appetite": 68,
+      "Brutality": 50,
+      "Development": 60,
+      "Eluding": 83,
+      "Energy": 61,
+      "Evasion": 84,
+      "Ferocity": 68,
+      "Fortitude": 72,
+      "Insight": 61,
+      "Might": 56,
+      "Nimbleness": 69,
+      "Patience": 51,
+      "Procreation": 93,
+      "Sufficiency": 52,
+      "Targeting": 58,
+      "Toughness": 79
+    }
   }
 ]

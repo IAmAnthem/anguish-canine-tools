@@ -1,5 +1,6 @@
 import caninesJson from "../../data/canonical/canines.json" with { type: "json" };
 import charactersJson from "../../data/canonical/characters.json" with { type: "json" };
+import comparisonObservationsJson from "../../data/canonical/comparison-observations.json" with { type: "json" };
 import humansJson from "../../data/canonical/humans.json" with { type: "json" };
 import lineageProfilesJson from "../../data/canonical/lineage-profiles.json" with { type: "json" };
 import sourceObservationsJson from "../../data/canonical/source-observations.json" with { type: "json" };
@@ -9,6 +10,7 @@ import comparisonRangesJson from "../../data/reference/comparison-ranges.json" w
 import {
   validateAllData,
   type CanonicalDataSet,
+  type ComparisonObservationRecord,
   type DataIntegrityReport,
   type LineageProfileRecord,
   type ReferenceDataSet
@@ -45,6 +47,7 @@ export type CanineAppearance = {
   primaryColor: string | null;
   secondaryColor: string | null;
   eyeColor: string | null;
+  markingTypes?: string[] | null;
 };
 
 export type Canine = {
@@ -78,6 +81,21 @@ export type SourceObservation = {
   notes: string | null;
 };
 
+export type ComparisonObservation = {
+  id: string;
+  targetCanineId: string;
+  knownCanineId: string;
+  knownLabel: string | null;
+  direction: string | null;
+  subject: string | null;
+  relationship: string | null;
+  examinedDescription: string | null;
+  referenceDescription: string | null;
+  sniffedDescription: string | null;
+  blockCount: number | null;
+  sourceObservedAt?: string | null;
+};
+
 export type RepositoryData = {
   canonical: {
     humans: readonly Human[];
@@ -86,6 +104,7 @@ export type RepositoryData = {
     traitProfiles: readonly TraitProfile[];
     lineageProfiles: readonly LineageProfileRecord[];
     sourceObservations: readonly SourceObservation[];
+    comparisonObservations?: readonly ComparisonObservation[];
   };
   reference: {
     collars: readonly CollarReference[];
@@ -133,7 +152,8 @@ export function loadRepositoryData(): RepositoryData {
       canines: caninesJson as readonly Canine[],
       traitProfiles: traitProfilesJson as readonly TraitProfile[],
       lineageProfiles: lineageProfilesJson as readonly LineageProfileRecord[],
-      sourceObservations: sourceObservationsJson as readonly SourceObservation[]
+      sourceObservations: sourceObservationsJson as readonly SourceObservation[],
+      comparisonObservations: comparisonObservationsJson as readonly ComparisonObservation[]
     },
     reference: {
       collars: collarsJson as readonly CollarReference[],
@@ -154,7 +174,8 @@ export function createDataStore(data: RepositoryData = loadRepositoryData()): Da
       characters: data.canonical.characters,
       canines: data.canonical.canines,
       traitProfiles: data.canonical.traitProfiles,
-      lineageProfiles: data.canonical.lineageProfiles
+      lineageProfiles: data.canonical.lineageProfiles,
+      comparisonObservations: (data.canonical.comparisonObservations ?? []) as readonly ComparisonObservationRecord[]
     } as CanonicalDataSet,
     {
       collars: data.reference.collars,

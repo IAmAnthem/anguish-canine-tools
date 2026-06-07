@@ -3382,5 +3382,14 @@
     "paternalGrandDamId": null,
     "maternalGrandSireId": null,
     "maternalGrandDamId": null
+  },
+  {
+    "canineId": "canine-blurgy-lucy-1118",
+    "sireId": null,
+    "damId": null,
+    "paternalGrandSireId": null,
+    "paternalGrandDamId": null,
+    "maternalGrandSireId": null,
+    "maternalGrandDamId": null
   }
 ]

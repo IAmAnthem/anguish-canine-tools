@@ -172,16 +172,27 @@ describe("trait calculator app workflow", () => {
     ]);
   });
 
-  it("auto-suggests known-to-unknown when pasted subject matches the selected known canine", () => {
+  it("requires an explicit direction before solving", () => {
     const store = createDataStore(data);
     const [known] = getKnownCanineOptions(store);
-    const result = solveCalculatorInput(known, "auto", comparisonText(), "Solved");
+    const result = solveCalculatorInput(known, "", comparisonText(), "Solved");
 
-    expect(result.direction).toBe("known-to-unknown");
+    expect(result.direction).toBeNull();
     expect(result.directionSuggestion).toMatchObject({
       confidence: "strong",
       reason: "The comparison subject matches the selected known canine."
     });
+    expect(result.resultRow).toBeNull();
+    expect(result.exportText).toBe("");
+    expect(result.warnings).toContain("Choose the comparison direction before solving.");
+  });
+
+  it("solves once the direction is explicitly selected", () => {
+    const store = createDataStore(data);
+    const [known] = getKnownCanineOptions(store);
+    const result = solveCalculatorInput(known, "known-to-unknown", comparisonText(), "Solved");
+
+    expect(result.direction).toBe("known-to-unknown");
     expect(result.resultRow?.Name).toBe("Solved");
     expect(result.resultRow?.TOTAL).toBe(String(exactTotal));
     expect(result.resultRow?.Procreation).toBe(String(exactTraits.Procreation));
@@ -201,7 +212,7 @@ describe("trait calculator app workflow", () => {
   it("freezes the known canine and direction into a comparison history entry", () => {
     const store = createDataStore(data);
     const [known] = getKnownCanineOptions(store);
-    const { entry, warnings } = createCalculatorHistoryEntry(known, "auto", comparisonText(), "entry-1");
+    const { entry, warnings } = createCalculatorHistoryEntry(known, "known-to-unknown", comparisonText(), "entry-1");
 
     expect(warnings).toEqual([]);
     expect(entry).toMatchObject({
@@ -217,7 +228,7 @@ describe("trait calculator app workflow", () => {
   it("merges comparison history entries into the final result row", () => {
     const store = createDataStore(data);
     const [known] = getKnownCanineOptions(store);
-    const first = createCalculatorHistoryEntry(known, "auto", comparisonText(), "entry-1").entry;
+    const first = createCalculatorHistoryEntry(known, "known-to-unknown", comparisonText(), "entry-1").entry;
     const second = createCalculatorHistoryEntry(known, "known-to-unknown", comparisonText(), "entry-2").entry;
 
     const result = solveCalculatorHistory([first, second].filter((entry): entry is NonNullable<typeof entry> => Boolean(entry)), "Merged");

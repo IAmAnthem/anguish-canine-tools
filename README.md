@@ -1,6 +1,6 @@
 # Ancient Anguish Canine Tools
 
-Browser-based tools for Ancient Anguish canine breeding.
+Browser-based tools for Ancient Anguish canine breeding, curation, and Ranger reference work.
 
 Live app: https://iamanthem.github.io/anguish-canine-tools/
 
@@ -11,26 +11,31 @@ This project is intended to replace and expand the older PowerShell tools:
 
 The goal is a public, zero-cost web app that helps players evaluate canines, avoid inbreeding penalties, and plan useful breeding paths without requiring anyone to install or trust a local PowerShell script.
 
-## Planned Tools
+## Current Tools
 
 ### Trait Calculator
 
-The trait calculator will help players solve canine trait values from in-game comparison text.
+The trait calculator solves canine trait values from in-game comparison text and can now emit an import-ready canonical draft.
 
-Planned workflow:
+Current workflow:
 
-1. Load or import known canine data.
-2. Select the comparison direction.
+1. Filter to the known compare pets you want to use.
+2. Select the comparison direction explicitly.
 3. Select a known canine.
-4. Paste the in-game comparison output.
-5. Produce solved values or narrowed ranges for each trait.
-6. Copy or export the resulting row.
+4. Paste certain in-game comparison output and add each compare to history.
+5. Narrow or solve the unknown canine's 17 traits.
+6. Fill in solved pet identity fields and observed long description.
+7. Copy the generated `canonical-canine-draft` JSON.
+8. Apply that draft into canonical repo data with the import script.
 
-The initial logic comes from the PowerShell `Canine-Comparator-GUI.ps1` script.
+The calculator also preserves structured compare-session evidence such as:
+
+- `related`, `partially related`, or `unrelated`
+- visible compared descriptors such as `a very large pearl trained fox`
 
 ### Breeding Planner
 
-The breeding planner will help players evaluate parentage and find viable mates.
+The breeding planner helps players evaluate parentage and find viable mates.
 
 Planned workflow:
 
@@ -41,7 +46,16 @@ Planned workflow:
 5. Find unrelated future mates.
 6. Rank or filter possible breeding paths by trait potential, Procreation, and practical owner availability.
 
-The initial logic comes from the PowerShell `CanineBreeding` scripts.
+### Additional Live Surfaces
+
+The app also includes:
+
+- `Multi-Step`: three-step ancestry flushing and carry-forward planning
+- `Data`: canonical browser for canines, traits, lineage, ownership, and appearance
+- `Herd Health`: population health plus curation tools
+- `Algorithms`: OCS, compensatory, and assortative mate ranking
+- `Ranger Class`: class reference, breeding notes, appearance tables, and collar guidance
+- `App Directions`: onboarding for how to move through the site
 
 ## Data Stewardship Model
 
@@ -84,19 +98,41 @@ Derived ranger metrics should be calculated from fixed formulas over the 17 trai
 
 GitHub Issues are still useful for small corrections, bad records, or missing details.
 
+## Calculator Draft Import
+
+When the calculator has enough certain compare data to solve a pet exactly, it can generate a `canonical-canine-draft` JSON package.
+
+That package may include:
+
+- human
+- character
+- canine
+- trait profile
+- source observation
+- comparison observations
+
+Apply it locally with:
+
+```powershell
+npm run apply:canine-draft -- path\to\draft.json
+```
+
+The importer upserts the solved pet into canonical data and creates a null lineage stub when lineage is still unknown.
+
 ## Data Model Direction
 
 The old tools use separate CSVs for traits and lineage. The web app should treat them as related views of the same canine rather than forcing everything into one flat table.
 
 For the new app, repo-managed structured data is preferred over user-maintained CSV as the primary source. CSV import/export may still be useful as a compatibility feature, but it should not define the app's internal model.
 
-Planned domain model:
+Current domain model direction:
 
 - `Human`: real player/community contact identity
 - `Character`: in-game persona owned by a human
 - `Canine`: individual pet owned by a character
 - `TraitProfile`: 17 trait values plus total
 - `LineageProfile`: parents and grandparents used for relationship checks
+- `ComparisonObservation`: compare-based relationship evidence when lineage is unknown or private
 
 Canine names are not stable identity. Some players rename each new pet; other players reuse the same name across generations because the game uses that name for commands and aliases. The app should use stable internal IDs for individual canine objects and treat names as display/command labels.
 
@@ -124,12 +160,14 @@ Legacy source repositories:
 
 ## Status
 
-Static app implementation is underway. Current browser workflows include:
+Current browser workflows include:
 
 - Trait calculator
 - One-breeding planner
 - Multi-step population-lift planner
 - Canonical data browser
-- Collar and breeding setup guidance
+- Herd-health curation
+- Mate-ranking algorithms
+- Ranger class and breeding guidance
 
 Local commands are documented in `docs/local-development.md`. Publishing notes are in `docs/publishing.md`.

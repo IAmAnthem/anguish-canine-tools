@@ -2088,5 +2088,15 @@
     "sourceLag": null,
     "externalId": null,
     "notes": "Imported from reviewed private planning workbook Breeders sheet."
+  },
+  {
+    "id": "source-manual-calculator-canine-blurgy-lucy-1118",
+    "entityType": "canine",
+    "entityId": "canine-blurgy-lucy-1118",
+    "source": "manual/calculator",
+    "sourceObservedAt": "2026-06-07",
+    "sourceLag": null,
+    "externalId": null,
+    "notes": "Solved from calculator workflow. Observed description: This fox seems to be the lifelong companion of a ranger. This furry canine has a pearl coat with black stripes and a black right ear. Her turquoise eyes look around curiously. She is in good shape. Observed sniff target: a very large pearl trained fox Compared relationship text: unrelated, partially related."
   }
 ]

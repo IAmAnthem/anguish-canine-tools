@@ -73,4 +73,39 @@ They seem to be unrelated.
     expect(blocks[0].isCertain).toBe(false);
     expect(blocks[0].warnings).toHaveLength(1);
   });
+
+  it("captures visible compare descriptions and relationship context", () => {
+    const blocks = parseComparisonText(`
+Songs1113 sniffs at a very large pearl trained fox.
+compare petname to fox 2 out loud
+You look hard at a very large frosted silver trained fox comparing to a very
+large pearl trained fox ...
+You are certain that Songs1113 is:
+ Alertness seems barely better.
+ Appetite seems marginally inferior.
+ Brutality seems marginally inferior.
+ Development seems barely inferior.
+ Eluding seems slightly better.
+ Energy seems slightly inferior.
+ Evasion seems similar.
+ Ferocity seems slightly inferior.
+ Fortitude seems slightly inferior.
+ Insight seems marginally better.
+ Might seems better.
+ Nimbleness seems barely inferior.
+ Patience seems marginally better.
+ Procreation seems marginally better.
+ Sufficiency seems slightly better.
+ Targeting seems similar.
+ Toughness seems slightly inferior.
+Overall he seems to be slightly inferior.
+They seem to be unrelated.
+`);
+
+    expect(blocks).toHaveLength(1);
+    expect(blocks[0].examinedDescription).toBe("a very large frosted silver trained fox");
+    expect(blocks[0].referenceDescription).toBe("a very large pearl trained fox");
+    expect(blocks[0].sniffedDescription).toBe("a very large pearl trained fox");
+    expect(blocks[0].relationship).toBe("unrelated");
+  });
 });

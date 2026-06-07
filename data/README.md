@@ -12,6 +12,7 @@ The first version uses repo-managed JSON tables. The app should read these files
 - `canonical/trait-profiles.json`: known or solved trait values
 - `canonical/lineage-profiles.json`: parent and grandparent lineage
 - `canonical/source-observations.json`: optional source metadata and external IDs
+- `canonical/comparison-observations.json`: structured compare-session evidence, including relationship text and visible compared descriptors
 - `reference/collars.json`: collar/gem effects used during breeding or birth
 - `reference/comparison-ranges.json`: text-to-range mapping for certain comparison output
 
@@ -26,6 +27,14 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\import-legacy-data
 The importer reads the legacy `CanineCalculations` and `CanineBreeding` CSV files from sibling repository folders and writes normalized JSON into `data/canonical/`.
 
 If `private-data/Doli-Path.xlsx` exists locally, the importer also reads the reviewed `Breeders` sheet for richer lineage, trait, and appearance data. The workbook itself is ignored by Git and should not be committed.
+
+Calculator drafts can be applied with:
+
+```powershell
+npm run apply:canine-draft -- path\to\draft.json
+```
+
+This upserts the human, character, canine, trait profile, source observation, comparison observations, and a null lineage stub when no lineage row exists yet.
 
 ## Identity Rules
 
@@ -82,3 +91,11 @@ Comparison ranges translate certain in-game comparison phrases into numeric low/
 Source observations are optional. Use them when a record comes from delayed website data, message-board notes, manual curation, or legacy imports.
 
 Do not commit raw player-tools HTML unless it has been reviewed and sanitized.
+
+## Comparison Observations
+
+Comparison observations preserve live compare evidence when lineage is unknown or private.
+
+- Use them to retain `related`, `partially related`, or `unrelated` compare results against known canines.
+- Use them to retain visible compared descriptors such as `a very large pearl trained fox`.
+- Do not treat them as a replacement for canonical lineage. They are evidence, not proof.

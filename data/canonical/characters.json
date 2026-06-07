@@ -442,5 +442,11 @@
     "name": "Shudder",
     "humanId": "human-tim",
     "status": "active"
+  },
+  {
+    "id": "character-blurgy",
+    "name": "Blurgy",
+    "humanId": "human-bob",
+    "status": "active"
   }
 ]
